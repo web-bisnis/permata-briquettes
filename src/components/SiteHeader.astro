@@ -1,0 +1,34 @@
+---
+import { navigationItems } from "../config/navigation";
+import ThemeControl from "./ThemeControl.astro";
+
+const currentPath = Astro.url.pathname;
+---
+
+<header class="site-header">
+  <div class="container site-header__inner">
+    <a class="site-home" href="/" aria-label="Beranda">Situs</a>
+
+    <details class="site-navigation">
+      <summary>Menu</summary>
+      <div class="site-navigation__panel">
+        <nav aria-label="Navigasi utama">
+          <ul class="site-navigation__list">
+            {navigationItems.map((item) => (
+              <li>
+                <a
+                  class="site-navigation__link"
+                  href={item.href}
+                  aria-current={currentPath === item.href ? "page" : undefined}
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+        <ThemeControl />
+      </div>
+    </details>
+  </div>
+</header>

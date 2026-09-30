@@ -1,0 +1,91 @@
+:root {
+  /* Primitive palette: do not add colors outside the approved five. */
+  --color-ink: #1e1e1e;
+  --color-paper: #efefe8;
+  --color-accent-base: #62735a;
+  --color-charcoal: #2a2a2a;
+  --color-white: #ffffff;
+
+  --font-family-heading: "Plus Jakarta Sans Variable", "Plus Jakarta Sans", sans-serif;
+  --font-family-body: "Inter Variable", Inter, sans-serif;
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: clamp(1.125rem, 1rem + 0.4vw, 1.35rem);
+  --font-size-heading-sm: clamp(1.5rem, 1.2rem + 1.2vw, 2.25rem);
+  --font-size-heading-lg: clamp(2.25rem, 1.5rem + 3vw, 4.5rem);
+  --line-height-tight: 1.1;
+  --line-height-body: 1.65;
+  --font-weight-regular: 400;
+  --font-weight-medium: 550;
+  --font-weight-bold: 700;
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+
+  --radius-sm: 0.375rem;
+  --radius-md: 0.75rem;
+  --radius-pill: 999rem;
+
+  --content-width: 72rem;
+  --content-width-narrow: 48rem;
+  --page-gutter: clamp(1rem, 4vw, 2.5rem);
+  --header-height: 4.5rem;
+
+  /* Documentation token. CSS media queries use the same 48rem literal. */
+  --breakpoint-navigation: 48rem;
+
+  --color-background: var(--color-paper);
+  --color-surface: var(--color-white);
+  --color-text: var(--color-ink);
+  --color-text-muted: var(--color-charcoal);
+  --color-border: var(--color-accent-base);
+  --color-accent: var(--color-accent-base);
+  --color-on-accent: var(--color-white);
+  --color-focus: var(--color-accent-base);
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --color-background: var(--color-ink);
+    --color-surface: var(--color-charcoal);
+    --color-text: var(--color-paper);
+    --color-text-muted: var(--color-white);
+    --color-border: var(--color-accent-base);
+    --color-accent: var(--color-paper);
+    --color-on-accent: var(--color-ink);
+    --color-focus: var(--color-paper);
+  }
+}
+
+:root[data-theme="light"] {
+  --color-background: var(--color-paper);
+  --color-surface: var(--color-white);
+  --color-text: var(--color-ink);
+  --color-text-muted: var(--color-charcoal);
+  --color-border: var(--color-accent-base);
+  --color-accent: var(--color-accent-base);
+  --color-on-accent: var(--color-white);
+  --color-focus: var(--color-accent-base);
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  --color-background: var(--color-ink);
+  --color-surface: var(--color-charcoal);
+  --color-text: var(--color-paper);
+  --color-text-muted: var(--color-white);
+  --color-border: var(--color-accent-base);
+  --color-accent: var(--color-paper);
+  --color-on-accent: var(--color-ink);
+  --color-focus: var(--color-paper);
+  color-scheme: dark;
+}

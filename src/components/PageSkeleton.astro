@@ -1,0 +1,29 @@
+---
+interface Props {
+  eyebrow: string;
+  title: string;
+  summary: string;
+}
+
+const { eyebrow, title, summary } = Astro.props;
+---
+
+<div class="container page-shell">
+  <header class="page-intro">
+    <p class="page-intro__eyebrow">{eyebrow}</p>
+    <h1 id="page-title">{title}</h1>
+    <p class="page-intro__summary">{summary}</p>
+  </header>
+
+  <section class="skeleton-section" aria-labelledby="skeleton-title">
+    <h2 id="skeleton-title">Struktur konten</h2>
+    <p class="skeleton-section__description">
+      Area ini siap menerima konten terverifikasi pada tahap berikutnya.
+    </p>
+    <div class="skeleton-grid" aria-hidden="true">
+      <div class="skeleton-block"></div>
+      <div class="skeleton-block"></div>
+      <div class="skeleton-block"></div>
+    </div>
+  </section>
+</div>

@@ -1,0 +1,42 @@
+<div class="theme-control">
+  <label class="theme-control__label" for="theme-select">Tema</label>
+  <select class="theme-control__select" id="theme-select" data-theme-select>
+    <option value="system">Sistem</option>
+    <option value="light">Terang</option>
+    <option value="dark">Gelap</option>
+  </select>
+</div>
+
+<script>
+  const themeSelect = document.querySelector<HTMLSelectElement>("[data-theme-select]");
+
+  if (themeSelect) {
+    let savedTheme = "system";
+
+    try {
+      const storedTheme = localStorage.getItem("theme");
+      if (storedTheme === "light" || storedTheme === "dark") savedTheme = storedTheme;
+    } catch {
+      // The system preference remains the safe default when storage is unavailable.
+    }
+
+    themeSelect.value = savedTheme;
+
+    themeSelect.addEventListener("change", () => {
+      const selectedTheme = themeSelect.value;
+
+      if (selectedTheme === "light" || selectedTheme === "dark") {
+        document.documentElement.dataset.theme = selectedTheme;
+        try {
+          localStorage.setItem("theme", selectedTheme);
+        } catch {}
+        return;
+      }
+
+      document.documentElement.removeAttribute("data-theme");
+      try {
+        localStorage.removeItem("theme");
+      } catch {}
+    });
+  }
+</script>

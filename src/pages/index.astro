@@ -1,20 +1,15 @@
 ---
-const pageTitle = "Permata Briquettes";
-const pageDescription = "Fondasi situs statis Permata Briquettes.";
+import PageSkeleton from "../components/PageSkeleton.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const pageTitle = "Fondasi antarmuka";
+const pageDescription = "Kerangka antarmuka statis untuk konten yang terverifikasi.";
 ---
 
-<!doctype html>
-<html lang="id">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="description" content={pageDescription} />
-    <title>{pageTitle}</title>
-  </head>
-  <body>
-    <main>
-      <h1>{pageTitle}</h1>
-      <p>Fondasi situs statis telah disiapkan.</p>
-    </main>
-  </body>
-</html>
+<BaseLayout title={pageTitle} description={pageDescription}>
+  <PageSkeleton
+    eyebrow="Kerangka halaman"
+    title={pageTitle}
+    summary="Sistem visual, tema, dan struktur global telah disiapkan tanpa menambahkan copy bisnis."
+  />
+</BaseLayout>
