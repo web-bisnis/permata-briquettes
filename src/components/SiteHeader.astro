@@ -2,19 +2,29 @@
 import { navigationItems } from "../config/navigation";
 import ThemeControl from "./ThemeControl.astro";
 
+interface Props {
+  lang: "en" | "id";
+  alternateRoute: string;
+}
+
+const { lang, alternateRoute } = Astro.props;
 const currentPath = Astro.url.pathname;
+const homePath = lang === "id" ? "/id/" : "/en/";
+const labels = lang === "id"
+  ? { home: "Beranda Permata Briquettes", menu: "Menu", nav: "Navigasi utama", language: "EN" }
+  : { home: "Permata Briquettes home", menu: "Menu", nav: "Main navigation", language: "ID" };
 ---
 
 <header class="site-header">
   <div class="container site-header__inner">
-    <a class="site-home" href="/" aria-label="Beranda">Situs</a>
+    <a class="site-home" href={homePath} aria-label={labels.home}>Permata Briquettes</a>
 
     <details class="site-navigation">
-      <summary>Menu</summary>
+      <summary>{labels.menu}</summary>
       <div class="site-navigation__panel">
-        <nav aria-label="Navigasi utama">
+        <nav aria-label={labels.nav}>
           <ul class="site-navigation__list">
-            {navigationItems.map((item) => (
+            {navigationItems[lang].map((item) => (
               <li>
                 <a
                   class="site-navigation__link"
@@ -25,6 +35,11 @@ const currentPath = Astro.url.pathname;
                 </a>
               </li>
             ))}
+            <li>
+              <a class="site-navigation__link" href={alternateRoute} hreflang={lang === "id" ? "en" : "id"}>
+                {labels.language}
+              </a>
+            </li>
           </ul>
         </nav>
         <ThemeControl />

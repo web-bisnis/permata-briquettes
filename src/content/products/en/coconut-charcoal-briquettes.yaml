@@ -1,0 +1,73 @@
+locale: en
+name: Coconut shell charcoal briquettes for shisha and hookah
+components:
+  - Coconut shell charcoal
+  - Food-grade tapioca
+  - Water
+uses:
+  - Shisha
+  - Hookah
+referenceOnlyNotice: These figures are references. Final limits and test methods will be specified for the order.
+grades:
+  - name: Platinum
+    specifications:
+      ashContent: 1.6–1.9%
+      burnTime: 2 h 30 min
+      ignitionTime: 10 min
+      moisture: 5% max
+      fixedCarbon: 80% min
+      volatileMatter: 14.5% max
+      ashColor: Natural white
+  - name: Super Premium
+    specifications:
+      ashContent: null
+      burnTime: 2 h+
+      ignitionTime: 10 min
+      moisture: 6% max
+      fixedCarbon: 80% min
+      volatileMatter: 16% max
+      ashColor: Natural white
+  - name: Premium
+    specifications:
+      ashContent: 2.3–2.5%
+      burnTime: 1 h 30 min+
+      ignitionTime: 10 min
+      moisture: 8% max
+      fixedCarbon: 75% min
+      volatileMatter: 18% max
+      ashColor: Natural grey
+shapes:
+  - name: Cube
+    sizes: [20×20×20 mm, 22×22×22 mm, 25×25×25 mm, 26×26×26 mm, 27×27×27 mm, 28×28×28 mm, 31×31×31 mm]
+  - name: Finger
+    sizes: [18×35 mm, 18×50 mm, 20×35 mm, 20×50 mm, 22×48 mm, 22×50 mm]
+  - name: Hexagonal
+    sizes: [18×35 mm, 18×50 mm, 20×35 mm, 20×50 mm, 22×48 mm, 22×50 mm]
+  - name: Flat/Brix
+    sizes: [25×25×17 mm]
+  - name: Dome
+    sizes: [18×35 mm, 18×50 mm, 20×35 mm, 20×50 mm, 22×48 mm, 22×50 mm]
+packaging:
+  masterCartonKg: [10, 20]
+  minimumOrder: One 20 ft container
+internalNotes:
+  - id: super-premium-ash
+    topic: Super Premium ash range
+    decision: Omitted from public data because two source values conflict.
+    required: Approve either 1.9–2.2% or 2.0–2.2%.
+  - id: composition-wording
+    topic: Composition wording
+    decision: Components are shown as listed; no percentage or label claim is added.
+    required: Approve precise wording for labels and technical documents.
+  - id: contractual-specification
+    topic: Contractual limits and testing
+    decision: All published figures remain explicitly reference data.
+    required: Approve limits, test methods, and tolerances for each grade.
+  - id: flat-dimension-units
+    topic: Two additional Flat/Brix sizes
+    decision: Omitted because the source does not confirm their units.
+    required: Confirm units for 20×20×15 and 22×22×15.
+  - id: grade-size-availability
+    topic: Grade and size combinations
+    decision: No combination is represented as guaranteed available.
+    required: Confirm the offered matrix by grade and size.

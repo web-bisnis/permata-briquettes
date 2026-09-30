@@ -1,9 +1,27 @@
+---
+interface Props {
+  labels?: {
+    control: string;
+    system: string;
+    light: string;
+    dark: string;
+  };
+}
+
+const { labels = {
+  control: "Tema",
+  system: "Sistem",
+  light: "Terang",
+  dark: "Gelap",
+} } = Astro.props;
+---
+
 <div class="theme-control">
-  <label class="theme-control__label" for="theme-select">Tema</label>
+  <label class="theme-control__label" for="theme-select">{labels.control}</label>
   <select class="theme-control__select" id="theme-select" data-theme-select>
-    <option value="system">Sistem</option>
-    <option value="light">Terang</option>
-    <option value="dark">Gelap</option>
+    <option value="system">{labels.system}</option>
+    <option value="light">{labels.light}</option>
+    <option value="dark">{labels.dark}</option>
   </select>
 </div>
 

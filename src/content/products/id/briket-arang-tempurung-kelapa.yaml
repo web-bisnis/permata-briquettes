@@ -1,0 +1,73 @@
+locale: id
+name: Briket arang tempurung kelapa untuk shisha dan hookah
+components:
+  - Arang tempurung kelapa
+  - Tapioka food grade
+  - Air
+uses:
+  - Shisha
+  - Hookah
+referenceOnlyNotice: Angka ini merupakan referensi. Batas akhir dan metode uji akan ditetapkan untuk pesanan.
+grades:
+  - name: Platinum
+    specifications:
+      ashContent: 1,6–1,9%
+      burnTime: 2 jam 30 menit
+      ignitionTime: 10 menit
+      moisture: maks. 5%
+      fixedCarbon: min. 80%
+      volatileMatter: maks. 14,5%
+      ashColor: Putih alami
+  - name: Super Premium
+    specifications:
+      ashContent: null
+      burnTime: 2 jam+
+      ignitionTime: 10 menit
+      moisture: maks. 6%
+      fixedCarbon: min. 80%
+      volatileMatter: maks. 16%
+      ashColor: Putih alami
+  - name: Premium
+    specifications:
+      ashContent: 2,3–2,5%
+      burnTime: 1 jam 30 menit+
+      ignitionTime: 10 menit
+      moisture: maks. 8%
+      fixedCarbon: min. 75%
+      volatileMatter: maks. 18%
+      ashColor: Abu-abu alami
+shapes:
+  - name: Cube
+    sizes: [20×20×20 mm, 22×22×22 mm, 25×25×25 mm, 26×26×26 mm, 27×27×27 mm, 28×28×28 mm, 31×31×31 mm]
+  - name: Finger
+    sizes: [18×35 mm, 18×50 mm, 20×35 mm, 20×50 mm, 22×48 mm, 22×50 mm]
+  - name: Hexagonal
+    sizes: [18×35 mm, 18×50 mm, 20×35 mm, 20×50 mm, 22×48 mm, 22×50 mm]
+  - name: Flat/Brix
+    sizes: [25×25×17 mm]
+  - name: Dome
+    sizes: [18×35 mm, 18×50 mm, 20×35 mm, 20×50 mm, 22×48 mm, 22×50 mm]
+packaging:
+  masterCartonKg: [10, 20]
+  minimumOrder: Satu kontainer 20 ft
+internalNotes:
+  - id: super-premium-ash
+    topic: Rentang kadar abu Super Premium
+    decision: Tidak dipublikasikan karena dua nilai sumber saling bertentangan.
+    required: Setujui 1,9–2,2% atau 2,0–2,2%.
+  - id: composition-wording
+    topic: Rumusan komposisi
+    decision: Komponen ditampilkan sesuai daftar tanpa persentase atau klaim label tambahan.
+    required: Setujui rumusan untuk label dan dokumen teknis.
+  - id: contractual-specification
+    topic: Batas kontraktual dan pengujian
+    decision: Seluruh angka publik dinyatakan sebagai data referensi.
+    required: Setujui batas, metode uji, dan toleransi per grade.
+  - id: flat-dimension-units
+    topic: Dua ukuran Flat/Brix tambahan
+    decision: Tidak dipublikasikan karena satuannya belum dikonfirmasi.
+    required: Konfirmasi satuan 20×20×15 dan 22×22×15.
+  - id: grade-size-availability
+    topic: Kombinasi grade dan ukuran
+    decision: Tidak ada kombinasi yang dinyatakan pasti tersedia.
+    required: Konfirmasi matriks grade dan ukuran yang ditawarkan.

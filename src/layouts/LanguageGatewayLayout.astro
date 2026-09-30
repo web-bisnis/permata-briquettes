@@ -1,20 +1,17 @@
 ---
-import SiteFooter from "../components/SiteFooter.astro";
-import SiteHeader from "../components/SiteHeader.astro";
+import ThemeControl from "../components/ThemeControl.astro";
 import "../styles/global.css";
 
 interface Props {
   title: string;
   description: string;
-  lang: "en" | "id";
-  alternateRoute: string;
 }
 
-const { title, description, lang, alternateRoute } = Astro.props;
+const { title, description } = Astro.props;
 ---
 
 <!doctype html>
-<html lang={lang}>
+<html lang="mul">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
@@ -33,13 +30,21 @@ const { title, description, lang, alternateRoute } = Astro.props;
     </script>
   </head>
   <body>
-    <a class="skip-link" href="#main-content">
-      {lang === "id" ? "Lewati ke konten utama" : "Skip to main content"}
-    </a>
-    <SiteHeader lang={lang} alternateRoute={alternateRoute} />
+    <a class="skip-link" href="#main-content">Skip to content / Lewati ke konten</a>
+    <header class="gateway-header">
+      <div class="container gateway-header__inner">
+        <ThemeControl
+          labels={{
+            control: "Theme / Tema",
+            system: "System / Sistem",
+            light: "Light / Terang",
+            dark: "Dark / Gelap",
+          }}
+        />
+      </div>
+    </header>
     <main id="main-content" tabindex="-1">
       <slot />
     </main>
-    <SiteFooter lang={lang} />
   </body>
 </html>

@@ -1,0 +1,38 @@
+stage: 3
+sourceIdentity: website_copy_permata_briquettes.md SHA-256 C61A600A4C7B9DC843AE70C5550B72148E9C3DA99801443FB6FD5CD9A326B4AB
+items:
+  - id: global-company-details
+    sourceSection: Global footer and About
+    status: withheld
+    decision: Unverified address, registration and tax identifiers, official contact channels, legal disclosure, and privacy link are not public.
+    required: Approve exact public values and links.
+  - id: super-premium-ash
+    sourceSection: Products and Product Detail
+    status: ambiguous
+    decision: The ash value is omitted because two ranges occur in the source.
+    required: Approve one contractual reference range.
+  - id: product-specification
+    sourceSection: Product Detail
+    status: pending-approval
+    decision: Unapproved composition wording, contractual limits, methods, tolerances, two unitless dimensions, the availability matrix, and document links are withheld.
+    required: Approve the product and document data for publication.
+  - id: packaging-configuration
+    sourceSection: Packaging & Private Label
+    status: pending-approval
+    decision: Inner-box configuration, artwork template, printing requirements, design minimums, approval flow, and route packing standards are withheld.
+    required: Approve the packaging configuration and process.
+  - id: quality-document-details
+    sourceSection: Quality & Documents
+    status: withheld
+    decision: Document availability and ownership may be stated, but report identifiers, files, links, checklists, and transport classification are not public.
+    required: Review current files and approve metadata, scope, validity, ownership, and public links.
+  - id: commercial-terms
+    sourceSection: Ordering & Shipping
+    status: pending-approval
+    decision: Net load, domestic delivery, payment, timing, milestones, release, tracking, and route-specific document details are withheld.
+    required: Approve values and processes applicable to each offer and route.
+  - id: contact-pages
+    sourceSection: Contact / Kontak
+    status: withheld
+    decision: Both contact routes, active inquiry controls, attachment rules, privacy notice, response commitment, office details, and direct channels are excluded from this stage.
+    required: Complete the separately authorized contact stage with verified channels and privacy decisions.

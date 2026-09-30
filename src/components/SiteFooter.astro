@@ -1,10 +1,25 @@
 ---
-const currentYear = new Date().getFullYear();
+import { navigationItems } from "../config/navigation";
+
+interface Props {
+  lang: "en" | "id";
+}
+
+const { lang } = Astro.props;
+const footerCopy = lang === "id"
+  ? "Permata Briquettes adalah merek dagang PT Permata Bara Globalindo. Briket arang tempurung kelapa untuk pembeli B2B."
+  : "Permata Briquettes is the trading brand of PT Permata Bara Globalindo. Coconut charcoal briquettes for B2B buyers.";
 ---
 
 <footer class="site-footer">
   <div class="container site-footer__inner">
-    <p>Fondasi antarmuka statis.</p>
-    <p><span aria-hidden="true">©</span> {currentYear}</p>
+    <p>{footerCopy}</p>
+    <nav aria-label={lang === "id" ? "Navigasi footer" : "Footer navigation"}>
+      <ul class="footer-navigation">
+        {navigationItems[lang].map((item) => (
+          <li><a href={item.href}>{item.label}</a></li>
+        ))}
+      </ul>
+    </nav>
   </div>
 </footer>

@@ -1,0 +1,36 @@
+---
+import { getCollection, render, type CollectionEntry } from "astro:content";
+import ContentPage from "../components/ContentPage.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+export async function getStaticPaths() {
+  const pages = await getCollection("pages");
+
+  return pages.map((page) => ({
+    params: { slug: page.data.route.replace(/^\//, "").replace(/\/$/, "") },
+    props: { page },
+  }));
+}
+
+interface Props {
+  page: CollectionEntry<"pages">;
+}
+
+const { page } = Astro.props;
+const { Content } = await render(page);
+---
+
+<BaseLayout
+  title={page.data.title}
+  description={page.data.description}
+  lang={page.data.locale}
+  alternateRoute={page.data.alternateRoute}
+>
+  <ContentPage
+    eyebrow={page.data.eyebrow}
+    title={page.data.heroTitle}
+    summary={page.data.heroSummary}
+  >
+    <Content />
+  </ContentPage>
+</BaseLayout>
