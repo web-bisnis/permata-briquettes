@@ -382,6 +382,43 @@ select {
   overflow-x: auto;
 }
 
+.contact-actions {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.contact-action {
+  min-height: 4.5rem;
+  padding: var(--space-4) var(--space-5);
+  border: 0.0625rem solid var(--color-border);
+  border-radius: var(--radius-md);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-1);
+  background: var(--color-surface);
+  overflow-wrap: anywhere;
+  text-decoration: none;
+}
+
+.contact-action:hover {
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+}
+
+.contact-action__label {
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-sm);
+}
+
+.contact-address {
+  padding: var(--space-5);
+  border-inline-start: 0.25rem solid var(--color-border);
+  background: var(--color-surface);
+  font-style: normal;
+  overflow-wrap: anywhere;
+}
+
 @media (min-width: 48rem) {
   .language-options {
     grid-template-columns: repeat(2, minmax(12rem, 1fr));
@@ -401,10 +438,14 @@ select {
     align-items: center;
     gap: var(--space-5);
     background: var(--color-surface);
+    flex-wrap: wrap;
+    justify-content: flex-end;
   }
 
   .site-navigation__list {
     flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-end;
   }
 
   .theme-control {
@@ -422,6 +463,10 @@ select {
 
   .skeleton-block:first-child {
     grid-row: span 2;
+  }
+
+  .contact-actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 

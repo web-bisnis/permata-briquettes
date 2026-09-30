@@ -10,6 +10,7 @@ export const navigationItems = {
     { label: "Quality & Documents", href: "/en/quality-documents/" },
     { label: "Ordering & Shipping", href: "/en/ordering-shipping/" },
     { label: "About", href: "/en/about/" },
+    { label: "Contact", href: "/en/contact/" },
   ],
   id: [
     { label: "Produk", href: "/id/produk/" },
@@ -17,5 +18,6 @@ export const navigationItems = {
     { label: "Kualitas & Dokumen", href: "/id/kualitas-dokumen/" },
     { label: "Pemesanan & Pengiriman", href: "/id/pemesanan-pengiriman/" },
     { label: "Tentang Kami", href: "/id/tentang-kami/" },
+    { label: "Kontak", href: "/id/kontak/" },
   ],
 } as const satisfies Record<"en" | "id", readonly NavigationItem[]>;
