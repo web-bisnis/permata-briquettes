@@ -1,0 +1,97 @@
+name: Cloudflare manual deployment
+
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: Environment to deploy
+        required: true
+        type: choice
+        options:
+          - staging
+          - production
+      release_confirmation:
+        description: Type DEPLOY_STAGING_DISABLED_WITH_CUSTOM_DOMAIN or DEPLOY_PRODUCTION_DISABLED_WITH_CUSTOM_DOMAIN
+        required: true
+        type: string
+      staging_verified:
+        description: Confirm staging evidence has passed (required for production)
+        required: true
+        default: false
+        type: boolean
+
+permissions:
+  actions: read
+  contents: read
+  deployments: read
+
+concurrency:
+  group: cloudflare-${{ inputs.target }}
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Verify and deploy disabled release
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.target }}
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      CLOUDFLARE_D1_DATABASE_ID: ${{ secrets.CLOUDFLARE_D1_DATABASE_ID }}
+    steps:
+      - name: Enforce release decision
+        shell: bash
+        run: |
+          expected="DEPLOY_${TARGET^^}_DISABLED_WITH_CUSTOM_DOMAIN"
+          if [[ "$CONFIRMATION" != "$expected" ]]; then
+            echo "Release confirmation did not match $expected."
+            exit 1
+          fi
+          if [[ "$TARGET" == "production" && "$STAGING_VERIFIED" != "true" ]]; then
+            echo "Production requires verified staging evidence."
+            exit 1
+          fi
+        env:
+          TARGET: ${{ inputs.target }}
+          CONFIRMATION: ${{ inputs.release_confirmation }}
+          STAGING_VERIFIED: ${{ inputs.staging_verified }}
+      - name: Check protected configuration exists
+        shell: bash
+        run: |
+          test -n "$CLOUDFLARE_API_TOKEN"
+          test -n "$CLOUDFLARE_ACCOUNT_ID"
+          test -n "$CLOUDFLARE_D1_DATABASE_ID"
+      - name: Require production environment protection
+        if: inputs.target == 'production'
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          rules="$(gh api "repos/${GITHUB_REPOSITORY}/environments/production" --jq '.protection_rules | length')"
+          if [[ "$rules" -lt 1 ]]; then
+            echo "Production GitHub Environment needs at least one protection rule."
+            exit 1
+          fi
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - name: Install locked dependencies
+        run: npm ci
+      - name: Check source
+        run: npm run check
+      - name: Build disabled release
+        run: npm run build:${{ inputs.target }}
+      - name: Audit static output
+        run: npm run audit:${{ inputs.target }}
+      - name: Run tests
+        run: npm test
+      - name: Prepare ignored Wrangler config
+        run: npm run prepare:deploy-config -- ${{ inputs.target }}
+      - name: Dry-run Worker bundle
+        run: npx wrangler deploy --config wrangler.deploy.jsonc --env ${{ inputs.target }} --dry-run --outdir .wrangler/release-dry-run
+      - name: Deploy disabled release
+        run: npx wrangler deploy --config wrangler.deploy.jsonc --env ${{ inputs.target }} --strict
+      - name: Read-only HTTPS smoke test
+        run: npm run smoke:deployment -- --environment ${{ inputs.target }} --base-url https://${{ inputs.target == 'staging' && 'staging.permatabriquettes.com' || 'www.permatabriquettes.com' }}
