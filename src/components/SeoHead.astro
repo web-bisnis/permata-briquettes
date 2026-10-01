@@ -1,0 +1,17 @@
+---
+import type { SeoMetadata } from "../config/seo";
+
+interface Props {
+  seo: SeoMetadata;
+}
+
+const { seo } = Astro.props;
+---
+
+<meta name="description" content={seo.description} />
+<meta name="robots" content={seo.robots} />
+<link rel="canonical" href={seo.canonical} />
+<link rel="alternate" hreflang="en" href={seo.alternates.en} />
+<link rel="alternate" hreflang="id" href={seo.alternates.id} />
+<link rel="alternate" hreflang="x-default" href={seo.alternates.xDefault} />
+<title>{seo.title}</title>

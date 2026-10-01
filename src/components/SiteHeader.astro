@@ -11,8 +11,20 @@ const { lang, alternateRoute } = Astro.props;
 const currentPath = Astro.url.pathname;
 const homePath = lang === "id" ? "/id/" : "/en/";
 const labels = lang === "id"
-  ? { home: "Beranda Permata Briquettes", menu: "Menu", nav: "Navigasi utama", language: "EN" }
-  : { home: "Permata Briquettes home", menu: "Menu", nav: "Main navigation", language: "ID" };
+  ? {
+      home: "Beranda Permata Briquettes",
+      menu: "Menu",
+      nav: "Navigasi utama",
+      language: "EN",
+      theme: { control: "Tema", system: "Sistem", light: "Terang", dark: "Gelap" },
+    }
+  : {
+      home: "Permata Briquettes home",
+      menu: "Menu",
+      nav: "Main navigation",
+      language: "ID",
+      theme: { control: "Theme", system: "System", light: "Light", dark: "Dark" },
+    };
 ---
 
 <header class="site-header">
@@ -42,7 +54,7 @@ const labels = lang === "id"
             </li>
           </ul>
         </nav>
-        <ThemeControl />
+        <ThemeControl labels={labels.theme} />
       </div>
     </details>
   </div>

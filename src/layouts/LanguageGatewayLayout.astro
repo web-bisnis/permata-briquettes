@@ -1,13 +1,11 @@
 ---
+import CloudflareWebAnalytics from "../components/CloudflareWebAnalytics.astro";
+import SeoHead from "../components/SeoHead.astro";
 import ThemeControl from "../components/ThemeControl.astro";
+import { createRootSeo, resolveSiteEnvironment } from "../config/seo";
 import "../styles/global.css";
 
-interface Props {
-  title: string;
-  description: string;
-}
-
-const { title, description } = Astro.props;
+const seo = createRootSeo(resolveSiteEnvironment(import.meta.env.SITE_ENV));
 ---
 
 <!doctype html>
@@ -15,9 +13,8 @@ const { title, description } = Astro.props;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
-    <meta name="description" content={description} />
     <meta name="color-scheme" content="light dark" />
-    <title>{title}</title>
+    <SeoHead seo={seo} />
     <script is:inline>
       (() => {
         try {
@@ -46,5 +43,6 @@ const { title, description } = Astro.props;
     <main id="main-content" tabindex="-1">
       <slot />
     </main>
+    <CloudflareWebAnalytics />
   </body>
 </html>

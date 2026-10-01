@@ -1,16 +1,30 @@
 ---
+import CloudflareWebAnalytics from "../components/CloudflareWebAnalytics.astro";
+import SeoHead from "../components/SeoHead.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import SiteHeader from "../components/SiteHeader.astro";
+import { createLocalizedSeo, resolveSiteEnvironment } from "../config/seo";
 import "../styles/global.css";
 
 interface Props {
   title: string;
   description: string;
   lang: "en" | "id";
+  route: string;
   alternateRoute: string;
+  indexable: boolean;
 }
 
-const { title, description, lang, alternateRoute } = Astro.props;
+const { title, description, lang, route, alternateRoute, indexable } = Astro.props;
+const seo = createLocalizedSeo({
+  title,
+  description,
+  locale: lang,
+  route,
+  alternateRoute,
+  indexable,
+  environment: resolveSiteEnvironment(import.meta.env.SITE_ENV),
+});
 ---
 
 <!doctype html>
@@ -18,9 +32,8 @@ const { title, description, lang, alternateRoute } = Astro.props;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
-    <meta name="description" content={description} />
     <meta name="color-scheme" content="light dark" />
-    <title>{title}</title>
+    <SeoHead seo={seo} />
     <script is:inline>
       (() => {
         try {
@@ -41,5 +54,6 @@ const { title, description, lang, alternateRoute } = Astro.props;
       <slot />
     </main>
     <SiteFooter lang={lang} />
+    <CloudflareWebAnalytics />
   </body>
 </html>

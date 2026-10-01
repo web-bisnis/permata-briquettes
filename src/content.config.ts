@@ -15,6 +15,7 @@ const pages = defineCollection({
     locale: z.enum(["en", "id"]),
     route: z.string().regex(/^\/(en|id)\/(?:[^/]+\/)*$/),
     alternateRoute: z.string().regex(/^\/(en|id)\/(?:[^/]+\/)*$/),
+    indexable: z.boolean().default(true),
     title: z.string().min(1),
     description: z.string().min(1),
     eyebrow: z.string().min(1).optional(),

@@ -1,0 +1,20 @@
+---
+import { resolveCloudflareAnalytics } from "../config/seo";
+
+const analytics = resolveCloudflareAnalytics({
+  SITE_ENV: import.meta.env.SITE_ENV,
+  PUBLIC_CLOUDFLARE_WEB_ANALYTICS_ENABLED:
+    import.meta.env.PUBLIC_CLOUDFLARE_WEB_ANALYTICS_ENABLED,
+  PUBLIC_CLOUDFLARE_WEB_ANALYTICS_TOKEN:
+    import.meta.env.PUBLIC_CLOUDFLARE_WEB_ANALYTICS_TOKEN,
+});
+---
+
+{analytics.enabled && analytics.token && (
+  <script
+    is:inline
+    defer
+    src="https://static.cloudflareinsights.com/beacon.min.js"
+    data-cf-beacon={JSON.stringify({ token: analytics.token })}
+  ></script>
+)}

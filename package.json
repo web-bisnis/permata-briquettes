@@ -7,6 +7,7 @@
     "dev": "astro dev",
     "check": "astro check && tsc --noEmit -p worker/tsconfig.json",
     "build": "astro build",
+    "audit:dist": "node scripts/audit-static-build.mjs --dir dist --environment local --analytics absent",
     "preview": "astro preview",
     "test": "vitest run",
     "worker:check": "wrangler deploy --dry-run --outdir .wrangler/dry-run",
