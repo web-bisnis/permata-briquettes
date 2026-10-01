@@ -1,0 +1,1017 @@
+{
+  "generatedAt": "2026-10-01T10:54:09.163Z",
+  "target": "https://staging.permatabriquettes.com",
+  "method": "Read-only GET requests; CTA hrefs inspected but not opened",
+  "status": "fail",
+  "summary": {
+    "routes": 19,
+    "failures": 38
+  },
+  "robots": {
+    "status": 200,
+    "body": "User-agent: *\nDisallow: /\n"
+  },
+  "sitemap": {
+    "status": 200,
+    "urls": [
+      "https://www.permatabriquettes.com/",
+      "https://www.permatabriquettes.com/en/",
+      "https://www.permatabriquettes.com/en/about/",
+      "https://www.permatabriquettes.com/en/contact/",
+      "https://www.permatabriquettes.com/en/ordering-shipping/",
+      "https://www.permatabriquettes.com/en/packaging/",
+      "https://www.permatabriquettes.com/en/privacy/",
+      "https://www.permatabriquettes.com/en/products/",
+      "https://www.permatabriquettes.com/en/products/coconut-charcoal-briquettes-for-shisha/",
+      "https://www.permatabriquettes.com/en/quality-documents/",
+      "https://www.permatabriquettes.com/id/",
+      "https://www.permatabriquettes.com/id/kemasan/",
+      "https://www.permatabriquettes.com/id/kontak/",
+      "https://www.permatabriquettes.com/id/kualitas-dokumen/",
+      "https://www.permatabriquettes.com/id/pemesanan-pengiriman/",
+      "https://www.permatabriquettes.com/id/privasi/",
+      "https://www.permatabriquettes.com/id/produk/",
+      "https://www.permatabriquettes.com/id/produk/briket-arang-tempurung-kelapa-untuk-shisha/",
+      "https://www.permatabriquettes.com/id/tentang-kami/"
+    ]
+  },
+  "inquiry": {
+    "status": 503,
+    "contentType": "application/json; charset=utf-8",
+    "bytes": 41
+  },
+  "endpointProbes": {
+    "/api/inquiries": {
+      "status": 503,
+      "contentType": "application/json; charset=utf-8",
+      "bytes": 41
+    },
+    "/api/": {
+      "status": 404,
+      "contentType": null,
+      "bytes": 0
+    },
+    "/api/contact": {
+      "status": 404,
+      "contentType": null,
+      "bytes": 0
+    },
+    "/api/upload": {
+      "status": 404,
+      "contentType": null,
+      "bytes": 0
+    },
+    "/admin/": {
+      "status": 404,
+      "contentType": null,
+      "bytes": 0
+    },
+    "/.env": {
+      "status": 404,
+      "contentType": null,
+      "bytes": 0
+    }
+  },
+  "pages": [
+    {
+      "route": "/",
+      "http": {
+        "status": 200,
+        "location": null,
+        "contentType": "text/html",
+        "bytes": 2479,
+        "servesPageBody": true
+      },
+      "https": {
+        "status": 200,
+        "finalUrl": "https://staging.permatabriquettes.com/",
+        "strictTransportSecurity": null
+      },
+      "title": "Choose a language / Pilih bahasa",
+      "canonical": "https://www.permatabriquettes.com/",
+      "robots": "noindex, nofollow",
+      "hreflang": {
+        "en": "https://www.permatabriquettes.com/en/",
+        "id": "https://www.permatabriquettes.com/id/",
+        "x-default": "https://www.permatabriquettes.com/"
+      },
+      "internalLinks": 2,
+      "brokenInternalLinks": [],
+      "cta": {
+        "email": 0,
+        "whatsapp": 0,
+        "hrefOnly": true
+      },
+      "headings": [
+        "h1"
+      ],
+      "landmarks": {
+        "header": 1,
+        "nav": 1,
+        "main": 1,
+        "footer": 0
+      },
+      "forms": 0,
+      "fileInputs": 0,
+      "externalScripts": []
+    },
+    {
+      "route": "/en/",
+      "http": {
+        "status": 200,
+        "location": null,
+        "contentType": "text/html",
+        "bytes": 7089,
+        "servesPageBody": true
+      },
+      "https": {
+        "status": 200,
+        "finalUrl": "https://staging.permatabriquettes.com/en/",
+        "strictTransportSecurity": null
+      },
+      "title": "Coconut Charcoal Briquettes Supplier | Permata Briquettes",
+      "canonical": "https://www.permatabriquettes.com/en/",
+      "robots": "noindex, nofollow",
+      "hreflang": {
+        "en": "https://www.permatabriquettes.com/en/",
+        "id": "https://www.permatabriquettes.com/id/",
+        "x-default": "https://www.permatabriquettes.com/"
+      },
+      "internalLinks": 17,
+      "brokenInternalLinks": [],
+      "cta": {
+        "email": 0,
+        "whatsapp": 0,
+        "hrefOnly": true
+      },
+      "headings": [
+        "h1",
+        "h2",
+        "h2",
+        "h2",
+        "h2",
+        "h2",
+        "h2"
+      ],
+      "landmarks": {
+        "header": 2,
+        "nav": 2,
+        "main": 1,
+        "footer": 1
+      },
+      "forms": 0,
+      "fileInputs": 0,
+      "externalScripts": []
+    },
+    {
+      "route": "/en/about/",
+      "http": {
+        "status": 200,
+        "location": null,
+        "contentType": "text/html",
+        "bytes": 6336,
+        "servesPageBody": true
+      },
+      "https": {
+        "status": 200,
+        "finalUrl": "https://staging.permatabriquettes.com/en/about/",
+        "strictTransportSecurity": null
+      },
+      "title": "About Permata Briquettes | PT Permata Bara Globalindo",
+      "canonical": "https://www.permatabriquettes.com/en/about/",
+      "robots": "noindex, nofollow",
+      "hreflang": {
+        "en": "https://www.permatabriquettes.com/en/about/",
+        "id": "https://www.permatabriquettes.com/id/tentang-kami/",
+        "x-default": "https://www.permatabriquettes.com/"
+      },
+      "internalLinks": 16,
+      "brokenInternalLinks": [],
+      "cta": {
+        "email": 0,
+        "whatsapp": 0,
+        "hrefOnly": true
+      },
+      "headings": [
+        "h1",
+        "h2",
+        "h2",
+        "h2",
+        "h2",
+        "h2"
+      ],
+      "landmarks": {
+        "header": 2,
+        "nav": 2,
+        "main": 1,
+        "footer": 1
+      },
+      "forms": 0,
+      "fileInputs": 0,
+      "externalScripts": []
+    },
+    {
+      "route": "/en/contact/",
+      "http": {
+        "status": 200,
+        "location": null,
+        "contentType": "text/html",
+        "bytes": 5460,
+        "servesPageBody": true
+      },
+      "https": {
+        "status": 200,
+        "finalUrl": "https://staging.permatabriquettes.com/en/contact/",
+        "strictTransportSecurity": null
+      },
+      "title": "Contact Permata Briquettes | Email and WhatsApp",
+      "canonical": "https://www.permatabriquettes.com/en/contact/",
+      "robots": "noindex, nofollow",
+      "hreflang": {
+        "en": "https://www.permatabriquettes.com/en/contact/",
+        "id": "https://www.permatabriquettes.com/id/kontak/",
+        "x-default": "https://www.permatabriquettes.com/"
+      },
+      "internalLinks": 15,
+      "brokenInternalLinks": [],
+      "cta": {
+        "email": 1,
+        "whatsapp": 1,
+        "hrefOnly": true
+      },
+      "headings": [
+        "h1",
+        "h2",
+        "h2"
+      ],
+      "landmarks": {
+        "header": 2,
+        "nav": 2,
+        "main": 1,
+        "footer": 1
+      },
+      "forms": 0,
+      "fileInputs": 0,
+      "externalScripts": []
+    },
+    {
+      "route": "/en/ordering-shipping/",
+      "http": {
+        "status": 200,
+        "location": null,
+        "contentType": "text/html",
+        "bytes": 7039,
+        "servesPageBody": false
+      },
+      "https": {
+        "status": 200,
+        "finalUrl": "https://staging.permatabriquettes.com/en/ordering-shipping/",
+        "strictTransportSecurity": null
+      },
+      "title": "Order & Ship Coconut Charcoal Briquettes | Permata Briquettes",
+      "canonical": "https://www.permatabriquettes.com/en/ordering-shipping/",
+      "robots": "noindex, nofollow",
+      "hreflang": {
+        "en": "https://www.permatabriquettes.com/en/ordering-shipping/",
+        "id": "https://www.permatabriquettes.com/id/pemesanan-pengiriman/",
+        "x-default": "https://www.permatabriquettes.com/"
+      },
+      "internalLinks": 15,
+      "brokenInternalLinks": [],
+      "cta": {
+        "email": 0,
+        "whatsapp": 0,
+        "hrefOnly": true
+      },
+      "headings": [
+        "h1",
+        "h2",
+        "h2",
+        "h2",
+        "h2",
+        "h2",
+        "h2"
+      ],
+      "landmarks": {
+        "header": 2,
+        "nav": 2,
+        "main": 1,
+        "footer": 1
+      },
+      "forms": 0,
+      "fileInputs": 0,
+      "externalScripts": []
+    },
+    {
+      "route": "/en/packaging/",
+      "http": {
+        "status": 200,
+        "location": null,
+        "contentType": "text/html",
+        "bytes": 6329,
+        "servesPageBody": false
+      },
+      "https": {
+        "status": 200,
+        "finalUrl": "https://staging.permatabriquettes.com/en/packaging/",
+        "strictTransportSecurity": null
+      },
+      "title": "Packaging & Private Label Charcoal | Permata Briquettes",
+      "canonical": "https://www.permatabriquettes.com/en/packaging/",
+      "robots": "noindex, nofollow",
+      "hreflang": {
+        "en": "https://www.permatabriquettes.com/en/packaging/",
+        "id": "https://www.permatabriquettes.com/id/kemasan/",
+        "x-default": "https://www.permatabriquettes.com/"
+      },
+      "internalLinks": 15,
+      "brokenInternalLinks": [],
+      "cta": {
+        "email": 0,
+        "whatsapp": 0,
+        "hrefOnly": true
+      },
+      "headings": [
+        "h1",
+        "h2",
+        "h2",
+        "h2",
+        "h2",
+        "h2"
+      ],
+      "landmarks": {
+        "header": 2,
+        "nav": 2,
+        "main": 1,
+        "footer": 1
+      },
+      "forms": 0,
+      "fileInputs": 0,
+      "externalScripts": []
+    },
+    {
+      "route": "/en/privacy/",
+      "http": {
+        "status": 200,
+        "location": null,
+        "contentType": "text/html",
+        "bytes": 8803,
+        "servesPageBody": true
+      },
+      "https": {
+        "status": 200,
+        "finalUrl": "https://staging.permatabriquettes.com/en/privacy/",
+        "strictTransportSecurity": null
+      },
+      "title": "Privacy Notice",
+      "canonical": "https://www.permatabriquettes.com/en/privacy/",
+      "robots": "noindex, nofollow",
+      "hreflang": {
+        "en": "https://www.permatabriquettes.com/en/privacy/",
+        "id": "https://www.permatabriquettes.com/id/privasi/",
+        "x-default": "https://www.permatabriquettes.com/"
+      },
+      "internalLinks": 15,
+      "brokenInternalLinks": [],
+      "cta": {
+        "email": 0,
+        "whatsapp": 0,
+        "hrefOnly": true
+      },
+      "headings": [
+        "h1",
+        "h2",
+        "h2",
+        "h2",
+        "h2",
+        "h2",
+        "h2",
+        "h2",
+        "h2",
+        "h2"
+      ],
+      "landmarks": {
+        "header": 2,
+        "nav": 2,
+        "main": 1,
+        "footer": 1
+      },
+      "forms": 0,
+      "fileInputs": 0,
+      "externalScripts": []
+    },
+    {
+      "route": "/en/products/",
+      "http": {
+        "status": 200,
+        "location": null,
+        "contentType": "text/html",
+        "bytes": 6353,
+        "servesPageBody": true
+      },
+      "https": {
+        "status": 200,
+        "finalUrl": "https://staging.permatabriquettes.com/en/products/",
+        "strictTransportSecurity": null
+      },
+      "title": "Coconut Charcoal Briquettes for Shisha | Products",
+      "canonical": "https://www.permatabriquettes.com/en/products/",
+      "robots": "noindex, nofollow",
+      "hreflang": {
+        "en": "https://www.permatabriquettes.com/en/products/",
+        "id": "https://www.permatabriquettes.com/id/produk/",
+        "x-default": "https://www.permatabriquettes.com/"
+      },
+      "internalLinks": 16,
+      "brokenInternalLinks": [],
+      "cta": {
+        "email": 0,
+        "whatsapp": 0,
+        "hrefOnly": true
+      },
+      "headings": [
+        "h1",
+        "h2",
+        "h3",
+        "h3",
+        "h3",
+        "h2",
+        "h2",
+        "h2"
+      ],
+      "landmarks": {
+        "header": 2,
+        "nav": 2,
+        "main": 1,
+        "footer": 1
+      },
+      "forms": 0,
+      "fileInputs": 0,
+      "externalScripts": []
+    },
+    {
+      "route": "/en/products/coconut-charcoal-briquettes-for-shisha/",
+      "http": {
+        "status": 200,
+        "location": null,
+        "contentType": "text/html",
+        "bytes": 7726,
+        "servesPageBody": true
+      },
+      "https": {
+        "status": 200,
+        "finalUrl": "https://staging.permatabriquettes.com/en/products/coconut-charcoal-briquettes-for-shisha/",
+        "strictTransportSecurity": null
+      },
+      "title": "Coconut Charcoal Briquettes for Shisha | Specifications",
+      "canonical": "https://www.permatabriquettes.com/en/products/coconut-charcoal-briquettes-for-shisha/",
+      "robots": "noindex, nofollow",
+      "hreflang": {
+        "en": "https://www.permatabriquettes.com/en/products/coconut-charcoal-briquettes-for-shisha/",
+        "id": "https://www.permatabriquettes.com/id/produk/briket-arang-tempurung-kelapa-untuk-shisha/",
+        "x-default": "https://www.permatabriquettes.com/"
+      },
+      "internalLinks": 16,
+      "brokenInternalLinks": [],
+      "cta": {
+        "email": 0,
+        "whatsapp": 0,
+        "hrefOnly": true
+      },
+      "headings": [
+        "h1",
+        "h2",
+        "h2",
+        "h2",
+        "h2",
+        "h2",
+        "h2"
+      ],
+      "landmarks": {
+        "header": 2,
+        "nav": 2,
+        "main": 1,
+        "footer": 1
+      },
+      "forms": 0,
+      "fileInputs": 0,
+      "externalScripts": []
+    },
+    {
+      "route": "/en/quality-documents/",
+      "http": {
+        "status": 200,
+        "location": null,
+        "contentType": "text/html",
+        "bytes": 6888,
+        "servesPageBody": true
+      },
+      "https": {
+        "status": 200,
+        "finalUrl": "https://staging.permatabriquettes.com/en/quality-documents/",
+        "strictTransportSecurity": null
+      },
+      "title": "Charcoal Quality Documents | Permata Briquettes",
+      "canonical": "https://www.permatabriquettes.com/en/quality-documents/",
+      "robots": "noindex, nofollow",
+      "hreflang": {
+        "en": "https://www.permatabriquettes.com/en/quality-documents/",
+        "id": "https://www.permatabriquettes.com/id/kualitas-dokumen/",
+        "x-default": "https://www.permatabriquettes.com/"
+      },
+      "internalLinks": 15,
+      "brokenInternalLinks": [],
+      "cta": {
+        "email": 0,
+        "whatsapp": 0,
+        "hrefOnly": true
+      },
+      "headings": [
+        "h1",
+        "h2",
+        "h2",
+        "h2",
+        "h2",
+        "h2"
+      ],
+      "landmarks": {
+        "header": 2,
+        "nav": 2,
+        "main": 1,
+        "footer": 1
+      },
+      "forms": 0,
+      "fileInputs": 0,
+      "externalScripts": []
+    },
+    {
+      "route": "/id/",
+      "http": {
+        "status": 200,
+        "location": null,
+        "contentType": "text/html",
+        "bytes": 7146,
+        "servesPageBody": true
+      },
+      "https": {
+        "status": 200,
+        "finalUrl": "https://staging.permatabriquettes.com/id/",
+        "strictTransportSecurity": null
+      },
+      "title": "Supplier Briket Arang Tempurung Kelapa | Permata Briquettes",
+      "canonical": "https://www.permatabriquettes.com/id/",
+      "robots": "noindex, nofollow",
+      "hreflang": {
+        "en": "https://www.permatabriquettes.com/en/",
+        "id": "https://www.permatabriquettes.com/id/",
+        "x-default": "https://www.permatabriquettes.com/"
+      },
+      "internalLinks": 17,
+      "brokenInternalLinks": [],
+      "cta": {
+        "email": 0,
+        "whatsapp": 0,
+        "hrefOnly": true
+      },
+      "headings": [
+        "h1",
+        "h2",
+        "h2",
+        "h2",
+        "h2",
+        "h2",
+        "h2"
+      ],
+      "landmarks": {
+        "header": 2,
+        "nav": 2,
+        "main": 1,
+        "footer": 1
+      },
+      "forms": 0,
+      "fileInputs": 0,
+      "externalScripts": []
+    },
+    {
+      "route": "/id/kemasan/",
+      "http": {
+        "status": 200,
+        "location": null,
+        "contentType": "text/html",
+        "bytes": 6376,
+        "servesPageBody": false
+      },
+      "https": {
+        "status": 200,
+        "finalUrl": "https://staging.permatabriquettes.com/id/kemasan/",
+        "strictTransportSecurity": null
+      },
+      "title": "Kemasan & Private Label Briket Arang | Permata Briquettes",
+      "canonical": "https://www.permatabriquettes.com/id/kemasan/",
+      "robots": "noindex, nofollow",
+      "hreflang": {
+        "en": "https://www.permatabriquettes.com/en/packaging/",
+        "id": "https://www.permatabriquettes.com/id/kemasan/",
+        "x-default": "https://www.permatabriquettes.com/"
+      },
+      "internalLinks": 15,
+      "brokenInternalLinks": [],
+      "cta": {
+        "email": 0,
+        "whatsapp": 0,
+        "hrefOnly": true
+      },
+      "headings": [
+        "h1",
+        "h2",
+        "h2",
+        "h2",
+        "h2",
+        "h2"
+      ],
+      "landmarks": {
+        "header": 2,
+        "nav": 2,
+        "main": 1,
+        "footer": 1
+      },
+      "forms": 0,
+      "fileInputs": 0,
+      "externalScripts": []
+    },
+    {
+      "route": "/id/kontak/",
+      "http": {
+        "status": 200,
+        "location": null,
+        "contentType": "text/html",
+        "bytes": 5499,
+        "servesPageBody": true
+      },
+      "https": {
+        "status": 200,
+        "finalUrl": "https://staging.permatabriquettes.com/id/kontak/",
+        "strictTransportSecurity": null
+      },
+      "title": "Kontak Permata Briquettes | Email dan WhatsApp",
+      "canonical": "https://www.permatabriquettes.com/id/kontak/",
+      "robots": "noindex, nofollow",
+      "hreflang": {
+        "en": "https://www.permatabriquettes.com/en/contact/",
+        "id": "https://www.permatabriquettes.com/id/kontak/",
+        "x-default": "https://www.permatabriquettes.com/"
+      },
+      "internalLinks": 15,
+      "brokenInternalLinks": [],
+      "cta": {
+        "email": 1,
+        "whatsapp": 1,
+        "hrefOnly": true
+      },
+      "headings": [
+        "h1",
+        "h2",
+        "h2"
+      ],
+      "landmarks": {
+        "header": 2,
+        "nav": 2,
+        "main": 1,
+        "footer": 1
+      },
+      "forms": 0,
+      "fileInputs": 0,
+      "externalScripts": []
+    },
+    {
+      "route": "/id/kualitas-dokumen/",
+      "http": {
+        "status": 200,
+        "location": null,
+        "contentType": "text/html",
+        "bytes": 6957,
+        "servesPageBody": true
+      },
+      "https": {
+        "status": 200,
+        "finalUrl": "https://staging.permatabriquettes.com/id/kualitas-dokumen/",
+        "strictTransportSecurity": null
+      },
+      "title": "Dokumen Kualitas Briket Arang | Permata Briquettes",
+      "canonical": "https://www.permatabriquettes.com/id/kualitas-dokumen/",
+      "robots": "noindex, nofollow",
+      "hreflang": {
+        "en": "https://www.permatabriquettes.com/en/quality-documents/",
+        "id": "https://www.permatabriquettes.com/id/kualitas-dokumen/",
+        "x-default": "https://www.permatabriquettes.com/"
+      },
+      "internalLinks": 15,
+      "brokenInternalLinks": [],
+      "cta": {
+        "email": 0,
+        "whatsapp": 0,
+        "hrefOnly": true
+      },
+      "headings": [
+        "h1",
+        "h2",
+        "h2",
+        "h2",
+        "h2",
+        "h2"
+      ],
+      "landmarks": {
+        "header": 2,
+        "nav": 2,
+        "main": 1,
+        "footer": 1
+      },
+      "forms": 0,
+      "fileInputs": 0,
+      "externalScripts": []
+    },
+    {
+      "route": "/id/pemesanan-pengiriman/",
+      "http": {
+        "status": 200,
+        "location": null,
+        "contentType": "text/html",
+        "bytes": 7089,
+        "servesPageBody": false
+      },
+      "https": {
+        "status": 200,
+        "finalUrl": "https://staging.permatabriquettes.com/id/pemesanan-pengiriman/",
+        "strictTransportSecurity": null
+      },
+      "title": "Pemesanan & Pengiriman Briket Arang | Permata Briquettes",
+      "canonical": "https://www.permatabriquettes.com/id/pemesanan-pengiriman/",
+      "robots": "noindex, nofollow",
+      "hreflang": {
+        "en": "https://www.permatabriquettes.com/en/ordering-shipping/",
+        "id": "https://www.permatabriquettes.com/id/pemesanan-pengiriman/",
+        "x-default": "https://www.permatabriquettes.com/"
+      },
+      "internalLinks": 15,
+      "brokenInternalLinks": [],
+      "cta": {
+        "email": 0,
+        "whatsapp": 0,
+        "hrefOnly": true
+      },
+      "headings": [
+        "h1",
+        "h2",
+        "h2",
+        "h2",
+        "h2",
+        "h2",
+        "h2"
+      ],
+      "landmarks": {
+        "header": 2,
+        "nav": 2,
+        "main": 1,
+        "footer": 1
+      },
+      "forms": 0,
+      "fileInputs": 0,
+      "externalScripts": []
+    },
+    {
+      "route": "/id/privasi/",
+      "http": {
+        "status": 200,
+        "location": null,
+        "contentType": "text/html",
+        "bytes": 9044,
+        "servesPageBody": true
+      },
+      "https": {
+        "status": 200,
+        "finalUrl": "https://staging.permatabriquettes.com/id/privasi/",
+        "strictTransportSecurity": null
+      },
+      "title": "Pemberitahuan Privasi",
+      "canonical": "https://www.permatabriquettes.com/id/privasi/",
+      "robots": "noindex, nofollow",
+      "hreflang": {
+        "en": "https://www.permatabriquettes.com/en/privacy/",
+        "id": "https://www.permatabriquettes.com/id/privasi/",
+        "x-default": "https://www.permatabriquettes.com/"
+      },
+      "internalLinks": 15,
+      "brokenInternalLinks": [],
+      "cta": {
+        "email": 0,
+        "whatsapp": 0,
+        "hrefOnly": true
+      },
+      "headings": [
+        "h1",
+        "h2",
+        "h2",
+        "h2",
+        "h2",
+        "h2",
+        "h2",
+        "h2",
+        "h2",
+        "h2"
+      ],
+      "landmarks": {
+        "header": 2,
+        "nav": 2,
+        "main": 1,
+        "footer": 1
+      },
+      "forms": 0,
+      "fileInputs": 0,
+      "externalScripts": []
+    },
+    {
+      "route": "/id/produk/",
+      "http": {
+        "status": 200,
+        "location": null,
+        "contentType": "text/html",
+        "bytes": 6466,
+        "servesPageBody": true
+      },
+      "https": {
+        "status": 200,
+        "finalUrl": "https://staging.permatabriquettes.com/id/produk/",
+        "strictTransportSecurity": null
+      },
+      "title": "Produk Briket Arang untuk Shisha | Permata Briquettes",
+      "canonical": "https://www.permatabriquettes.com/id/produk/",
+      "robots": "noindex, nofollow",
+      "hreflang": {
+        "en": "https://www.permatabriquettes.com/en/products/",
+        "id": "https://www.permatabriquettes.com/id/produk/",
+        "x-default": "https://www.permatabriquettes.com/"
+      },
+      "internalLinks": 16,
+      "brokenInternalLinks": [],
+      "cta": {
+        "email": 0,
+        "whatsapp": 0,
+        "hrefOnly": true
+      },
+      "headings": [
+        "h1",
+        "h2",
+        "h3",
+        "h3",
+        "h3",
+        "h2",
+        "h2",
+        "h2"
+      ],
+      "landmarks": {
+        "header": 2,
+        "nav": 2,
+        "main": 1,
+        "footer": 1
+      },
+      "forms": 0,
+      "fileInputs": 0,
+      "externalScripts": []
+    },
+    {
+      "route": "/id/produk/briket-arang-tempurung-kelapa-untuk-shisha/",
+      "http": {
+        "status": 200,
+        "location": null,
+        "contentType": "text/html",
+        "bytes": 7790,
+        "servesPageBody": true
+      },
+      "https": {
+        "status": 200,
+        "finalUrl": "https://staging.permatabriquettes.com/id/produk/briket-arang-tempurung-kelapa-untuk-shisha/",
+        "strictTransportSecurity": null
+      },
+      "title": "Spesifikasi Briket Arang Tempurung Kelapa untuk Shisha",
+      "canonical": "https://www.permatabriquettes.com/id/produk/briket-arang-tempurung-kelapa-untuk-shisha/",
+      "robots": "noindex, nofollow",
+      "hreflang": {
+        "en": "https://www.permatabriquettes.com/en/products/coconut-charcoal-briquettes-for-shisha/",
+        "id": "https://www.permatabriquettes.com/id/produk/briket-arang-tempurung-kelapa-untuk-shisha/",
+        "x-default": "https://www.permatabriquettes.com/"
+      },
+      "internalLinks": 16,
+      "brokenInternalLinks": [],
+      "cta": {
+        "email": 0,
+        "whatsapp": 0,
+        "hrefOnly": true
+      },
+      "headings": [
+        "h1",
+        "h2",
+        "h2",
+        "h2",
+        "h2",
+        "h2",
+        "h2"
+      ],
+      "landmarks": {
+        "header": 2,
+        "nav": 2,
+        "main": 1,
+        "footer": 1
+      },
+      "forms": 0,
+      "fileInputs": 0,
+      "externalScripts": []
+    },
+    {
+      "route": "/id/tentang-kami/",
+      "http": {
+        "status": 200,
+        "location": null,
+        "contentType": "text/html",
+        "bytes": 6320,
+        "servesPageBody": true
+      },
+      "https": {
+        "status": 200,
+        "finalUrl": "https://staging.permatabriquettes.com/id/tentang-kami/",
+        "strictTransportSecurity": null
+      },
+      "title": "Tentang Permata Briquettes | PT Permata Bara Globalindo",
+      "canonical": "https://www.permatabriquettes.com/id/tentang-kami/",
+      "robots": "noindex, nofollow",
+      "hreflang": {
+        "en": "https://www.permatabriquettes.com/en/about/",
+        "id": "https://www.permatabriquettes.com/id/tentang-kami/",
+        "x-default": "https://www.permatabriquettes.com/"
+      },
+      "internalLinks": 16,
+      "brokenInternalLinks": [],
+      "cta": {
+        "email": 0,
+        "whatsapp": 0,
+        "hrefOnly": true
+      },
+      "headings": [
+        "h1",
+        "h2",
+        "h2",
+        "h2",
+        "h2",
+        "h2"
+      ],
+      "landmarks": {
+        "header": 2,
+        "nav": 2,
+        "main": 1,
+        "footer": 1
+      },
+      "forms": 0,
+      "fileInputs": 0,
+      "externalScripts": []
+    }
+  ],
+  "failures": [
+    "/: HTTP did not redirect (200)",
+    "/: HTTP redirect is not route-preserving HTTPS",
+    "/en/: HTTP did not redirect (200)",
+    "/en/: HTTP redirect is not route-preserving HTTPS",
+    "/en/about/: HTTP did not redirect (200)",
+    "/en/about/: HTTP redirect is not route-preserving HTTPS",
+    "/en/contact/: HTTP did not redirect (200)",
+    "/en/contact/: HTTP redirect is not route-preserving HTTPS",
+    "/en/ordering-shipping/: HTTP did not redirect (200)",
+    "/en/ordering-shipping/: HTTP redirect is not route-preserving HTTPS",
+    "/en/packaging/: HTTP did not redirect (200)",
+    "/en/packaging/: HTTP redirect is not route-preserving HTTPS",
+    "/en/privacy/: HTTP did not redirect (200)",
+    "/en/privacy/: HTTP redirect is not route-preserving HTTPS",
+    "/en/products/: HTTP did not redirect (200)",
+    "/en/products/: HTTP redirect is not route-preserving HTTPS",
+    "/en/products/coconut-charcoal-briquettes-for-shisha/: HTTP did not redirect (200)",
+    "/en/products/coconut-charcoal-briquettes-for-shisha/: HTTP redirect is not route-preserving HTTPS",
+    "/en/quality-documents/: HTTP did not redirect (200)",
+    "/en/quality-documents/: HTTP redirect is not route-preserving HTTPS",
+    "/id/: HTTP did not redirect (200)",
+    "/id/: HTTP redirect is not route-preserving HTTPS",
+    "/id/kemasan/: HTTP did not redirect (200)",
+    "/id/kemasan/: HTTP redirect is not route-preserving HTTPS",
+    "/id/kontak/: HTTP did not redirect (200)",
+    "/id/kontak/: HTTP redirect is not route-preserving HTTPS",
+    "/id/kualitas-dokumen/: HTTP did not redirect (200)",
+    "/id/kualitas-dokumen/: HTTP redirect is not route-preserving HTTPS",
+    "/id/pemesanan-pengiriman/: HTTP did not redirect (200)",
+    "/id/pemesanan-pengiriman/: HTTP redirect is not route-preserving HTTPS",
+    "/id/privasi/: HTTP did not redirect (200)",
+    "/id/privasi/: HTTP redirect is not route-preserving HTTPS",
+    "/id/produk/: HTTP did not redirect (200)",
+    "/id/produk/: HTTP redirect is not route-preserving HTTPS",
+    "/id/produk/briket-arang-tempurung-kelapa-untuk-shisha/: HTTP did not redirect (200)",
+    "/id/produk/briket-arang-tempurung-kelapa-untuk-shisha/: HTTP redirect is not route-preserving HTTPS",
+    "/id/tentang-kami/: HTTP did not redirect (200)",
+    "/id/tentang-kami/: HTTP redirect is not route-preserving HTTPS"
+  ]
+}

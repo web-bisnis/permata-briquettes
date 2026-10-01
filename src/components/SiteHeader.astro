@@ -31,7 +31,7 @@ const labels = lang === "id"
   <div class="container site-header__inner">
     <a class="site-home" href={homePath} aria-label={labels.home}>Permata Briquettes</a>
 
-    <details class="site-navigation">
+    <details class="site-navigation" data-site-navigation open>
       <summary>{labels.menu}</summary>
       <div class="site-navigation__panel">
         <nav aria-label={labels.nav}>
@@ -59,3 +59,17 @@ const labels = lang === "id"
     </details>
   </div>
 </header>
+
+<script>
+  const navigation = document.querySelector<HTMLDetailsElement>("[data-site-navigation]");
+  const desktopNavigation = window.matchMedia("(min-width: 48rem)");
+
+  if (navigation) {
+    const synchronizeNavigation = () => {
+      navigation.open = desktopNavigation.matches;
+    };
+
+    synchronizeNavigation();
+    desktopNavigation.addEventListener("change", synchronizeNavigation);
+  }
+</script>
