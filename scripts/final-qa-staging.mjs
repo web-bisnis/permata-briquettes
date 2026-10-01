@@ -3,6 +3,7 @@ import { dirname, resolve } from "node:path";
 
 const BASE_URL = "https://staging.permatabriquettes.com";
 const PRODUCTION_ORIGIN = "https://www.permatabriquettes.com";
+const REDIRECT_QUERY = "qa_redirect=path-query";
 const audit = JSON.parse(readFileSync(resolve("reports/audits/07-staging.json"), "utf8"));
 const routes = audit.pages.map((page) => page.route);
 const routeSet = new Set(routes);
@@ -54,7 +55,9 @@ const pages = [];
 for (const route of routes) {
   const httpsResponse = await request(`${BASE_URL}${route}`);
   const html = await httpsResponse.text();
-  const httpResponse = await request(`http://staging.permatabriquettes.com${route}`, { redirect: "manual" });
+  const httpUrl = `http://staging.permatabriquettes.com${route}?${REDIRECT_QUERY}`;
+  const expectedRedirect = `${BASE_URL}${route}?${REDIRECT_QUERY}`;
+  const httpResponse = await request(httpUrl, { redirect: "manual" });
   const httpBody = await httpResponse.text();
   const httpLocation = httpResponse.headers.get("location");
   const title = elements(html, "title").map((match) => plainText(match[2]));
@@ -91,7 +94,8 @@ for (const route of routes) {
   record(httpsResponse.ok, `${route}: HTTPS returned ${httpsResponse.status}`);
   record(httpsResponse.url.startsWith(BASE_URL), `${route}: HTTPS left the staging host`);
   record([301, 302, 307, 308].includes(httpResponse.status), `${route}: HTTP did not redirect (${httpResponse.status})`);
-  record(Boolean(httpLocation?.startsWith(`${BASE_URL}${route}`)), `${route}: HTTP redirect is not route-preserving HTTPS`);
+  record(httpLocation === expectedRedirect, `${route}: HTTP redirect does not preserve the staging host, path, and query`);
+  record(httpsResponse.headers.get("strict-transport-security") === null, `${route}: HSTS must remain absent pending a separate rollout decision`);
   record(title.length === 1 && title[0] === expected.title, `${route}: title differs from audited build`);
   record(canonical.length === 1 && canonical[0] === expected.canonical, `${route}: canonical differs from audited build`);
   record(meta.find((entry) => entry.name === "robots")?.content === "noindex, nofollow", `${route}: robots is not fail closed`);
@@ -124,8 +128,10 @@ for (const route of routes) {
   pages.push({
     route,
     http: {
+      requestedUrl: httpUrl,
       status: httpResponse.status,
       location: httpLocation,
+      expectedLocation: expectedRedirect,
       contentType: httpResponse.headers.get("content-type"),
       bytes: httpBody.length,
       servesPageBody: httpBody.includes(`<title>${title[0]}</title>`),
