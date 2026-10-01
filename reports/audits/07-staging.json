@@ -7,17 +7,17 @@
     "pages": 19,
     "sitemapUrls": 19,
     "outputFiles": 32,
-    "outputBytes": 420534,
+    "outputBytes": 424566,
     "cssBytes": 15700,
     "javascriptBytes": 0,
-    "inlineJavascriptBytes": 13262,
-    "maximumInlineJavascriptBytesPerPage": 698,
+    "inlineJavascriptBytes": 16268,
+    "maximumInlineJavascriptBytesPerPage": 865,
     "fontBytes": 275940
   },
   "sizeGroups": {
     ".html": {
       "files": 19,
-      "bytes": 127327
+      "bytes": 131359
     },
     ".txt": {
       "files": 1,
@@ -130,8 +130,8 @@
       "images": 0,
       "controls": 1,
       "tables": 0,
-      "inlineJavascriptBytes": 698,
-      "bytes": 7091
+      "inlineJavascriptBytes": 865,
+      "bytes": 7315
     },
     {
       "route": "/en/about/",
@@ -157,8 +157,8 @@
       "images": 0,
       "controls": 1,
       "tables": 0,
-      "inlineJavascriptBytes": 698,
-      "bytes": 6342
+      "inlineJavascriptBytes": 865,
+      "bytes": 6566
     },
     {
       "route": "/en/contact/",
@@ -181,8 +181,8 @@
       "images": 0,
       "controls": 1,
       "tables": 0,
-      "inlineJavascriptBytes": 698,
-      "bytes": 5460
+      "inlineJavascriptBytes": 865,
+      "bytes": 5684
     },
     {
       "route": "/en/ordering-shipping/",
@@ -209,8 +209,8 @@
       "images": 0,
       "controls": 1,
       "tables": 0,
-      "inlineJavascriptBytes": 698,
-      "bytes": 7039
+      "inlineJavascriptBytes": 865,
+      "bytes": 7263
     },
     {
       "route": "/en/packaging/",
@@ -236,8 +236,8 @@
       "images": 0,
       "controls": 1,
       "tables": 0,
-      "inlineJavascriptBytes": 698,
-      "bytes": 6329
+      "inlineJavascriptBytes": 865,
+      "bytes": 6553
     },
     {
       "route": "/en/privacy/",
@@ -267,8 +267,8 @@
       "images": 0,
       "controls": 1,
       "tables": 0,
-      "inlineJavascriptBytes": 698,
-      "bytes": 8829
+      "inlineJavascriptBytes": 865,
+      "bytes": 9053
     },
     {
       "route": "/en/products/",
@@ -296,8 +296,8 @@
       "images": 0,
       "controls": 1,
       "tables": 0,
-      "inlineJavascriptBytes": 698,
-      "bytes": 6357
+      "inlineJavascriptBytes": 865,
+      "bytes": 6581
     },
     {
       "route": "/en/products/coconut-charcoal-briquettes-for-shisha/",
@@ -324,8 +324,8 @@
       "images": 0,
       "controls": 1,
       "tables": 2,
-      "inlineJavascriptBytes": 698,
-      "bytes": 7766
+      "inlineJavascriptBytes": 865,
+      "bytes": 7990
     },
     {
       "route": "/en/quality-documents/",
@@ -351,8 +351,8 @@
       "images": 0,
       "controls": 1,
       "tables": 1,
-      "inlineJavascriptBytes": 698,
-      "bytes": 6896
+      "inlineJavascriptBytes": 865,
+      "bytes": 7120
     },
     {
       "route": "/id/",
@@ -379,8 +379,8 @@
       "images": 0,
       "controls": 1,
       "tables": 0,
-      "inlineJavascriptBytes": 698,
-      "bytes": 7146
+      "inlineJavascriptBytes": 865,
+      "bytes": 7370
     },
     {
       "route": "/id/kemasan/",
@@ -406,8 +406,8 @@
       "images": 0,
       "controls": 1,
       "tables": 0,
-      "inlineJavascriptBytes": 698,
-      "bytes": 6376
+      "inlineJavascriptBytes": 865,
+      "bytes": 6600
     },
     {
       "route": "/id/kontak/",
@@ -430,8 +430,8 @@
       "images": 0,
       "controls": 1,
       "tables": 0,
-      "inlineJavascriptBytes": 698,
-      "bytes": 5499
+      "inlineJavascriptBytes": 865,
+      "bytes": 5723
     },
     {
       "route": "/id/kualitas-dokumen/",
@@ -457,8 +457,8 @@
       "images": 0,
       "controls": 1,
       "tables": 1,
-      "inlineJavascriptBytes": 698,
-      "bytes": 6957
+      "inlineJavascriptBytes": 865,
+      "bytes": 7181
     },
     {
       "route": "/id/pemesanan-pengiriman/",
@@ -485,8 +485,8 @@
       "images": 0,
       "controls": 1,
       "tables": 0,
-      "inlineJavascriptBytes": 698,
-      "bytes": 7089
+      "inlineJavascriptBytes": 865,
+      "bytes": 7313
     },
     {
       "route": "/id/privasi/",
@@ -516,8 +516,8 @@
       "images": 0,
       "controls": 1,
       "tables": 0,
-      "inlineJavascriptBytes": 698,
-      "bytes": 9052
+      "inlineJavascriptBytes": 865,
+      "bytes": 9276
     },
     {
       "route": "/id/produk/",
@@ -545,8 +545,8 @@
       "images": 0,
       "controls": 1,
       "tables": 0,
-      "inlineJavascriptBytes": 698,
-      "bytes": 6470
+      "inlineJavascriptBytes": 865,
+      "bytes": 6694
     },
     {
       "route": "/id/produk/briket-arang-tempurung-kelapa-untuk-shisha/",
@@ -573,8 +573,8 @@
       "images": 0,
       "controls": 1,
       "tables": 2,
-      "inlineJavascriptBytes": 698,
-      "bytes": 7830
+      "inlineJavascriptBytes": 865,
+      "bytes": 8054
     },
     {
       "route": "/id/tentang-kami/",
@@ -600,8 +600,8 @@
       "images": 0,
       "controls": 1,
       "tables": 0,
-      "inlineJavascriptBytes": 698,
-      "bytes": 6320
+      "inlineJavascriptBytes": 865,
+      "bytes": 6544
     }
   ],
   "warnings": [],
