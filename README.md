@@ -10,6 +10,10 @@ Fondasi website statis menggunakan Astro dan TypeScript.
 - `npm run preview` — meninjau hasil build secara lokal.
 - `npm test` — menjalankan pengujian Worker, copy, dan build gated dengan mock lokal.
 - `npm run worker:check` — membundel Worker sebagai dry-run tanpa deployment.
+- `npm run build:staging` / `npm run build:production` — build reproducible
+  dengan inquiry dan Cloudflare Web Analytics dipaksa nonaktif.
+- `npm run worker:check:staging` / `npm run worker:check:production` — dry-run
+  konfigurasi Wrangler bernama tanpa upload.
 - `npm run db:migrate:local` — menerapkan migration hanya ke simulator D1 lokal.
 
 Inquiry Worker dan form nonaktif secara default. Build hanya merender form bila
@@ -18,3 +22,8 @@ Inquiry Worker dan form nonaktif secara default. Build hanya merender form bila
 Mode `local-mock` tidak melakukan request jaringan dan menolak simulasi submit
 di hostname selain loopback. Lihat `reports/05-inquiry-copy-revision-01.md` untuk
 bukti copy, feature gate, versi deterministik, dan hasil pengujian.
+
+Runbook provisioning, deployment, migration, rollback, dan aktivasi terpisah
+tersedia di `docs/cloudflare-deployment.md`. Workflow GitHub hanya dapat dipicu
+manual dan selalu membangun rilis awal dengan inquiry, cron retry, dan analytics
+nonaktif.

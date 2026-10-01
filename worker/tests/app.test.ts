@@ -25,7 +25,7 @@ const configuredEnv = (): WorkerEnv => ({
 });
 
 describe("fail-closed application shell", () => {
-  it("returns 503 while disabled and still protects the method", async () => {
+  it("returns 503 for read-only and write requests while disabled", async () => {
     const env = { ...configuredEnv(), INQUIRY_ENABLED: "false" };
     const post = await handleFetch(inquiryRequest(), env, new TestContext());
     expect(post.status).toBe(503);
@@ -36,7 +36,7 @@ describe("fail-closed application shell", () => {
       env,
       new TestContext(),
     );
-    expect(get.status).toBe(405);
+    expect(get.status).toBe(503);
   });
 
   it("fails closed if approved copy configuration is absent", async () => {

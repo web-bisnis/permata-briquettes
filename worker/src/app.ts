@@ -30,9 +30,9 @@ export async function handleFetch(
 ): Promise<Response> {
   const pathname = new URL(request.url).pathname;
   if (pathname === "/api/inquiries") {
-    if (request.method !== "POST") return jsonError(405, "method_not_allowed", { Allow: "POST" });
     const activation = resolveActivation(env);
     if (!activation.active) return jsonError(503, "inquiry_unavailable");
+    if (request.method !== "POST") return jsonError(405, "method_not_allowed", { Allow: "POST" });
     try {
       const dependencies = overrides.dependencies ?? createDependencies(env, activation.config);
       return await handleInquiry(request, activation.config, dependencies, context);
@@ -42,9 +42,9 @@ export async function handleFetch(
   }
 
   if (pathname === "/api/webhooks/resend") {
-    if (request.method !== "POST") return jsonError(405, "method_not_allowed", { Allow: "POST" });
     const activation = resolveActivation(env);
     if (!activation.active) return jsonError(503, "webhook_unavailable");
+    if (request.method !== "POST") return jsonError(405, "method_not_allowed", { Allow: "POST" });
     try {
       const repository = overrides.repository ?? new D1InquiryRepository(env.DB!);
       const now = (overrides.now ?? unixNow)();

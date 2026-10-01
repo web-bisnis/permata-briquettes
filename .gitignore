@@ -3,6 +3,7 @@ node_modules/
 dist/
 .astro/
 .wrangler/
+wrangler.deploy.jsonc
 .env
 .env.*
 !.env.example
