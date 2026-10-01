@@ -1,6 +1,13 @@
 ---
 import { getCollection, render, type CollectionEntry } from "astro:content";
 import ContentPage from "../components/ContentPage.astro";
+import InquiryForm from "../components/InquiryForm.astro";
+import { INQUIRY_COPY } from "../config/inquiry-copy";
+import { resolveInquiryFeature } from "../config/inquiry-feature";
+import {
+  MARKETING_CONSENT_VERSION,
+  PRIVACY_NOTICE_VERSION,
+} from "../config/inquiry-versions";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
 export async function getStaticPaths() {
@@ -18,6 +25,15 @@ interface Props {
 
 const { page } = Astro.props;
 const { Content } = await render(page);
+const inquiryFeature = resolveInquiryFeature({
+  PUBLIC_INQUIRY_FORM_ENABLED: import.meta.env.PUBLIC_INQUIRY_FORM_ENABLED,
+  PUBLIC_INQUIRY_FORM_MODE: import.meta.env.PUBLIC_INQUIRY_FORM_MODE,
+  PUBLIC_TURNSTILE_SITE_KEY: import.meta.env.PUBLIC_TURNSTILE_SITE_KEY,
+});
+const isContactPage = page.data.route === "/en/contact/" || page.data.route === "/id/kontak/";
+const renderInquiryForm = isContactPage && inquiryFeature.enabled;
+const inquiryCopy = INQUIRY_COPY[page.data.locale];
+const privacyHref = page.data.locale === "en" ? "/en/privacy/" : "/id/privasi/";
 ---
 
 <BaseLayout
@@ -32,5 +48,17 @@ const { Content } = await render(page);
     summary={page.data.heroSummary}
   >
     <Content />
+    {renderInquiryForm && (
+      <InquiryForm
+        enabled={true}
+        locale={page.data.locale}
+        copy={inquiryCopy}
+        privacyHref={privacyHref}
+        privacyNoticeVersion={PRIVACY_NOTICE_VERSION}
+        consentTextVersion={MARKETING_CONSENT_VERSION}
+        turnstileSiteKey={inquiryFeature.turnstileSiteKey}
+        useLocalMock={inquiryFeature.useLocalMock}
+      />
+    )}
   </ContentPage>
 </BaseLayout>

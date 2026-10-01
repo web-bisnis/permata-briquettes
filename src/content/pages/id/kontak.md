@@ -12,7 +12,7 @@ internalNotes: []
 
 ## Kontak langsung
 
-Pilih salah satu kanal kontak resmi. Keduanya merupakan tautan langsung; halaman ini tidak memuat form inquiry atau mengumpulkan informasi.
+Pilih salah satu kanal kontak resmi.
 
 <div class="contact-actions" aria-label="Pilihan kontak langsung">
   <a class="contact-action" href="mailto:marketing@permatabriquettes.com">

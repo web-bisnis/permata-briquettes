@@ -17,9 +17,9 @@ const pages = defineCollection({
     alternateRoute: z.string().regex(/^\/(en|id)\/(?:[^/]+\/)*$/),
     title: z.string().min(1),
     description: z.string().min(1),
-    eyebrow: z.string().min(1),
+    eyebrow: z.string().min(1).optional(),
     heroTitle: z.string().min(1),
-    heroSummary: z.string().min(1),
+    heroSummary: z.string().min(1).optional(),
     internalNotes: z.array(internalNoteSchema).default([]),
   }),
 });

@@ -1,0 +1,25 @@
+# Copy to .dev.vars for local-only development. Keep all sensitive values empty.
+# The checked-in defaults keep the inquiry endpoint disabled.
+INQUIRY_ENABLED=false
+RUNTIME_MODE=local
+USE_LOCAL_MOCKS=true
+
+# Required only when a public environment is explicitly activated.
+TURNSTILE_SECRET=
+RESEND_API_KEY=
+RESEND_WEBHOOK_SECRET=
+RATE_LIMIT_HASH_KEY=
+SUPPRESSION_HASH_KEY=
+RESEND_NOTIFICATION_TO=
+RESEND_FROM_ADDRESS=
+RESEND_REPLY_TO=
+
+# Deterministic SHA-256 versions generated from the approved bilingual source.
+PRIVACY_NOTICE_VERSION="sha256-82f9288a6b820a24513d1f6041b2d7bfdd4d9a2067f909c010eb28c683a5f611"
+MARKETING_CONSENT_VERSION="sha256-b7f8c726daf971743ef9295167b2852f98ef4495eb2399f30264ca02344909b3"
+
+# Approved buyer-confirmation copy. These values are public content, not secrets.
+BUYER_CONFIRMATION_SUBJECT_EN="Your inquiry has been received | Permata Briquettes"
+BUYER_CONFIRMATION_TEXT_EN="Thank you. We have received your inquiry. Our team will review it and aims to respond within one business day. For questions about personal data, please contact office@permatabriquettes.com."
+BUYER_CONFIRMATION_SUBJECT_ID="Inquiry Anda telah diterima | Permata Briquettes"
+BUYER_CONFIRMATION_TEXT_ID="Terima kasih. Inquiry Anda telah kami terima. Tim kami akan meninjaunya dan berupaya merespons dalam satu hari kerja. Untuk pertanyaan terkait data pribadi, hubungi office@permatabriquettes.com."

@@ -1,0 +1,173 @@
+---
+import {
+  INQUIRY_LIMITS,
+  PRIVACY_CONTACT_EMAIL,
+  type InquiryFormCopy,
+} from "../config/inquiry-copy";
+
+interface Props {
+  enabled?: boolean;
+  locale: "en" | "id";
+  copy: InquiryFormCopy;
+  privacyHref: string;
+  privacyNoticeVersion: string;
+  consentTextVersion: string;
+  turnstileSiteKey: string;
+  useLocalMock?: boolean;
+}
+
+const {
+  enabled = false,
+  locale,
+  copy,
+  privacyHref,
+  privacyNoticeVersion,
+  consentTextVersion,
+  turnstileSiteKey,
+  useLocalMock = true,
+} = Astro.props;
+
+const [consentBeforeEmail, consentAfterEmail] = copy.marketingConsentLabel.split(
+  PRIVACY_CONTACT_EMAIL,
+);
+---
+
+{enabled && (
+  <section class="inquiry" aria-labelledby="inquiry-heading">
+    <h2 id="inquiry-heading">{copy.heading}</h2>
+    <p class="inquiry__warning">{copy.warning}</p>
+    <form
+      class="inquiry__form"
+      action="/api/inquiries"
+      method="post"
+      data-inquiry-form
+      data-locale={locale}
+      data-privacy-version={privacyNoticeVersion}
+      data-consent-version={consentTextVersion}
+      data-success-message={copy.successMessage}
+      data-error-message={copy.errorMessage}
+      data-submitting-label={copy.submittingLabel}
+      data-local-mock={useLocalMock ? "true" : "false"}
+      novalidate
+    >
+      <label>
+        <span>{copy.nameLabel}</span>
+        <input
+          name="name"
+          autocomplete="name"
+          required
+          minlength="1"
+          maxlength={INQUIRY_LIMITS.name}
+          data-required-message={copy.validation.name}
+          data-too-long-message={copy.validation.name}
+        />
+      </label>
+      <label>
+        <span>{copy.emailLabel}</span>
+        <input
+          name="email"
+          type="email"
+          autocomplete="email"
+          required
+          maxlength={INQUIRY_LIMITS.email}
+          data-required-message={copy.validation.emailRequired}
+          data-type-message={copy.validation.emailInvalid}
+          data-too-long-message={copy.validation.emailInvalid}
+        />
+      </label>
+      <label>
+        <span>{copy.companyLabel}</span>
+        <input
+          name="company"
+          autocomplete="organization"
+          required
+          minlength="1"
+          maxlength={INQUIRY_LIMITS.company}
+          data-required-message={copy.validation.company}
+          data-too-long-message={copy.validation.company}
+        />
+      </label>
+      <label>
+        <span>{copy.phoneLabel} <small>({copy.optionalLabel})</small></span>
+        <input
+          name="phone"
+          type="tel"
+          autocomplete="tel"
+          maxlength={INQUIRY_LIMITS.phone}
+          data-too-long-message={copy.validation.phone}
+        />
+      </label>
+      <label>
+        <span>{copy.messageLabel} <small>({copy.optionalLabel})</small></span>
+        <textarea
+          name="message"
+          maxlength={INQUIRY_LIMITS.message}
+          rows="7"
+          data-too-long-message={copy.validation.message}
+        ></textarea>
+      </label>
+      <label class="inquiry__consent">
+        <input name="marketingConsent" type="checkbox" value="true" />
+        <span>
+          {consentBeforeEmail}<a href={`mailto:${PRIVACY_CONTACT_EMAIL}`}>{PRIVACY_CONTACT_EMAIL}</a>{consentAfterEmail}
+        </span>
+      </label>
+      <p><a href={privacyHref}>{copy.privacyLinkLabel}</a></p>
+      {useLocalMock ? (
+        <input type="hidden" name="cf-turnstile-response" value="local-turnstile-pass" />
+      ) : (
+        <div
+          class="cf-turnstile"
+          data-sitekey={turnstileSiteKey}
+          data-action="inquiry"
+          data-response-field="true"
+          data-turnstile-message={copy.validation.turnstile}
+        ></div>
+      )}
+      <button type="submit" data-submit-label={copy.submitLabel}>{copy.submitLabel}</button>
+      <p class="inquiry__status" data-inquiry-status aria-live="polite"></p>
+    </form>
+    {!useLocalMock && (
+      <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+    )}
+  </section>
+)}
+
+<script>
+  import "../scripts/inquiry-form";
+</script>
+
+<style>
+  .inquiry__form {
+    display: grid;
+    gap: var(--space-4);
+    max-width: 48rem;
+  }
+
+  .inquiry__form label:not(.inquiry__consent) {
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  .inquiry__form input:not([type="checkbox"]),
+  .inquiry__form textarea {
+    width: 100%;
+    padding: var(--space-3);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    color: var(--color-text);
+    background: var(--color-surface);
+    font: inherit;
+  }
+
+  .inquiry__consent {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+  }
+
+  .inquiry__warning,
+  .inquiry__status {
+    max-width: 65ch;
+  }
+</style>

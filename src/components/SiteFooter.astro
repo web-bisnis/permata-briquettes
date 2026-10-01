@@ -9,6 +9,9 @@ const { lang } = Astro.props;
 const footerCopy = lang === "id"
   ? "Permata Briquettes adalah merek dagang PT Permata Bara Globalindo. Briket arang tempurung kelapa untuk pembeli B2B."
   : "Permata Briquettes is the trading brand of PT Permata Bara Globalindo. Coconut charcoal briquettes for B2B buyers.";
+const privacyLink = lang === "id"
+  ? { href: "/id/privasi/", label: "Pemberitahuan Privasi" }
+  : { href: "/en/privacy/", label: "Privacy Notice" };
 ---
 
 <footer class="site-footer">
@@ -19,6 +22,7 @@ const footerCopy = lang === "id"
         {navigationItems[lang].map((item) => (
           <li><a href={item.href}>{item.label}</a></li>
         ))}
+        <li><a href={privacyLink.href}>{privacyLink.label}</a></li>
       </ul>
     </nav>
   </div>

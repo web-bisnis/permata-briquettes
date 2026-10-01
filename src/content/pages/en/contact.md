@@ -12,7 +12,7 @@ internalNotes: []
 
 ## Direct contact
 
-Choose either official contact channel. These are direct links; this page does not contain an inquiry form or collect information.
+Choose either official contact channel.
 
 <div class="contact-actions" aria-label="Direct contact options">
   <a class="contact-action" href="mailto:marketing@permatabriquettes.com">
