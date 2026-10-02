@@ -39,8 +39,8 @@
   --page-gutter: clamp(1rem, 4vw, 2.5rem);
   --header-height: 4.5rem;
 
-  /* Documentation token. CSS media queries use the same 48rem literal. */
-  --breakpoint-navigation: 48rem;
+  /* Documentation token. CSS media queries use the same 75rem literal; below it the menu button is used so the header stays one row. */
+  --breakpoint-navigation: 75rem;
 
   --color-background: var(--color-paper);
   --color-surface: var(--color-white);
@@ -50,20 +50,9 @@
   --color-accent: var(--color-accent-base);
   --color-on-accent: var(--color-white);
   --color-focus: var(--color-accent-base);
-  color-scheme: light dark;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme]) {
-    --color-background: var(--color-ink);
-    --color-surface: var(--color-charcoal);
-    --color-text: var(--color-paper);
-    --color-text-muted: var(--color-white);
-    --color-border: var(--color-accent-base);
-    --color-accent: var(--color-paper);
-    --color-on-accent: var(--color-ink);
-    --color-focus: var(--color-paper);
-  }
+  /* The one tonal strip per page: a variation of the paper color, not a new palette color. */
+  --color-band: color-mix(in srgb, var(--color-paper) 88%, var(--color-accent-base));
+  color-scheme: light;
 }
 
 :root[data-theme="light"] {
@@ -75,6 +64,7 @@
   --color-accent: var(--color-accent-base);
   --color-on-accent: var(--color-white);
   --color-focus: var(--color-accent-base);
+  --color-band: color-mix(in srgb, var(--color-paper) 88%, var(--color-accent-base));
   color-scheme: light;
 }
 
@@ -87,5 +77,6 @@
   --color-accent: var(--color-paper);
   --color-on-accent: var(--color-ink);
   --color-focus: var(--color-paper);
+  --color-band: var(--color-charcoal);
   color-scheme: dark;
 }

@@ -1,0 +1,486 @@
+/* Composition blocks for the home page and the numbered grade list. Colors come only from tokens.css. */
+
+/* Spacing between sections: 56-80px on mobile, 80-128px on desktop. */
+:root {
+  --section-space: var(--space-8);
+}
+
+@media (min-width: 48rem) {
+  :root {
+    --section-space: var(--space-9);
+  }
+}
+
+.section {
+  padding-block: var(--section-space);
+}
+
+/* Heading pattern used everywhere: small label, short accent rule, then the heading. */
+.section-header__eyebrow::after,
+.page-intro__eyebrow::after {
+  content: "";
+  display: block;
+  width: 2.5rem;
+  height: 0.1875rem;
+  margin-block-start: var(--space-2);
+  background: var(--color-accent);
+}
+
+.section-header--center {
+  margin-inline: auto;
+  justify-items: center;
+  text-align: center;
+}
+
+.section-header--center .section-header__eyebrow::after {
+  margin-inline: auto;
+}
+
+/* Cards sit on the page background with a thin border and no shadow. */
+.feature-grid > li.card {
+  background: transparent;
+}
+
+.card__badge {
+  width: 3rem;
+  height: 3rem;
+  border-radius: var(--radius-pill);
+  display: grid;
+  place-items: center;
+  background: var(--color-band);
+  color: var(--color-accent);
+}
+
+.icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.section--ruled {
+  padding-block-start: 0;
+}
+
+.section--ruled > .container {
+  padding-block-start: var(--section-space);
+  border-block-start: 0.0625rem solid var(--color-border);
+}
+
+.section-note {
+  max-width: var(--content-width-narrow);
+  margin-block-start: var(--space-5);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+/* Home: heading on one side, text on the other */
+.home-profile {
+  display: grid;
+  gap: var(--space-5);
+  align-items: start;
+}
+
+.home-profile .section-header {
+  margin-block-end: 0;
+}
+
+.home-profile__body {
+  max-width: 42rem;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-lg);
+}
+
+/* Home: short centered introduction */
+.home-intro {
+  max-width: var(--content-width-narrow);
+  margin-inline: auto;
+  display: grid;
+  justify-items: center;
+  gap: var(--space-5);
+  text-align: center;
+}
+
+.home-intro .section-header {
+  margin-block-end: 0;
+}
+
+.home-intro > p {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-lg);
+}
+
+/* Two photo panels edge to edge; the overlay is only as strong as white text needs. */
+.product-panels__grid {
+  display: grid;
+}
+
+.product-panel {
+  position: relative;
+  isolation: isolate;
+  min-height: 26rem;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  color: var(--color-white);
+}
+
+.product-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+
+.product-panel--dark::before {
+  background: color-mix(in srgb, var(--color-ink) 72%, transparent);
+}
+
+/* Strongest where the text sits (lower part), lighter above so the photo still shows. */
+.product-panel--accent::before {
+  background: linear-gradient(
+    to top,
+    color-mix(in srgb, var(--color-accent-base) 95%, transparent) 0%,
+    color-mix(in srgb, var(--color-accent-base) 93%, transparent) 70%,
+    color-mix(in srgb, var(--color-accent-base) 60%, transparent) 100%
+  );
+}
+
+.product-panel .product-panel__media {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  border-radius: 0;
+}
+
+.product-panel .product-panel__media picture,
+.product-panel .product-panel__media img {
+  width: 100%;
+  height: 100%;
+}
+
+.product-panel .product-panel__media img {
+  object-fit: cover;
+}
+
+.product-panel__body {
+  max-width: 32rem;
+  padding: var(--space-7) var(--page-gutter);
+  display: grid;
+  justify-items: start;
+  gap: var(--space-4);
+}
+
+.product-panel h3 {
+  font-size: var(--font-size-heading-sm);
+}
+
+.product-panel p {
+  color: var(--color-white);
+  font-size: var(--font-size-lg);
+}
+
+.product-panel .button {
+  border-color: var(--color-white);
+  background: var(--color-white);
+  color: var(--color-ink);
+}
+
+.product-panel :focus-visible {
+  outline-color: var(--color-white);
+}
+
+/* The one tonal strip on the page; cut-out portraits stand on its lower edge. */
+.team-band {
+  padding-block-start: var(--section-space);
+  overflow: hidden;
+  background: var(--color-band);
+}
+
+.team-band__inner {
+  display: grid;
+  gap: var(--space-7);
+  align-items: end;
+}
+
+.team-band__text {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-5);
+}
+
+.team-band__text .section-header {
+  margin-block-end: 0;
+}
+
+.team-band__text > p {
+  max-width: 36rem;
+  color: var(--color-text-muted);
+}
+
+.team-band__names {
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-3);
+  list-style: none;
+}
+
+.team-band__names li {
+  display: grid;
+}
+
+.team-band__names span {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+/* One group: figures overlap slightly, the middle one stands in front and a touch larger.
+   The side fade hides the hard edge where a cut-out sleeve meets the frame. */
+.team-band__portraits {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  list-style: none;
+}
+
+.team-band__portraits li {
+  position: relative;
+  flex: 1 1 0;
+  max-width: 20rem;
+  min-width: 0;
+}
+
+.team-band__portraits li + li {
+  margin-inline-start: -12%;
+}
+
+.team-band__portraits:has(> li:nth-child(3):last-child) > li:nth-child(2) {
+  z-index: 1;
+  transform: scale(1.07);
+  transform-origin: bottom center;
+}
+
+.team-band .media {
+  border-radius: 0;
+  overflow: visible;
+  background: transparent;
+}
+
+.team-band .media img {
+  object-position: center bottom;
+  mask-image: linear-gradient(to right, transparent 0, #000 5%, #000 95%, transparent 100%);
+}
+
+/* Closing call to action stays on the page background. */
+.cta-band--plain {
+  border-block-start: 0.0625rem solid var(--color-border);
+}
+
+/* Numbered grade list: no cards, the photo alternates sides. */
+.grade-list {
+  margin: 0;
+  padding: 0;
+  display: grid;
+  list-style: none;
+}
+
+.grade-row {
+  padding-block: var(--space-7);
+  border-block-start: 0.0625rem solid var(--color-border);
+  display: grid;
+  gap: var(--space-5);
+  align-items: center;
+}
+
+.grade-row:first-child {
+  padding-block-start: 0;
+  border-block-start: 0;
+}
+
+.grade-row__text {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.grade-row__number {
+  color: var(--color-accent);
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-heading-lg);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+}
+
+.grade-row h3 {
+  font-size: var(--font-size-heading-sm);
+}
+
+.checklist {
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-2);
+  list-style: none;
+}
+
+.checklist li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+
+.checklist .icon {
+  flex: none;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-block-start: 0.25rem;
+  stroke-width: 2.5;
+  color: var(--color-accent);
+}
+
+.grade-row__media {
+  max-width: 20rem;
+}
+
+@media (min-width: 48rem) {
+  .home-profile {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: var(--space-8);
+  }
+
+  .product-panels__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .product-panel {
+    min-height: 34rem;
+  }
+
+  .product-panel__body {
+    padding: var(--space-8) var(--space-7);
+  }
+
+  .team-band__inner {
+    grid-template-columns: minmax(0, 3fr) minmax(0, 5fr);
+    gap: var(--space-7);
+  }
+
+  .team-band__text {
+    align-self: center;
+    padding-block-end: var(--section-space);
+  }
+
+  .grade-row {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 20rem);
+    gap: var(--space-8);
+  }
+
+  .grade-row:nth-child(even) {
+    grid-template-columns: minmax(0, 20rem) minmax(0, 1fr);
+  }
+
+  .grade-row:nth-child(even) .grade-row__media {
+    order: -1;
+  }
+}
+
+/* Home hero with a full-width background photo. White text on a dark overlay, in both themes. */
+.hero-backdrop {
+  position: relative;
+  isolation: isolate;
+  border-block-end: 0.0625rem solid var(--color-border);
+  background: var(--color-surface);
+}
+
+.hero-backdrop__inner {
+  padding-block: var(--space-8) var(--space-9);
+}
+
+.hero-backdrop--photo {
+  min-height: 34rem;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  border-block-end: 0;
+  background: var(--color-ink);
+  color: var(--color-white);
+}
+
+.hero-backdrop--photo .hero-backdrop__inner {
+  width: min(100% - (2 * var(--page-gutter)), var(--content-width));
+}
+
+.hero-backdrop--photo::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: color-mix(in srgb, var(--color-ink) 80%, transparent);
+}
+
+.hero-backdrop .hero-backdrop__media {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  border-radius: 0;
+}
+
+.hero-backdrop .hero-backdrop__media picture,
+.hero-backdrop .hero-backdrop__media img {
+  width: 100%;
+  height: 100%;
+}
+
+.hero-backdrop .hero-backdrop__media img {
+  object-fit: cover;
+}
+
+.hero-backdrop--photo .section-header__eyebrow,
+.hero-backdrop--photo .hero__summary {
+  color: var(--color-white);
+}
+
+.hero-backdrop--photo .section-header__eyebrow::after {
+  background: var(--color-white);
+}
+
+.hero-backdrop--photo .button {
+  border-color: var(--color-white);
+  background: var(--color-white);
+  color: var(--color-ink);
+}
+
+.hero-backdrop--photo .button--secondary {
+  background: transparent;
+  color: var(--color-white);
+}
+
+.hero-backdrop--photo :focus-visible {
+  outline-color: var(--color-white);
+}
+
+
+@media (min-width: 48rem) {
+  .hero-backdrop--photo {
+    min-height: 38rem;
+  }
+
+  /* Text sits on the left, so the overlay relaxes toward the right where the photo shows. */
+  .hero-backdrop--photo::before {
+    background: linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--color-ink) 88%, transparent) 0%,
+      color-mix(in srgb, var(--color-ink) 78%, transparent) 50%,
+      color-mix(in srgb, var(--color-ink) 45%, transparent) 100%
+    );
+  }
+
+  .hero-backdrop--photo .hero__text {
+    max-width: 40rem;
+  }
+}

@@ -1,0 +1,63 @@
+/* Floating WhatsApp button, bottom right. Only the logo is shown; the accessible name carries the text. */
+.whatsapp-float {
+  position: fixed;
+  z-index: 20;
+  inset-block-end: max(var(--space-4), env(safe-area-inset-bottom));
+  inset-inline-end: max(var(--space-4), env(safe-area-inset-right));
+  width: 3.5rem;
+  height: 3.5rem;
+  border: 0.1875rem solid var(--color-background);
+  border-radius: var(--radius-pill);
+  display: grid;
+  place-items: center;
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+  text-decoration: none;
+}
+
+.whatsapp-float .icon {
+  width: 1.75rem;
+  height: 1.75rem;
+  stroke-width: 1.75;
+}
+
+/* The logo already has its own white ring and shadow, so it needs no frame. */
+.whatsapp-float--logo {
+  width: 3.75rem;
+  height: 3.75rem;
+  border: 0;
+  background: none;
+  transition: transform 160ms ease;
+}
+
+.whatsapp-float--logo picture,
+.whatsapp-float--logo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.whatsapp-float:hover {
+  transform: scale(1.06);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .whatsapp-float--logo {
+    transition: none;
+  }
+
+  .whatsapp-float:hover {
+    transform: none;
+  }
+}
+
+/* Keep the footer text clear of the button when scrolled to the very end. */
+.site-footer {
+  padding-block-end: calc(var(--space-6) + 4.5rem);
+}
+
+@media print {
+  .whatsapp-float {
+    display: none;
+  }
+}
