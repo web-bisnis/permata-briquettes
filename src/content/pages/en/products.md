@@ -7,6 +7,15 @@ description: Explore Platinum, Super Premium and Premium coconut charcoal brique
 eyebrow: Products
 heroTitle: Products with specifications you can compare.
 heroSummary: Our current B2B range covers coconut shell charcoal briquettes for shisha and hookah. Select a grade, then confirm shape, size and packing for your order.
+layout: sections
+heroStyle: split
+heroMedia: products/hero-lineup
+closingCta: true
+compose:
+  - kind: grades
+    eyebrow: Grades
+  - kind: split
+  - kind: band
 internalNotes:
   - id: super-premium-ash
     topic: Super Premium ash range

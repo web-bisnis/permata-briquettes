@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-10-01T11:13:47.653Z",
+  "generatedAt": "2026-10-01T13:02:03.949Z",
   "target": "https://staging.permatabriquettes.com",
   "browser": "Google Chrome headless via DevTools Protocol",
-  "status": "fail",
+  "status": "pass",
   "summary": {
     "routes": 19,
     "viewports": 3,
     "routeViewportChecks": 57,
-    "failures": 1
+    "failures": 0
   },
   "viewports": [
     {
@@ -426,7 +426,7 @@
       "addressWithinViewport": true,
       "ctaWithinViewport": true,
       "themeControlWithinViewport": true,
-      "languageSwitchCount": 0,
+      "languageSwitchCount": 1,
       "visibleCtas": 0
     },
     {
@@ -445,7 +445,7 @@
       "addressWithinViewport": true,
       "ctaWithinViewport": true,
       "themeControlWithinViewport": true,
-      "languageSwitchCount": 0,
+      "languageSwitchCount": 1,
       "visibleCtas": 0
     },
     {
@@ -464,7 +464,7 @@
       "addressWithinViewport": true,
       "ctaWithinViewport": true,
       "themeControlWithinViewport": true,
-      "languageSwitchCount": 0,
+      "languageSwitchCount": 1,
       "visibleCtas": 2
     },
     {
@@ -483,7 +483,7 @@
       "addressWithinViewport": true,
       "ctaWithinViewport": true,
       "themeControlWithinViewport": true,
-      "languageSwitchCount": 0,
+      "languageSwitchCount": 1,
       "visibleCtas": 0
     },
     {
@@ -502,7 +502,7 @@
       "addressWithinViewport": true,
       "ctaWithinViewport": true,
       "themeControlWithinViewport": true,
-      "languageSwitchCount": 0,
+      "languageSwitchCount": 1,
       "visibleCtas": 0
     },
     {
@@ -521,7 +521,7 @@
       "addressWithinViewport": true,
       "ctaWithinViewport": true,
       "themeControlWithinViewport": true,
-      "languageSwitchCount": 0,
+      "languageSwitchCount": 1,
       "visibleCtas": 0
     },
     {
@@ -540,7 +540,7 @@
       "addressWithinViewport": true,
       "ctaWithinViewport": true,
       "themeControlWithinViewport": true,
-      "languageSwitchCount": 0,
+      "languageSwitchCount": 1,
       "visibleCtas": 0
     },
     {
@@ -559,7 +559,7 @@
       "addressWithinViewport": true,
       "ctaWithinViewport": true,
       "themeControlWithinViewport": true,
-      "languageSwitchCount": 0,
+      "languageSwitchCount": 1,
       "visibleCtas": 0
     },
     {
@@ -578,7 +578,7 @@
       "addressWithinViewport": true,
       "ctaWithinViewport": true,
       "themeControlWithinViewport": true,
-      "languageSwitchCount": 0,
+      "languageSwitchCount": 1,
       "visibleCtas": 0
     },
     {
@@ -597,7 +597,7 @@
       "addressWithinViewport": true,
       "ctaWithinViewport": true,
       "themeControlWithinViewport": true,
-      "languageSwitchCount": 0,
+      "languageSwitchCount": 1,
       "visibleCtas": 0
     },
     {
@@ -616,7 +616,7 @@
       "addressWithinViewport": true,
       "ctaWithinViewport": true,
       "themeControlWithinViewport": true,
-      "languageSwitchCount": 0,
+      "languageSwitchCount": 1,
       "visibleCtas": 0
     },
     {
@@ -635,7 +635,7 @@
       "addressWithinViewport": true,
       "ctaWithinViewport": true,
       "themeControlWithinViewport": true,
-      "languageSwitchCount": 0,
+      "languageSwitchCount": 1,
       "visibleCtas": 2
     },
     {
@@ -654,7 +654,7 @@
       "addressWithinViewport": true,
       "ctaWithinViewport": true,
       "themeControlWithinViewport": true,
-      "languageSwitchCount": 0,
+      "languageSwitchCount": 1,
       "visibleCtas": 0
     },
     {
@@ -673,7 +673,7 @@
       "addressWithinViewport": true,
       "ctaWithinViewport": true,
       "themeControlWithinViewport": true,
-      "languageSwitchCount": 0,
+      "languageSwitchCount": 1,
       "visibleCtas": 0
     },
     {
@@ -692,7 +692,7 @@
       "addressWithinViewport": true,
       "ctaWithinViewport": true,
       "themeControlWithinViewport": true,
-      "languageSwitchCount": 0,
+      "languageSwitchCount": 1,
       "visibleCtas": 0
     },
     {
@@ -711,7 +711,7 @@
       "addressWithinViewport": true,
       "ctaWithinViewport": true,
       "themeControlWithinViewport": true,
-      "languageSwitchCount": 0,
+      "languageSwitchCount": 1,
       "visibleCtas": 0
     },
     {
@@ -730,7 +730,7 @@
       "addressWithinViewport": true,
       "ctaWithinViewport": true,
       "themeControlWithinViewport": true,
-      "languageSwitchCount": 0,
+      "languageSwitchCount": 1,
       "visibleCtas": 0
     },
     {
@@ -749,7 +749,7 @@
       "addressWithinViewport": true,
       "ctaWithinViewport": true,
       "themeControlWithinViewport": true,
-      "languageSwitchCount": 0,
+      "languageSwitchCount": 1,
       "visibleCtas": 0
     },
     {
@@ -787,7 +787,7 @@
       "addressWithinViewport": true,
       "ctaWithinViewport": true,
       "themeControlWithinViewport": true,
-      "languageSwitchCount": 0,
+      "languageSwitchCount": 1,
       "visibleCtas": 0
     },
     {
@@ -806,7 +806,7 @@
       "addressWithinViewport": true,
       "ctaWithinViewport": true,
       "themeControlWithinViewport": true,
-      "languageSwitchCount": 0,
+      "languageSwitchCount": 1,
       "visibleCtas": 0
     },
     {
@@ -825,7 +825,7 @@
       "addressWithinViewport": true,
       "ctaWithinViewport": true,
       "themeControlWithinViewport": true,
-      "languageSwitchCount": 0,
+      "languageSwitchCount": 1,
       "visibleCtas": 2
     },
     {
@@ -844,7 +844,7 @@
       "addressWithinViewport": true,
       "ctaWithinViewport": true,
       "themeControlWithinViewport": true,
-      "languageSwitchCount": 0,
+      "languageSwitchCount": 1,
       "visibleCtas": 0
     },
     {
@@ -863,7 +863,7 @@
       "addressWithinViewport": true,
       "ctaWithinViewport": true,
       "themeControlWithinViewport": true,
-      "languageSwitchCount": 0,
+      "languageSwitchCount": 1,
       "visibleCtas": 0
     },
     {
@@ -882,7 +882,7 @@
       "addressWithinViewport": true,
       "ctaWithinViewport": true,
       "themeControlWithinViewport": true,
-      "languageSwitchCount": 0,
+      "languageSwitchCount": 1,
       "visibleCtas": 0
     },
     {
@@ -901,7 +901,7 @@
       "addressWithinViewport": true,
       "ctaWithinViewport": true,
       "themeControlWithinViewport": true,
-      "languageSwitchCount": 0,
+      "languageSwitchCount": 1,
       "visibleCtas": 0
     },
     {
@@ -920,7 +920,7 @@
       "addressWithinViewport": true,
       "ctaWithinViewport": true,
       "themeControlWithinViewport": true,
-      "languageSwitchCount": 0,
+      "languageSwitchCount": 1,
       "visibleCtas": 0
     },
     {
@@ -939,7 +939,7 @@
       "addressWithinViewport": true,
       "ctaWithinViewport": true,
       "themeControlWithinViewport": true,
-      "languageSwitchCount": 0,
+      "languageSwitchCount": 1,
       "visibleCtas": 0
     },
     {
@@ -958,7 +958,7 @@
       "addressWithinViewport": true,
       "ctaWithinViewport": true,
       "themeControlWithinViewport": true,
-      "languageSwitchCount": 0,
+      "languageSwitchCount": 1,
       "visibleCtas": 0
     },
     {
@@ -977,7 +977,7 @@
       "addressWithinViewport": true,
       "ctaWithinViewport": true,
       "themeControlWithinViewport": true,
-      "languageSwitchCount": 0,
+      "languageSwitchCount": 1,
       "visibleCtas": 0
     },
     {
@@ -996,7 +996,7 @@
       "addressWithinViewport": true,
       "ctaWithinViewport": true,
       "themeControlWithinViewport": true,
-      "languageSwitchCount": 0,
+      "languageSwitchCount": 1,
       "visibleCtas": 2
     },
     {
@@ -1015,7 +1015,7 @@
       "addressWithinViewport": true,
       "ctaWithinViewport": true,
       "themeControlWithinViewport": true,
-      "languageSwitchCount": 0,
+      "languageSwitchCount": 1,
       "visibleCtas": 0
     },
     {
@@ -1034,7 +1034,7 @@
       "addressWithinViewport": true,
       "ctaWithinViewport": true,
       "themeControlWithinViewport": true,
-      "languageSwitchCount": 0,
+      "languageSwitchCount": 1,
       "visibleCtas": 0
     },
     {
@@ -1053,7 +1053,7 @@
       "addressWithinViewport": true,
       "ctaWithinViewport": true,
       "themeControlWithinViewport": true,
-      "languageSwitchCount": 0,
+      "languageSwitchCount": 1,
       "visibleCtas": 0
     },
     {
@@ -1072,7 +1072,7 @@
       "addressWithinViewport": true,
       "ctaWithinViewport": true,
       "themeControlWithinViewport": true,
-      "languageSwitchCount": 0,
+      "languageSwitchCount": 1,
       "visibleCtas": 0
     },
     {
@@ -1091,7 +1091,7 @@
       "addressWithinViewport": true,
       "ctaWithinViewport": true,
       "themeControlWithinViewport": true,
-      "languageSwitchCount": 0,
+      "languageSwitchCount": 1,
       "visibleCtas": 0
     },
     {
@@ -1110,7 +1110,7 @@
       "addressWithinViewport": true,
       "ctaWithinViewport": true,
       "themeControlWithinViewport": true,
-      "languageSwitchCount": 0,
+      "languageSwitchCount": 1,
       "visibleCtas": 0
     }
   ],
@@ -1344,11 +1344,12 @@
     "visibleNavLinks": 7
   },
   "accessibility": {
-    "nodeCount": 83,
+    "nodeCount": 122,
     "landmarkRoles": [
       "banner",
       "main",
       "contentinfo",
+      "navigation",
       "navigation"
     ],
     "unnamedInteractive": []
@@ -1417,7 +1418,5 @@
       "path": "C:\\Users\\akmal\\Documents\\PT Web Bisnis Solusi Teknologi\\Permata Briquettes\\reports\\audits\\08-browser-screenshots\\quality-desktop-system.png"
     }
   ],
-  "failures": [
-    "accessibility tree: navigation landmarks missing"
-  ]
+  "failures": []
 }

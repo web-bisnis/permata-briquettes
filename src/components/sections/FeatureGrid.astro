@@ -1,0 +1,31 @@
+---
+import Icon from "../Icon.astro";
+
+interface Item {
+  title: string;
+  body: string;
+  /** Round badge above the title. */
+  icon?: "specs" | "quality" | "shipping";
+  href?: string;
+  linkLabel?: string;
+}
+
+interface Props {
+  items: readonly Item[];
+  /** Columns from the tablet breakpoint up. */
+  columns?: 2 | 3 | 4;
+}
+
+const { items, columns = 3 } = Astro.props;
+---
+
+<ul class:list={["feature-grid", `feature-grid--${columns}`]}>
+  {items.map((item) => (
+    <li class="card">
+      {item.icon && <span class="card__badge"><Icon name={item.icon} /></span>}
+      <h3>{item.title}</h3>
+      <p>{item.body}</p>
+      {item.href && item.linkLabel && <a class="card__link" href={item.href}>{item.linkLabel}</a>}
+    </li>
+  ))}
+</ul>

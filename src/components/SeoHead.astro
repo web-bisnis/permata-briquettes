@@ -1,11 +1,17 @@
 ---
-import type { SeoMetadata } from "../config/seo";
+import { OPEN_GRAPH_LOCALES, SITE_NAME, type SeoMetadata } from "../config/seo";
 
 interface Props {
   seo: SeoMetadata;
+  /** Site-relative URL of the favicon, once brand/favicon has been supplied. */
+  iconHref?: string;
 }
 
-const { seo } = Astro.props;
+const { seo, iconHref } = Astro.props;
+const openGraphLocale = seo.locale === "mul" ? undefined : OPEN_GRAPH_LOCALES[seo.locale];
+const alternateOpenGraphLocale = seo.locale === "mul"
+  ? undefined
+  : OPEN_GRAPH_LOCALES[seo.locale === "en" ? "id" : "en"];
 ---
 
 <meta name="description" content={seo.description} />
@@ -14,4 +20,24 @@ const { seo } = Astro.props;
 <link rel="alternate" hreflang="en" href={seo.alternates.en} />
 <link rel="alternate" hreflang="id" href={seo.alternates.id} />
 <link rel="alternate" hreflang="x-default" href={seo.alternates.xDefault} />
+{iconHref && <link rel="icon" href={iconHref} />}
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content={SITE_NAME} />
+<meta property="og:title" content={seo.title} />
+<meta property="og:description" content={seo.description} />
+<meta property="og:url" content={seo.canonical} />
+{openGraphLocale && <meta property="og:locale" content={openGraphLocale} />}
+{alternateOpenGraphLocale && <meta property="og:locale:alternate" content={alternateOpenGraphLocale} />}
+{seo.image && (
+  <>
+    <meta property="og:image" content={seo.image.url} />
+    <meta property="og:image:width" content={String(seo.image.width)} />
+    <meta property="og:image:height" content={String(seo.image.height)} />
+    <meta property="og:image:alt" content={seo.image.alt} />
+  </>
+)}
+<meta name="twitter:card" content={seo.image ? "summary_large_image" : "summary"} />
+<meta name="twitter:title" content={seo.title} />
+<meta name="twitter:description" content={seo.description} />
+{seo.image && <meta name="twitter:image" content={seo.image.url} />}
 <title>{seo.title}</title>

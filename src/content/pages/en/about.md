@@ -7,6 +7,17 @@ description: Learn how PT Permata Bara Globalindo works as a B2B supplier of coc
 eyebrow: About
 heroTitle: A supplier focused on the commercial side of charcoal sourcing.
 heroSummary: Permata Briquettes is the trading brand of PT Permata Bara Globalindo. We connect B2B buyers with products from a manufacturing partner and manage the supplier-side commercial relationship.
+showTeam: true
+layout: sections
+heroStyle: backdrop
+heroMedia: team/group
+heroFocus: top
+closingCta: true
+compose:
+  - kind: split
+  - kind: split
+  - kind: band
+  - kind: centered
 internalNotes:
   - id: company-details
     topic: Public company identity
@@ -14,8 +25,8 @@ internalNotes:
     required: Approve registered address, registration number, tax number, official contacts, and public document links.
   - id: contact-actions
     topic: Contact calls to action
-    decision: Active links are withheld for this stage.
-    required: Complete the approved contact implementation.
+    decision: The email and WhatsApp buttons use the same official channels as the Contact page (src/config/contact.ts).
+    required: The inquiry form still waits for a separate decision.
 ---
 
 ## What we do

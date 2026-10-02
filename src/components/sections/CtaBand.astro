@@ -1,0 +1,35 @@
+---
+interface Action {
+  label: string;
+  href: string;
+  /** The primary action is filled; others are outlined. */
+  variant?: "primary" | "secondary";
+}
+
+interface Props {
+  id: string;
+  title: string;
+  body?: string;
+  actions: readonly Action[];
+  /** "plain" keeps the page background so the closing call does not add another color change. */
+  tone?: "accent" | "plain";
+}
+
+const { id, title, body, actions, tone = "accent" } = Astro.props;
+---
+
+<section class:list={["section", "cta-band", tone === "accent" ? "section--accent" : "cta-band--plain"]} aria-labelledby={id}>
+  <div class="container cta-band__inner">
+    <div>
+      <h2 id={id}>{title}</h2>
+      {body && <p>{body}</p>}
+    </div>
+    <div class="cta-band__actions">
+      {actions.map((action) => (
+        <a class:list={["button", action.variant === "secondary" && "button--secondary"]} href={action.href}>
+          {action.label}
+        </a>
+      ))}
+    </div>
+  </div>
+</section>

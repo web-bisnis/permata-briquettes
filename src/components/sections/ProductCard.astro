@@ -1,0 +1,33 @@
+---
+import type { MediaLocale } from "../../config/media-slots";
+import Media from "../Media.astro";
+
+interface Props {
+  title: string;
+  summary: string;
+  href: string;
+  linkLabel: string;
+  lang: MediaLocale;
+  mediaId?: string;
+  /** Short facts such as grades or minimum order, shown as a list. */
+  facts?: readonly string[];
+}
+
+const { title, summary, href, linkLabel, lang, mediaId, facts = [] } = Astro.props;
+---
+
+<article class="card product-card">
+  {mediaId && (
+    <Media id={mediaId} locale={lang} ratio="3/2" sizes="(min-width: 48rem) 33vw, 100vw" class="product-card__media" />
+  )}
+  <div class="product-card__body">
+    <h3>{title}</h3>
+    <p>{summary}</p>
+    {facts.length > 0 && (
+      <ul class="product-card__facts">
+        {facts.map((fact) => <li>{fact}</li>)}
+      </ul>
+    )}
+    <a class="card__link" href={href}>{linkLabel}</a>
+  </div>
+</article>

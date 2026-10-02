@@ -1,0 +1,70 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { contactActions } from "../config/contact";
+import type { MediaLocale } from "../config/media-slots";
+import { splitSections, textOf } from "../lib/compose";
+import ComposedSection from "./sections/ComposedSection.astro";
+import CtaBand from "./sections/CtaBand.astro";
+import HeroBackdrop from "./sections/HeroBackdrop.astro";
+import HeroMedia from "./sections/HeroMedia.astro";
+
+interface Props {
+  data: CollectionEntry<"pages">["data"];
+  /** HTML rendered from the markdown body. */
+  html: string;
+  lang: MediaLocale;
+}
+
+const { data, html, lang } = Astro.props;
+const { intro, sections } = splitSections(html);
+const closing = data.closingCta && sections.length > 0 ? sections[sections.length - 1] : undefined;
+const body = closing ? sections.slice(0, -1) : sections;
+const photoBehind = data.heroStyle === "backdrop";
+---
+
+{data.heroStyle === "split" ? (
+  <HeroMedia lang={lang} eyebrow={data.eyebrow} title={data.heroTitle} summary={data.heroSummary} mediaId={data.heroMedia}>
+    {intro && <div slot="actions" class="hero__intro" set:html={intro} />}
+  </HeroMedia>
+) : (
+  <HeroBackdrop
+    lang={lang}
+    eyebrow={data.eyebrow}
+    title={data.heroTitle}
+    summary={data.heroSummary}
+    mediaId={photoBehind ? data.heroMedia : undefined}
+    focus={data.heroFocus}
+    introHtml={intro || undefined}
+  />
+)}
+
+<slot name="before" />
+
+{body.map((section, index) => {
+  const spec = data.compose[index];
+  return (
+    <>
+    <ComposedSection
+      section={section}
+      lang={lang}
+      kind={spec?.kind}
+      eyebrow={spec?.eyebrow}
+      media={spec?.media}
+      reverse={spec?.reverse}
+    />
+    {spec?.attach === "documents" && <slot name="attach-documents" />}
+    </>
+  );
+})}
+
+<slot name="after" />
+
+{closing && (
+  <CtaBand
+    id="closing-cta"
+    tone="plain"
+    title={closing.title}
+    body={textOf(closing.body)}
+    actions={contactActions(lang)}
+  />
+)}

@@ -7,6 +7,17 @@ description: Kenali peran PT Permata Bara Globalindo sebagai supplier briket ara
 eyebrow: Tentang Kami
 heroTitle: Supplier yang berfokus pada kebutuhan pembelian B2B.
 heroSummary: Permata Briquettes adalah merek dagang PT Permata Bara Globalindo. Kami menghubungkan buyer dengan produk dari mitra manufacturer dan menangani hubungan komersial dari sisi supplier.
+showTeam: true
+layout: sections
+heroStyle: backdrop
+heroMedia: team/group
+heroFocus: top
+closingCta: true
+compose:
+  - kind: split
+  - kind: split
+  - kind: band
+  - kind: centered
 internalNotes:
   - id: company-details
     topic: Identitas perusahaan untuk publik
@@ -14,8 +25,8 @@ internalNotes:
     required: Setujui alamat terdaftar, NIB, NPWP, kontak resmi, dan tautan dokumen publik.
   - id: contact-actions
     topic: CTA kontak
-    decision: Tautan aktif ditahan pada tahap ini.
-    required: Selesaikan implementasi kontak yang disetujui.
+    decision: Tombol email dan WhatsApp memakai kanal resmi yang sama dengan halaman Kontak (src/config/contact.ts).
+    required: Formulir inquiry tetap menunggu keputusan terpisah.
 ---
 
 ## Peran kami

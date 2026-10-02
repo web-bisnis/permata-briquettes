@@ -1,203 +1,239 @@
-# Tahap 8 — Perbaikan HTTPS staging dan navigasi responsif
+# Tahap 8 — Dokumentasi final staging terverifikasi
 
-Tanggal: 1 Oktober 2026 (Asia/Jakarta)  
-Target QA: `https://staging.permatabriquettes.com`  
-Keputusan saat ini: **NO-GO**
+Tanggal pembaruan: 1 Oktober 2026 (Asia/Jakarta)  
+Target: `https://staging.permatabriquettes.com`  
+Status staging: **TERVERIFIKASI**  
+Status production: **NO-GO / BELUM DISENTUH**
 
-## Ringkasan
+## Ringkasan keputusan
 
-Release candidate lokal untuk H-02 telah direview, diuji, dan dibuat sebagai
-commit yang dapat ditelusuri. Build lokal lulus seluruh verifikasi dan Chrome
-headless lulus **57/57** kombinasi route/viewport. Regresi khusus memastikan
-header tetap semantik `open` secara default dan state `details` diselaraskan
-dengan breakpoint desktop `48rem`.
+H-01 dan H-02 telah lulus pada staging. Seluruh 19 route HTTP mengalihkan ke
+HTTPS staging dengan path dan query string dipertahankan, seluruh pemeriksaan
+HTTPS tetap lulus, dan browser QA lulus 57/57 kombinasi route/viewport.
 
-Deployment staging dan perubahan Cloudflare Redirect Rule **tidak dilakukan**.
-Permintaan tahap ini menyatakan kedua mutation tersebut baru boleh dilakukan
-setelah keputusan rilis staging eksplisit yang mencakup keduanya, sedangkan
-otorisasi eksplisit itu belum diberikan. Environment lokal juga tidak memiliki
-credential Cloudflare atau Zone ID; tidak ada nilai credential yang dibaca atau
-dicatat.
+Website statis dan CTA staging dinyatakan **GO untuk bukti QA staging**. Status
+ini tidak mengotorisasi atau menyatakan kesiapan deployment production.
+Production tetap **NO-GO** dan memerlukan readiness, approval, deployment, serta
+verifikasi tersendiri.
 
-Akibatnya, staging live masih memiliki dua temuan high:
+Token Cloudflare staging **belum diubah**. Hardening dihentikan karena identitas
+token yang terhubung ke GitHub Environment `staging` tidak dapat dibuktikan
+secara aman. Tidak ada nilai token yang dibuka, dibaca, disalin, atau dicetak.
 
-- H-01: semua 19 URL HTTP masih mengembalikan `200`, tanpa redirect;
-- H-02: navigasi tablet/desktop staging masih berasal dari release lama dan
-  tetap tersembunyi.
+## Bukti verifikasi staging terbaru
 
-HSTS tetap tidak aktif dan tidak diubah. HSTS adalah keputusan rollout terpisah,
-bukan bagian dari rule yang disiapkan.
-
-## Release candidate dan traceability
-
-| Item | Nilai/status |
+| Pemeriksaan | Hasil |
 | --- | --- |
-| Branch lokal | `release/staging-https-navigation-2026-10-01` |
-| Commit release candidate H-02 | `927e5707ac4445dab2ef49f129c571a2f2df25f9` |
-| Commit subject | `fix: restore responsive header navigation` |
-| Git tree | `eeadb8049ab83ed85d6b3e9c1665b31f844580cf` |
-| Dist SHA-256 deterministik | `4f912e54588140af49baf43603e7944bebaa5dd4ea3c9a579462c72112e07d72` |
-| Node | `v24.16.0` |
-| npm | `11.16.0` |
-| Wrangler | `4.145.0` |
-| Push/PR/merge | Belum dilakukan |
-| Deployment staging | **Belum dilakukan—menunggu otorisasi gabungan** |
-| Deployment production | Tidak dilakukan |
+| Audit HTTP→HTTPS | **Lulus — 19 route, 0 failure** |
+| HTTPS route audit | **Lulus — 19/19 merespons `200`** |
+| Smoke GET-only | **Lulus — 38/38 pemeriksaan** |
+| Browser/responsive | **Lulus — 57/57 kombinasi route/viewport** |
+| Keyboard dan focus | **Lulus pada browser-engine** |
+| Accessibility tree | **Lulus; dua landmark navigation tersedia** |
+| Worker staging | **Lulus dry-run; tidak ada upload/deployment baru** |
+| Inquiry endpoint | **`503 inquiry_unavailable`** |
+| HSTS | **Absent; keputusan rollout tetap pending terpisah** |
 
-Commit mencakup perbaikan `SiteHeader.astro`, regression test, harness QA 19
-route/browser, serta evidence Tahap 8. Report revisi ini dibuat setelah commit
-tersebut agar dapat menyebut SHA release candidate secara eksplisit.
+Perintah yang telah dijalankan untuk bukti terbaru:
 
-## Review H-02
-
-Perubahan terbatas pada state navigasi; tidak ada copy, fakta, spesifikasi,
-privacy notice, atau fitur bisnis yang berubah.
-
-- Elemen `details.site-navigation` sekarang memiliki `open` secara default.
-  Dengan demikian, nav tetap tersedia secara semantik bila JavaScript gagal.
-- Script memilih elemen melalui `data-site-navigation` dan memakai
-  `matchMedia("(min-width: 48rem)")`.
-- Pada tablet/desktop, `navigation.open = true`; saat kembali ke mobile,
-  `navigation.open = false`, sehingga menu mobile tetap ringkas dan dapat dibuka
-  dengan Enter.
-- Test build baru memverifikasi default `open`, selector stabil, breakpoint,
-  assignment state, dan listener perubahan media query pada halaman EN dan ID.
-
-Hasil lokal:
-
-- tujuh link nav/language terlihat pada desktop;
-- mobile menu, language switch, theme control, CTA, dan footer dapat dicapai
-  lewat keyboard;
-- accessibility tree memuat `banner`, `main`, `contentinfo`, dan dua landmark
-  `navigation`;
-- 57/57 pemeriksaan responsive/browser lulus tanpa horizontal overflow.
-
-## Rencana Cloudflare Redirect Rule H-01
-
-Rule belum diterapkan. Payload terencana tersimpan di
-`reports/audits/08-staging-redirect-rule-plan.json` dan sengaja tidak berisi
-credential.
-
-Scope yang harus dipakai setelah otorisasi:
-
-```text
-phase: http_request_dynamic_redirect
-expression:
-  http.host eq "staging.permatabriquettes.com"
-  and http.request.scheme eq "http"
-status: 301
-target expression:
-  concat("https://staging.permatabriquettes.com", http.request.uri.path)
-preserve_query_string: true
+```powershell
+npm run smoke:deployment -- --environment staging --base-url https://staging.permatabriquettes.com
+node scripts/final-qa-staging.mjs
+node scripts/browser-qa-staging.mjs
+npm run worker:check:staging
 ```
 
-Guard wajib:
+Hasil aktual:
 
-- gunakan Single Redirect/Ruleset yang hanya cocok dengan hostname staging;
-- baca entry-point ruleset yang sudah ada dan pertahankan semua rule lain;
-- jangan memakai `Always Use HTTPS` atau setting zone-wide;
-- jangan mencakup `www.permatabriquettes.com` atau hostname production lain;
-- jangan membuat atau mengubah HSTS;
-- require protected `CLOUDFLARE_API_TOKEN` dan `CLOUDFLARE_ZONE_ID` hanya pada
-  execution environment yang disetujui, tanpa mencetak nilainya.
+- smoke: `PASS: staging read-only smoke test; 38 checks.`;
+- audit live: `PASS: 19 live routes; 0 failures`;
+- browser: `PASS: 57 responsive route/viewport checks; 0 failures`;
+- Wrangler: dry-run selesai dengan `--dry-run: exiting now`, tanpa upload.
 
-## Audit ulang HTTP/HTTPS 19 route—baseline sebelum otorisasi
+Seluruh request smoke/audit memakai metode GET read-only. Tidak ada POST,
+payload inquiry, PII, email, WhatsApp, webhook, atau mutation request.
 
-Audit memakai query marker `?qa_redirect=path-query`. Redirect yang benar harus
-memberikan `301/302/307/308` dengan `Location` yang **persis** sama dengan URL
-HTTPS staging, termasuk pathname dan query marker. Audit tidak mengikuti
-redirect HTTP dan tidak mengirim payload.
+## Audit HTTP/HTTPS 19 route
 
-| Route | HTTP + query | Location | HTTPS | SEO/struktur |
+Audit HTTP memakai query marker `?qa_redirect=path-query` dan tidak mengikuti
+redirect. Setiap `Location` harus persis memakai hostname staging HTTPS,
+pathname yang sama, dan query marker yang sama.
+
+| Route | HTTP | HTTPS | Path/query | SEO staging |
 | --- | --- | --- | --- | --- |
-| `/` | **200 — gagal** | kosong; expected `https://staging.permatabriquettes.com/?qa_redirect=path-query` | 200 | lulus |
-| `/en/` | **200 — gagal** | kosong | 200 | lulus |
-| `/en/about/` | **200 — gagal** | kosong | 200 | lulus |
-| `/en/contact/` | **200 — gagal** | kosong | 200 | lulus |
-| `/en/ordering-shipping/` | **200 — gagal** | kosong | 200 | lulus |
-| `/en/packaging/` | **200 — gagal** | kosong | 200 | lulus |
-| `/en/privacy/` | **200 — gagal** | kosong | 200 | lulus |
-| `/en/products/` | **200 — gagal** | kosong | 200 | lulus |
-| `/en/products/coconut-charcoal-briquettes-for-shisha/` | **200 — gagal** | kosong | 200 | lulus |
-| `/en/quality-documents/` | **200 — gagal** | kosong | 200 | lulus |
-| `/id/` | **200 — gagal** | kosong | 200 | lulus |
-| `/id/kemasan/` | **200 — gagal** | kosong | 200 | lulus |
-| `/id/kontak/` | **200 — gagal** | kosong | 200 | lulus |
-| `/id/kualitas-dokumen/` | **200 — gagal** | kosong | 200 | lulus |
-| `/id/pemesanan-pengiriman/` | **200 — gagal** | kosong | 200 | lulus |
-| `/id/privasi/` | **200 — gagal** | kosong | 200 | lulus |
-| `/id/produk/` | **200 — gagal** | kosong | 200 | lulus |
-| `/id/produk/briket-arang-tempurung-kelapa-untuk-shisha/` | **200 — gagal** | kosong | 200 | lulus |
-| `/id/tentang-kami/` | **200 — gagal** | kosong | 200 | lulus |
+| `/` | 301 | 200 | dipertahankan | lulus |
+| `/en/` | 301 | 200 | dipertahankan | lulus |
+| `/en/about/` | 301 | 200 | dipertahankan | lulus |
+| `/en/contact/` | 301 | 200 | dipertahankan | lulus |
+| `/en/ordering-shipping/` | 301 | 200 | dipertahankan | lulus |
+| `/en/packaging/` | 301 | 200 | dipertahankan | lulus |
+| `/en/privacy/` | 301 | 200 | dipertahankan | lulus |
+| `/en/products/` | 301 | 200 | dipertahankan | lulus |
+| `/en/products/coconut-charcoal-briquettes-for-shisha/` | 301 | 200 | dipertahankan | lulus |
+| `/en/quality-documents/` | 301 | 200 | dipertahankan | lulus |
+| `/id/` | 301 | 200 | dipertahankan | lulus |
+| `/id/kemasan/` | 301 | 200 | dipertahankan | lulus |
+| `/id/kontak/` | 301 | 200 | dipertahankan | lulus |
+| `/id/kualitas-dokumen/` | 301 | 200 | dipertahankan | lulus |
+| `/id/pemesanan-pengiriman/` | 301 | 200 | dipertahankan | lulus |
+| `/id/privasi/` | 301 | 200 | dipertahankan | lulus |
+| `/id/produk/` | 301 | 200 | dipertahankan | lulus |
+| `/id/produk/briket-arang-tempurung-kelapa-untuk-shisha/` | 301 | 200 | dipertahankan | lulus |
+| `/id/tentang-kami/` | 301 | 200 | dipertahankan | lulus |
 
-Ringkasan audit live:
+Untuk seluruh route:
 
-- 19 route diperiksa;
-- 38 kegagalan yang seluruhnya berasal dari dua assertion redirect per route:
-  status bukan redirect dan `Location` tidak sesuai;
-- seluruh HTTPS `200`, tetap pada hostname staging;
-- title, canonical, `noindex, nofollow`, sitemap, hreflang, internal link,
-  heading, dan landmark statis lulus;
-- HSTS tidak ditemukan dan tetap pending terpisah;
-- `GET /api/inquiries` tetap `503 inquiry_unavailable`;
-- `/api/`, `/api/contact`, `/api/upload`, `/admin/`, dan `/.env` tetap `404`.
+- redirect tidak pernah berpindah ke production atau hostname lain;
+- HTTPS tetap berada pada `staging.permatabriquettes.com`;
+- meta robots tetap `noindex, nofollow`;
+- canonical dan sitemap tetap menggunakan production origin yang disetujui;
+- hreflang EN/ID/x-default, internal link, heading, dan landmark statis lulus;
+- tidak ada form inquiry, file input, Turnstile, atau analytics;
+- HSTS tidak ditemukan.
 
-## Browser, keyboard, dan accessibility tree
+## Browser, responsive, keyboard, dan aksesibilitas
 
-### Staging live saat ini
+Chrome headless memeriksa 19 route pada:
 
-- 19 route × 3 viewport = 57 kombinasi diperiksa.
-- Mobile `360×800`: menu, language switch, theme control, CTA, address, tabel,
-  dan footer berada dalam viewport; menu dapat dibuka dengan Enter.
-- Tablet `768×1024` dan desktop `1440×1000`: satu kegagalan teragregasi;
-  header nav tidak hadir pada accessibility tree dan screenshot release lama
-  menunjukkan hanya brand.
-- Focus order mobile mencapai skip link, home, summary, seluruh nav, language
-  switch, theme select, email CTA, WhatsApp CTA, dan footer link.
-- Skip link terlihat, memiliki outline `3px`, dan memindahkan fokus ke
-  `#main-content`.
-- Light, dark, system-light, dan system-dark bekerja; tidak ada CTA yang dibuka
-  atau pesan yang dikirim.
+- mobile `360×800`;
+- tablet `768×1024`;
+- desktop `1440×1000`.
 
-Hasil: 57 kombinasi selesai dijalankan, dengan satu kegagalan teragregasi pada
-nav/accessibility staging; high tetap terbuka karena release H-02 belum ada di
-staging.
+Hasil 57/57:
 
-### Release candidate lokal
+- tidak ada horizontal page overflow;
+- nav, language switch, dan theme control tampil pada mobile, tablet, dan
+  desktop;
+- tabel tetap berada dalam horizontal scroll container bila diperlukan;
+- CTA, alamat, dan footer berada di dalam viewport;
+- menu mobile dapat dibuka melalui keyboard;
+- skip link menjadi fokus pertama dan memindahkan fokus ke `#main-content`;
+- urutan fokus mencapai nav, language switch, theme select, CTA, dan footer;
+- focus ring tersedia pada kontrol yang diperiksa;
+- light, dark, system-light, dan system-dark menghasilkan theme yang sesuai;
+- accessibility tree memiliki `banner`, dua `navigation`, `main`, dan
+  `contentinfo`;
+- tidak ada interactive control tanpa accessible name.
 
-- 57/57 kombinasi route/viewport lulus;
-- 0 horizontal overflow;
-- nav, language switch, dan theme control terlihat pada mobile/tablet/desktop;
-- keyboard/focus ring lulus;
-- accessibility tree memiliki dua landmark navigation dan tidak memiliki
-  interactive control tanpa accessible name.
-
-## Hasil perintah verifikasi
-
-| Perintah | Hasil |
-| --- | --- |
-| `npm ci` | Lulus; 315 package, 0 vulnerability. |
-| `npm run check` | Lulus; 53 file, 0 error/warning/hint. |
-| `npm run build:staging` | Lulus; 19 halaman; inquiry dan analytics dipaksa nonaktif. |
-| `npm run audit:staging` | Lulus; 19 halaman, 0 failure, 0 warning. |
-| `npm test` | Lulus; 10 file, 41 test termasuk regresi H-02. |
-| `npm run worker:check:staging` | Lulus dry-run; tidak upload; `INQUIRY_ENABLED=false`, `USE_LOCAL_MOCKS=false`, cron kosong. |
-| `npm run smoke:deployment -- --environment staging --base-url https://staging.permatabriquettes.com` | Lulus 38 pemeriksaan GET-only pada release staging lama. |
-| `node scripts/final-qa-staging.mjs` | **Fail expected**: 38 kegagalan redirect pada 19 route; pemeriksaan lain lulus. |
-| `node scripts/browser-qa-staging.mjs` | **Fail expected**: 57 kombinasi, satu kegagalan nav staging lama. |
-| Browser lokal release candidate | Lulus 57/57, 0 failure. |
-
-Warning `Test-Path` dari shim npm PowerShell tetap muncul setelah beberapa
-perintah yang exit code-nya `0`; ini noise permission workstation dan bukan
-kegagalan build.
+CTA hanya diverifikasi melalui href dan tab order. Email dan WhatsApp tidak
+dibuka atau dikirim.
 
 ## Status H-01, H-02, dan HSTS
 
-| Item | Status | Tindak lanjut |
+| Item | Status staging | Bukti/catatan |
 | --- | --- | --- |
-| H-01 HTTP→HTTPS | **High, terbuka di staging** | Setelah otorisasi gabungan, tambahkan rule hostname-only yang disiapkan lalu audit 19 path+query. |
-| H-02 responsive nav | **High di staging; fixed lokal** | Deploy commit `927e5707ac4445dab2ef49f129c571a2f2df25f9` setelah otorisasi, lalu ulangi 57 browser checks. |
-| HSTS | **Pending terpisah; tidak aktif** | Tidak ada perubahan sekarang. Buat keputusan rollout terpisah bila kelak dipertimbangkan. |
+| H-01 HTTP→HTTPS | **Closed/lulus** | 19/19 HTTP = 301; hostname, path, dan query dipertahankan. |
+| H-02 responsive navigation | **Closed/lulus** | Browser 57/57; nav/language/theme tampil; dua nav landmark tersedia. |
+| HSTS | **Absent/pending** | Tidak diaktifkan atau diubah; memerlukan keputusan rollout terpisah. |
+
+Redirect yang terverifikasi hanya berlaku untuk
+`staging.permatabriquettes.com`. Audit perilaku membuktikan bahwa request tidak
+diarahkan ke hostname production. Tidak ada setting zone-wide atau HSTS yang
+diubah dalam pekerjaan dokumentasi ini.
+
+## Traceability release staging
+
+| Item | Bukti/status |
+| --- | --- |
+| Branch source | `release/staging-https-navigation-2026-10-01` |
+| Commit perbaikan H-02 | `927e5707ac4445dab2ef49f129c571a2f2df25f9` |
+| Commit dokumentasi/rule plan lokal | `2a83bd5` |
+| Redirect | Hostname-only staging; perilaku 301 terverifikasi pada 19 route |
+| Deployment staging | Release yang memuat H-02 aktif secara fungsional dan lulus browser QA |
+| Worker version/deployment ID | Belum tersedia dalam evidence aman pembaruan ini; tidak direka |
+| Redirect ruleset/rule ID | Belum tersedia dalam evidence aman pembaruan ini; tidak direka |
+
+Bukti fungsional staging cukup untuk status QA staging terverifikasi, tetapi
+Worker version, workflow run URL/ID, deployed commit metadata, serta redirect
+rule ID masih perlu ditambahkan ke change record bila tersedia dari pembacaan
+metadata administratif yang aman.
+
+## Status layanan dan activation gate
+
+| Layanan/gate | Status |
+| --- | --- |
+| Static website staging | Aktif dan terverifikasi |
+| HTTP→HTTPS staging | Aktif dan terverifikasi |
+| Robots/indexing | `noindex, nofollow`; crawling diblokir |
+| Inquiry form | Nonaktif/tidak dirender |
+| `GET /api/inquiries` | `503 inquiry_unavailable` |
+| D1 migration/write | Tidak dilakukan |
+| Cloudflare Web Analytics | Nonaktif |
+| Turnstile | Nonaktif |
+| Resend/email | Nonaktif; tidak ada email dikirim |
+| Webhook | Nonaktif |
+| Cron retry | Nonaktif/kosong |
+| HSTS | Tidak aktif; pending keputusan terpisah |
+| Production | Tidak disentuh; tetap NO-GO |
+
+Worker dry-run membaca konfigurasi staging dengan:
+
+- `INQUIRY_ENABLED="false"`;
+- `RUNTIME_MODE="staging"`;
+- `USE_LOCAL_MOCKS="false"`;
+- cron kosong;
+- tidak ada upload atau deployment dari perintah dry-run.
+
+## Token staging — belum diubah
+
+Hardening token tidak dilakukan. Upaya membaca metadata dashboard dihentikan
+karena automation tidak dapat menentukan URL browser Cloudflare dengan tingkat
+kepastian yang diperlukan. Akibatnya, identitas token yang benar-benar dipakai
+oleh secret GitHub Environment `staging` tidak dapat dibuktikan.
+
+Sesuai batasan least privilege:
+
+- tidak ada token yang dipilih atau diedit;
+- tidak ada permission yang ditambah/dihapus;
+- tidak ada token yang dibuat, diputar, disalin, atau dihapus;
+- tidak ada nilai credential yang dibaca atau dicetak;
+- tidak ada screenshot dashboard yang disimpan.
+
+Status: **TOKEN HARDENING PENDING — TOKEN BELUM DIUBAH**.
+
+## Materi non-secret yang dibutuhkan sebelum hardening
+
+Hardening berikutnya hanya boleh dimulai setelah tersedia evidence yang
+menghubungkan satu token Cloudflare tertentu dengan GitHub Environment
+`staging` secara tidak ambigu.
+
+Evidence minimum:
+
+1. metadata Cloudflare token tanpa nilainya:
+   - nama token;
+   - token ID/identifier non-secret;
+   - account owner;
+   - waktu dibuat/diperbarui dan, bila tersedia, last-used metadata;
+2. scope token saat ini:
+   - seluruh permission group;
+   - resource/account/zone restriction untuk setiap permission;
+3. bukti keterkaitan dengan GitHub Environment `staging`, misalnya change
+   record resmi yang memetakan token ID tersebut ke secret bernama
+   `CLOUDFLARE_API_TOKEN`, atau audit metadata deployment yang menghubungkan
+   token ID, workflow run staging, dan waktu penggunaan;
+4. metadata GitHub non-secret:
+   - repository dan Environment `staging`;
+   - nama secret `CLOUDFLARE_API_TOKEN`;
+   - waktu update secret;
+   - workflow run/deployment yang memakai Environment tersebut;
+5. akses dashboard melalui tab yang dapat ditargetkan secara aman, sudah login,
+   tanpa membuka halaman yang menampilkan nilai credential.
+
+Nama token atau kemiripan timestamp saja tidak cukup bila terdapat lebih dari
+satu kandidat. Bila mapping tetap ambigu, hardening harus dihentikan.
+
+Scope akhir yang kelak diizinkan hanya:
+
+- **Individual Workers > Editor** untuk
+  `permata-briquettes-staging`;
+- **Zone > Workers Routes > Write** untuk zone
+  `permatabriquettes.com`.
+
+Permission `Admin`, `Content Read-Only`, `Metadata Read-Only`, izin
+redirect-rule, dan permission lain harus dihapus hanya setelah identitas token
+terbukti. Verifikasi sesudah hardening harus membaca metadata permission tanpa
+nilai token dan menjalankan pemeriksaan read-only/dry-run yang relevan; jangan
+melakukan deployment hanya untuk menguji token.
 
 ## Temuan per severity
 
@@ -207,68 +243,53 @@ Tidak ada.
 
 ### High
 
-- H-01 dan H-02 masih terbuka pada staging live karena mutation belum
-  diotorisasi. Keduanya menghalangi GO.
+Tidak ada issue high terbuka untuk jalur website statis dan CTA staging.
 
 ### Medium
 
-- Verifikasi perangkat nyata dan pembaca layar belum dilakukan. Ini verification
-  gap, bukan defect terkonfirmasi.
-- Branch/commit release candidate belum dipush atau direview di remote; workflow
-  deployment belum dapat menunjuk commit tersebut sampai langkah Git terpisah
-  disetujui/dilakukan.
+- QA perangkat nyata dan pembaca layar masih pending; ini verification gap,
+  bukan defect terkonfirmasi.
+- Traceability administratif deployment/version/rule ID belum lengkap.
+- Token staging belum di-harden karena identitasnya belum terbukti secara aman.
 
 ### Low
 
-- Noise permission npm PowerShell shim tidak memengaruhi exit code.
+- Warning permission dari npm PowerShell shim dapat muncul meskipun command
+  berakhir dengan exit code `0`; tidak memengaruhi hasil website.
 
-## Keputusan QA
+## Pemeriksaan manual yang masih pending
 
-**NO-GO**.
+1. iPhone Safari dan Android Chrome, portrait/landscape: menu, table scroll,
+   wrapping CTA, alamat, footer, dan theme system.
+2. iPad/Android tablet pada 768/1024 px: nav, language switch, dan theme control.
+3. Chrome, Edge, Firefox, dan Safari desktop pada beberapa lebar serta zoom
+   200%.
+4. Keyboard nyata: Tab/Shift+Tab, skip link, Enter/Space pada menu, theme,
+   language, CTA, dan footer.
+5. NVDA + Firefox/Chrome dan VoiceOver + Safari: landmark, accessible name,
+   focus order, dan skip link.
+6. Tambahkan workflow run URL/ID, deployed commit, Worker version, dan redirect
+   rule ID ke change record melalui metadata read-only yang aman.
 
-Alasan: definition of done mensyaratkan redirect seluruh HTTP route dan browser
-staging 57/57. Staging live masih gagal pada H-01 dan H-02. Kelulusan lokal tidak
-boleh dianggap sebagai kelulusan staging atau otorisasi production.
+## Keputusan akhir
 
-Keputusan dapat dievaluasi ulang hanya setelah release owner secara eksplisit
-mengotorisasi **dua tindakan sekaligus**:
+- **Staging website QA: TERVERIFIKASI.**
+- **Token hardening: PENDING, token belum diubah.**
+- **Production: NO-GO / belum diverifikasi dan belum disentuh.**
+- **HSTS: absent/pending keputusan rollout terpisah.**
 
-1. deploy staging commit H-02 yang disebutkan di atas; dan
-2. aktivasi Cloudflare Redirect Rule hostname-only sesuai plan H-01.
-
-Sesudah itu, jalankan ulang sembilan perintah wajib, simpan Worker deployment/
-version ID dan ruleset/rule ID tanpa credential, lalu require:
-
-- HTTP semua route redirect tepat ke HTTPS staging dengan path+query utuh;
-- HTTPS semua route tetap `200`, `noindex, nofollow`;
-- inquiry tetap `503 inquiry_unavailable`;
-- Chrome staging 57/57 dan dua landmark nav;
-- HSTS tetap tidak ada.
-
-## Bukti manual yang masih perlu diperiksa
-
-Setelah release staging yang diotorisasi:
-
-1. iPhone Safari dan Android Chrome, portrait/landscape: mobile menu, table
-   scroll, CTA wrapping, address, footer, dan theme system.
-2. iPad/Android tablet pada 768/1024 px: nav, language switch, dan theme control
-   terlihat serta tidak menutupi konten.
-3. Chrome, Edge, Firefox, Safari desktop pada 1280/1440/1920 px dan zoom 200%.
-4. Keyboard nyata: Tab/Shift+Tab, skip link, Enter/Space pada menu, nav,
-   language switch, theme select, CTA, footer, dan focus ring.
-5. NVDA + Firefox/Chrome serta VoiceOver + Safari: banner, dua navigation, main,
-   contentinfo; nama kontrol dan perpindahan skip link.
-6. Periksa CTA melalui href saja; jangan mengirim email atau WhatsApp.
+Status staging terverifikasi tidak dianggap sebagai otorisasi deployment
+production atau aktivasi layanan server.
 
 ## Konfirmasi batasan
 
-- Tidak ada deployment staging pada revisi ini karena otorisasi gabungan belum
-  diberikan.
-- Tidak ada deployment atau perubahan DNS production.
-- Tidak ada setting zone-wide Cloudflare yang diubah.
+- Tidak ada perubahan token atau permission Cloudflare.
+- Tidak ada browser Cloudflare yang dibuka atau dikendalikan kembali.
+- Tidak ada deployment baru dalam pekerjaan dokumentasi ini.
+- Production dan DNS production tidak diubah.
 - HSTS tidak diaktifkan atau diubah.
-- Tidak ada migration/write D1 remote.
-- Inquiry tetap nonaktif dan fail closed.
-- Analytics, Turnstile, Resend, webhook, dan cron tetap nonaktif.
-- Tidak ada email atau WhatsApp yang dikirim.
-- Tidak ada copy, fakta, spesifikasi, atau privacy notice yang diubah.
+- D1 tidak dimigrasi atau ditulis.
+- Inquiry, analytics, Turnstile, Resend, webhook, dan cron tetap nonaktif.
+- Tidak ada email atau WhatsApp dikirim.
+- Tidak ada nilai credential atau screenshot credential yang dicatat.
+

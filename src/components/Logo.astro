@@ -1,0 +1,35 @@
+---
+import { Image } from "astro:assets";
+import { getMedia } from "../config/media";
+import { LOGO_ID } from "../config/media-slots";
+import { SITE_NAME, SITE_TAGLINE } from "../config/seo";
+
+interface Props {
+  /** Footer use: show the mark only, and nothing at all until brand/logo exists. */
+  markOnly?: boolean;
+  /** Header use: show the brand tagline under the name. */
+  showTagline?: boolean;
+}
+
+const { markOnly = false, showTagline = false } = Astro.props;
+
+/**
+ * The brand mark (a symbol without lettering), with the name written beside it so the brand
+ * is readable and the surrounding link keeps an accessible name. Until brand/logo has been
+ * supplied only the name is shown.
+ */
+const mark = getMedia(LOGO_ID);
+const markProps = mark
+  ? mark.format === "svg"
+    ? { src: mark }
+    : { src: mark, width: Math.min(mark.width, 240), format: "webp" as const }
+  : undefined;
+---
+
+{markProps && <Image {...markProps} alt="" class="logo__img" loading="eager" />}
+{!(markOnly && markProps) && (
+  <span class="logo-copy">
+    <span class="logo-text">{SITE_NAME}</span>
+    {showTagline && <span class="logo-tagline">{SITE_TAGLINE}</span>}
+  </span>
+)}

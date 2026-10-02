@@ -1,0 +1,45 @@
+---
+import type { CollectionEntry } from "astro:content";
+import type { MediaLocale } from "../../config/media-slots";
+import { specRows } from "../../config/spec-rows";
+
+interface Props {
+  lang: MediaLocale;
+  grades: CollectionEntry<"products">["data"]["grades"];
+  /** Text shown for a value that has not been approved for publication. */
+  missingValue?: string;
+}
+
+const { lang, grades, missingValue = "—" } = Astro.props;
+
+const copy = lang === "id"
+  ? {
+      region: "Perbandingan spesifikasi referensi per grade. Geser ke samping bila tabel terpotong.",
+      parameter: "Parameter referensi",
+    }
+  : {
+      region: "Reference specification comparison by grade. Scroll sideways if the table is cut off.",
+      parameter: "Reference parameter",
+    };
+
+const rows = specRows(lang);
+---
+
+<div class="table-scroll" role="region" aria-label={copy.region} tabindex="0">
+  <table class="spec-table">
+    <thead>
+      <tr>
+        <th scope="col">{copy.parameter}</th>
+        {grades.map((grade) => <th scope="col">{grade.name}</th>)}
+      </tr>
+    </thead>
+    <tbody>
+      {rows.map((row) => (
+        <tr>
+          <th scope="row">{row.label}</th>
+          {grades.map((grade) => <td>{grade.specifications[row.key] ?? missingValue}</td>)}
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>

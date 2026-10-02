@@ -1,0 +1,176 @@
+---
+// Development-only preview of every layout component, with sample copy.
+// It is generated only when PUBLIC_COMPONENT_GALLERY=true (npm run gallery), so
+// production and staging builds never contain it.
+import { getEntry } from "astro:content";
+import Media from "../../components/Media.astro";
+import CtaBand from "../../components/sections/CtaBand.astro";
+import DocumentCard from "../../components/sections/DocumentCard.astro";
+import FeatureGrid from "../../components/sections/FeatureGrid.astro";
+import HeroMedia from "../../components/sections/HeroMedia.astro";
+import MediaSplit from "../../components/sections/MediaSplit.astro";
+import ProcessSteps from "../../components/sections/ProcessSteps.astro";
+import ProductCard from "../../components/sections/ProductCard.astro";
+import Section from "../../components/sections/Section.astro";
+import SectionHeader from "../../components/sections/SectionHeader.astro";
+import ShapeGallery from "../../components/sections/ShapeGallery.astro";
+import SpecTable from "../../components/sections/SpecTable.astro";
+import TeamGrid from "../../components/sections/TeamGrid.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+export function getStaticPaths() {
+  if (import.meta.env.PUBLIC_COMPONENT_GALLERY !== "true") return [];
+  return [{ params: { lang: "en" } }, { params: { lang: "id" } }];
+}
+
+const lang = Astro.params.lang === "id" ? "id" : "en";
+const product = await getEntry(
+  "products",
+  lang === "id" ? "id/briket-arang-tempurung-kelapa" : "en/coconut-charcoal-briquettes",
+);
+if (!product) throw new Error("Product data for the gallery is missing");
+
+const sample = lang === "id"
+  ? {
+      title: "Galeri komponen",
+      alternate: "/en/component-gallery/",
+      eyebrow: "Contoh",
+      heroTitle: "Judul halaman dengan foto di sampingnya.",
+      summary: "Teks contoh. Tata letak berubah menjadi dua kolom setelah foto tersedia.",
+      sectionTitle: "Judul seksi contoh",
+      intro: "Pengantar singkat untuk seksi ini.",
+      cardBody: "Penjelasan singkat satu hal yang perlu diketahui pembeli.",
+      cards: ["Satu", "Dua", "Tiga"],
+      link: "Selengkapnya",
+      steps: ["Kirim kebutuhan", "Terima penawaran", "Setujui spesifikasi", "Pengiriman"],
+      doc: { owner: "Pemilik", issuer: "Penerbit", date: "Tanggal" },
+      cta: "Siap meminta penawaran?",
+      member: "Nama Anggota Tim",
+      role: "Jabatan",
+    }
+  : {
+      title: "Component gallery",
+      alternate: "/id/component-gallery/",
+      eyebrow: "Sample",
+      heroTitle: "A page heading with a photo beside it.",
+      summary: "Sample text. The layout becomes two columns once the photo is supplied.",
+      sectionTitle: "Sample section title",
+      intro: "A short introduction for this section.",
+      cardBody: "A short explanation of one thing a buyer needs to know.",
+      cards: ["One", "Two", "Three"],
+      link: "Read more",
+      steps: ["Send your requirements", "Receive a quotation", "Agree the specification", "Shipment"],
+      doc: { owner: "Owner", issuer: "Issuer", date: "Date" },
+      cta: "Ready to request a quotation?",
+      member: "Team Member Name",
+      role: "Role",
+    };
+---
+
+<BaseLayout
+  title={`${sample.title} | Permata Briquettes`}
+  description="Development preview of layout components."
+  lang={lang}
+  route={`/${lang}/component-gallery/`}
+  alternateRoute={sample.alternate}
+  indexable={false}
+>
+  <HeroMedia
+    lang={lang}
+    eyebrow={sample.eyebrow}
+    title={sample.heroTitle}
+    summary={sample.summary}
+    mediaId="products/hero-lineup"
+  >
+    <a slot="actions" class="button" href="#features">{sample.link}</a>
+    <a slot="actions" class="button button--secondary" href="#features">{sample.link}</a>
+  </HeroMedia>
+
+  <Section labelledby="features">
+    <SectionHeader id="features" title={sample.sectionTitle} eyebrow={sample.eyebrow} intro={sample.intro} />
+    <FeatureGrid
+      items={sample.cards.map((title) => ({ title, body: sample.cardBody, href: "#features", linkLabel: sample.link }))}
+    />
+  </Section>
+
+  <Section tone="alt" labelledby="products">
+    <SectionHeader id="products" title={sample.sectionTitle} />
+    <div class="feature-grid feature-grid--2">
+      <ProductCard
+        lang={lang}
+        title={product.data.name}
+        summary={sample.cardBody}
+        href="#products"
+        linkLabel={sample.link}
+        mediaId="products/line-shisha"
+        facts={product.data.grades.map((grade) => grade.name)}
+      />
+      <ProductCard
+        lang={lang}
+        title={sample.cards[1]}
+        summary={sample.cardBody}
+        href="#products"
+        linkLabel={sample.link}
+        mediaId="products/line-bbq"
+      />
+    </div>
+  </Section>
+
+  <Section labelledby="specs">
+    <SectionHeader id="specs" title={sample.sectionTitle} />
+    <SpecTable lang={lang} grades={product.data.grades} />
+  </Section>
+
+  <Section tone="alt" labelledby="shapes">
+    <SectionHeader id="shapes" title={sample.sectionTitle} />
+    <ShapeGallery lang={lang} shapes={product.data.shapes} />
+  </Section>
+
+  <Section labelledby="split">
+    <SectionHeader id="split" title={sample.sectionTitle} />
+    <MediaSplit lang={lang} mediaId="packaging/overview">
+      <p>{sample.intro}</p>
+      <p>{sample.cardBody}</p>
+    </MediaSplit>
+    <MediaSplit lang={lang} mediaId="shipping/container-loading" ratio="3/2" reverse>
+      <p>{sample.intro}</p>
+      <p>{sample.cardBody}</p>
+    </MediaSplit>
+  </Section>
+
+  <Section tone="alt" labelledby="documents">
+    <SectionHeader id="documents" title={sample.sectionTitle} />
+    <div class="feature-grid feature-grid--3">
+      <DocumentCard lang={lang} title="ROA" description={sample.cardBody} rows={[{ label: sample.doc.issuer, value: "Sample issuer" }, { label: sample.doc.date, value: "29 August 2022" }]} previewId="documents/preview-roa-carsurin" />
+      <DocumentCard lang={lang} title="SHT" description={sample.cardBody} rows={[{ label: sample.doc.issuer, value: "Sample issuer" }]} previewId="documents/preview-sht-carsurin" />
+      <DocumentCard lang={lang} title="MSDS" description={sample.cardBody} rows={[{ label: sample.doc.owner, value: "Manufacturer" }]} />
+    </div>
+  </Section>
+
+  <Section labelledby="process">
+    <SectionHeader id="process" title={sample.sectionTitle} />
+    <ProcessSteps steps={sample.steps.map((title) => ({ title, body: sample.cardBody }))} />
+  </Section>
+
+  <Section tone="alt" labelledby="team">
+    <SectionHeader id="team" title={sample.sectionTitle} />
+    <TeamGrid
+      lang={lang}
+      members={[
+        { name: sample.member, role: sample.role, photoId: "team/sample-member-1" },
+        { name: sample.member, role: sample.role },
+      ]}
+    />
+    <Media id="team/team-group" locale={lang} ratio="3/2" caption={sample.cardBody} />
+  </Section>
+
+  <CtaBand
+    id="cta"
+    title={sample.cta}
+    body={sample.cardBody}
+    actions={[
+      { label: sample.link, href: "#cta" },
+      { label: sample.link, href: "#cta", variant: "secondary" },
+    ]}
+  />
+</BaseLayout>

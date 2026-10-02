@@ -1,7 +1,16 @@
 ---
-import { getCollection, render, type CollectionEntry } from "astro:content";
+import { getCollection, getEntry, render, type CollectionEntry } from "astro:content";
+import ComposedPage from "../components/ComposedPage.astro";
 import ContentPage from "../components/ContentPage.astro";
+import HomePage from "../components/HomePage.astro";
 import InquiryForm from "../components/InquiryForm.astro";
+import Section from "../components/sections/Section.astro";
+import DocumentGallery from "../components/sections/DocumentGallery.astro";
+import PartnerLogos from "../components/sections/PartnerLogos.astro";
+import PackagingExamples from "../components/sections/PackagingExamples.astro";
+import PageBlock from "../components/sections/PageBlock.astro";
+import ProductSpecBlocks from "../components/sections/ProductSpecBlocks.astro";
+import TeamGrid from "../components/sections/TeamGrid.astro";
 import { INQUIRY_COPY } from "../config/inquiry-copy";
 import { resolveInquiryFeature } from "../config/inquiry-feature";
 import {
@@ -33,6 +42,16 @@ const inquiryFeature = resolveInquiryFeature({
 const isContactPage = page.data.route === "/en/contact/" || page.data.route === "/id/kontak/";
 const renderInquiryForm = isContactPage && inquiryFeature.enabled;
 const inquiryCopy = INQUIRY_COPY[page.data.locale];
+const product = page.data.product ? await getEntry(page.data.product) : undefined;
+const isSections = page.data.layout === "sections";
+const renderedHtml = page.rendered?.html ?? "";
+const isHome = page.data.layout === "home" && page.data.home !== undefined;
+const teamMembers = page.data.showTeam || isHome
+  ? (await getCollection("team"))
+      .filter((member) => member.data.locale === page.data.locale)
+      .sort((left, right) => left.data.order - right.data.order)
+  : [];
+const teamTitle = page.data.locale === "id" ? "Tim kami" : "Our team";
 const privacyHref = page.data.locale === "en" ? "/en/privacy/" : "/id/privasi/";
 ---
 
@@ -43,13 +62,81 @@ const privacyHref = page.data.locale === "en" ? "/en/privacy/" : "/id/privasi/";
   route={page.data.route}
   alternateRoute={page.data.alternateRoute}
   indexable={page.data.indexable}
+  loadsTurnstile={renderInquiryForm && !inquiryFeature.useLocalMock}
+  ogImage={page.data.ogImage ?? page.data.heroMedia}
 >
+  {isHome && page.data.home ? (
+    <HomePage
+      lang={page.data.locale}
+      eyebrow={page.data.eyebrow}
+      title={page.data.heroTitle}
+      summary={page.data.heroSummary}
+      heroMedia={page.data.heroMedia}
+      home={page.data.home}
+      members={teamMembers.map((member) => ({
+        name: member.data.name,
+        role: member.data.role,
+        photoId: member.data.photo,
+      }))}
+    />
+  ) : isSections ? (
+    <ComposedPage data={page.data} html={renderedHtml} lang={page.data.locale}>
+      {product && <ProductSpecBlocks slot="before" lang={page.data.locale} product={product.data} />}
+      {page.data.packagingExamples && <PackagingExamples slot="before" lang={page.data.locale} />}
+      <DocumentGallery slot="attach-documents" lang={page.data.locale} />
+      {page.data.showLabLogos && <PartnerLogos slot="after" lang={page.data.locale} />}
+      {teamMembers.length > 0 && (
+        <PageBlock slot="after" id="team" title={teamTitle}>
+          <TeamGrid
+            lang={page.data.locale}
+            members={teamMembers.map((member) => ({
+              name: member.data.name,
+              role: member.data.role,
+              bio: member.data.bio,
+              photoId: member.data.photo,
+            }))}
+          />
+        </PageBlock>
+      )}
+      {renderInquiryForm && (
+        <Section slot="after">
+          <InquiryForm
+            enabled={true}
+            locale={page.data.locale}
+            copy={inquiryCopy}
+            privacyHref={privacyHref}
+            privacyNoticeVersion={PRIVACY_NOTICE_VERSION}
+            consentTextVersion={MARKETING_CONSENT_VERSION}
+            turnstileSiteKey={inquiryFeature.turnstileSiteKey}
+            useLocalMock={inquiryFeature.useLocalMock}
+          />
+        </Section>
+      )}
+    </ComposedPage>
+  ) : (
   <ContentPage
     eyebrow={page.data.eyebrow}
     title={page.data.heroTitle}
     summary={page.data.heroSummary}
+    heroMedia={page.data.heroMedia}
+    lang={page.data.locale}
   >
+    {product && <ProductSpecBlocks slot="before" lang={page.data.locale} product={product.data} />}
+    {page.data.packagingExamples && <PackagingExamples slot="before" lang={page.data.locale} />}
     <Content />
+    {teamMembers.length > 0 && (
+      <PageBlock slot="after" id="team" title={teamTitle}>
+        <TeamGrid
+          lang={page.data.locale}
+          members={teamMembers.map((member) => ({
+            name: member.data.name,
+            role: member.data.role,
+            bio: member.data.bio,
+            photoId: member.data.photo,
+          }))}
+        />
+      </PageBlock>
+    )}
     {renderInquiryForm && (
       <InquiryForm
         enabled={true}
@@ -63,4 +150,5 @@ const privacyHref = page.data.locale === "en" ? "/en/privacy/" : "/id/privasi/";
       />
     )}
   </ContentPage>
+  )}
 </BaseLayout>

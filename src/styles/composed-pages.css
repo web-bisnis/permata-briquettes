@@ -1,0 +1,244 @@
+/* Inner pages built from markdown sections (layout: sections). Same patterns as the home page. */
+
+/* A heading without a label still gets the short accent rule above it. */
+.section-header > h2:first-child::before {
+  content: "";
+  display: block;
+  width: 2.5rem;
+  height: 0.1875rem;
+  margin-block-end: var(--space-3);
+  background: var(--color-accent);
+}
+
+.section-header--center > h2:first-child::before {
+  margin-inline: auto;
+}
+
+/* Plain sections that follow each other share one gap instead of stacking two paddings. */
+.section--default + .section--default {
+  padding-block-start: 0;
+}
+
+.composed {
+  display: grid;
+  gap: var(--space-5);
+  align-items: start;
+}
+
+.composed .section-header {
+  margin-block-end: 0;
+}
+
+.composed--stack {
+  gap: var(--space-6);
+}
+
+/* Text from the markdown body */
+.composed__body {
+  max-width: 42rem;
+  display: grid;
+  gap: var(--space-4);
+  color: var(--color-text-muted);
+}
+
+.composed__body > * {
+  margin-block: 0;
+}
+
+.composed__body ul,
+.composed__body ol {
+  padding-inline-start: var(--space-6);
+}
+
+.composed__body li + li {
+  margin-block-start: var(--space-2);
+}
+
+.composed__body a {
+  color: var(--color-text);
+  font-weight: var(--font-weight-bold);
+}
+
+.composed__body:has(.contact-actions),
+.composed__body--table {
+  max-width: none;
+}
+
+/* The email address is long, so the two contact options stack in the text column. */
+.composed__body .contact-actions {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.composed__body--centered {
+  justify-items: center;
+  text-align: center;
+}
+
+.composed__body--table {
+  overflow-x: auto;
+}
+
+.composed__body--table table {
+  width: 100%;
+  min-width: 32rem;
+  border-collapse: collapse;
+  font-size: var(--font-size-sm);
+}
+
+.composed__body--table th,
+.composed__body--table td {
+  padding: var(--space-3) var(--space-4);
+  border-block-end: 0.0625rem solid var(--color-border);
+  text-align: start;
+  vertical-align: top;
+}
+
+.composed__body--table thead th {
+  border-block-end-width: 0.1875rem;
+  color: var(--color-text);
+  font-family: var(--font-family-heading);
+}
+
+.composed__body--table td:first-child {
+  color: var(--color-text);
+  font-weight: var(--font-weight-bold);
+  white-space: nowrap;
+}
+
+.media-split .composed__body {
+  max-width: none;
+}
+
+/* The one tonal strip on a page */
+.band {
+  padding-block: var(--section-space);
+  background: var(--color-band);
+}
+
+/* Order steps: one group of equal items, so cards are appropriate here. */
+.step-list {
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-4);
+  list-style: none;
+  counter-reset: step;
+}
+
+.step-list__item {
+  position: relative;
+  padding: var(--space-5);
+  padding-block-start: calc(var(--space-5) + 3rem);
+  border: 0.0625rem solid var(--color-border);
+  border-radius: var(--radius-md);
+  display: grid;
+  align-content: start;
+  gap: var(--space-2);
+  counter-increment: step;
+}
+
+.step-list__item::before {
+  content: counter(step);
+  position: absolute;
+  inset-block-start: var(--space-5);
+  inset-inline-start: var(--space-5);
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: var(--radius-pill);
+  display: grid;
+  place-items: center;
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+  font-family: var(--font-family-heading);
+  font-weight: var(--font-weight-bold);
+}
+
+.step-list__item h3 {
+  font-size: var(--font-size-lg);
+}
+
+.step-list__item p {
+  margin: 0;
+  color: var(--color-text-muted);
+}
+
+/* Link under a hero summary, drawn as a button */
+.hero__intro p {
+  margin: 0;
+}
+
+.hero__intro a {
+  min-height: 2.75rem;
+  padding: var(--space-2) var(--space-5);
+  border: 0.125rem solid var(--color-accent);
+  border-radius: var(--radius-pill);
+  display: inline-flex;
+  align-items: center;
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+  font-family: var(--font-family-heading);
+  font-weight: var(--font-weight-bold);
+  text-decoration: none;
+}
+
+.hero-backdrop--photo .hero__intro a {
+  border-color: var(--color-white);
+  background: var(--color-white);
+  color: var(--color-ink);
+}
+
+.hero-backdrop--focus-top .hero-backdrop__media img {
+  object-position: center top;
+}
+
+.hero-backdrop--focus-center .hero-backdrop__media img {
+  object-position: center center;
+}
+
+.hero-backdrop--focus-bottom .hero-backdrop__media img {
+  object-position: center bottom;
+}
+
+.hero-backdrop .hero__text {
+  max-width: 48rem;
+}
+
+/* Grade rows without a photo use one column. */
+.grade-row:not(:has(.grade-row__media)) {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+/* Team rows: no border, portraits stand on the tonal strip. */
+.team-card {
+  border: 0;
+  background: var(--color-band);
+}
+
+.team-card .media {
+  background: transparent;
+}
+
+@media (min-width: 48rem) {
+  .composed--split {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: var(--space-8);
+  }
+
+  .step-list {
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  }
+
+  .grade-row:not(:has(.grade-row__media)),
+  .grade-row:not(:has(.grade-row__media)):nth-child(even) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Document previews: the first page is shown from the top and opens the full file. */
+.document-card__preview {
+  display: block;
+}
+
+.document-card .media img {
+  object-position: center top;
+}

@@ -7,6 +7,15 @@ description: Jelajahi briket arang tempurung kelapa grade Platinum, Super Premiu
 eyebrow: Produk
 heroTitle: Pilih produk berdasarkan spesifikasinya.
 heroSummary: Katalog B2B kami saat ini berisi briket arang tempurung kelapa untuk shisha dan hookah. Pilih grade, lalu konfirmasi bentuk, ukuran, dan kemasan untuk pesanan Anda.
+layout: sections
+heroStyle: split
+heroMedia: products/hero-lineup
+closingCta: true
+compose:
+  - kind: grades
+    eyebrow: Grade
+  - kind: split
+  - kind: band
 internalNotes:
   - id: super-premium-ash
     topic: Rentang kadar abu Super Premium
@@ -14,8 +23,8 @@ internalNotes:
     required: Setujui rentang kadar abu yang benar.
   - id: contact-actions
     topic: CTA penawaran produk
-    decision: Tautan aktif ditahan pada tahap ini.
-    required: Selesaikan implementasi kontak yang disetujui.
+    decision: Tombol email dan WhatsApp memakai kanal resmi yang sama dengan halaman Kontak (src/config/contact.ts).
+    required: Formulir inquiry tetap menunggu keputusan terpisah.
 ---
 
 [Lihat Detail Produk](/id/produk/briket-arang-tempurung-kelapa-untuk-shisha/)

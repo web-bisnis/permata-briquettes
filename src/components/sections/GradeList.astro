@@ -1,0 +1,46 @@
+---
+import type { CollectionEntry } from "astro:content";
+import type { MediaLocale } from "../../config/media-slots";
+import { specRows } from "../../config/spec-rows";
+import Icon from "../Icon.astro";
+import Media from "../Media.astro";
+
+interface Props {
+  lang: MediaLocale;
+  grades: CollectionEntry<"products">["data"]["grades"];
+}
+
+const { lang, grades } = Astro.props;
+const rows = specRows(lang);
+const caption = lang === "id" ? "Abu setelah pembakaran" : "Ash after burning";
+const mediaIdFor = (name: string) => `products/ash-${name.toLowerCase().replace(/\s+/gu, "-")}`;
+---
+
+<ol class="grade-list">
+  {grades.map((grade, index) => (
+    <li class="grade-row">
+      <div class="grade-row__text">
+        <p class="grade-row__number" aria-hidden="true">{String(index + 1).padStart(2, "0")}.</p>
+        <h3>{grade.name}</h3>
+        <ul class="checklist">
+          {rows
+            .filter((row) => grade.specifications[row.key] != null)
+            .map((row) => (
+              <li>
+                <Icon name="check" />
+                <span><strong>{row.label}:</strong> {grade.specifications[row.key]}</span>
+              </li>
+            ))}
+        </ul>
+      </div>
+      <Media
+        id={mediaIdFor(grade.name)}
+        locale={lang}
+        ratio="4/3"
+        caption={caption}
+        sizes="(min-width: 48rem) 20vw, 60vw"
+        class="grade-row__media"
+      />
+    </li>
+  ))}
+</ol>

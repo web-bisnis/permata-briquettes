@@ -1,0 +1,27 @@
+---
+import { shapeMediaId, type MediaLocale } from "../../config/media-slots";
+import Media from "../Media.astro";
+
+interface Props {
+  lang: MediaLocale;
+  /** Sizes are shown as written in the product data, which already carries the unit. */
+  shapes: readonly { name: string; sizes: readonly string[] }[];
+}
+
+const { lang, shapes } = Astro.props;
+---
+
+<ul class="shape-gallery">
+  {shapes.map((shape) => {
+    const mediaId = shapeMediaId(shape.name);
+    return (
+      <li class="card shape-card">
+        {mediaId && (
+          <Media id={mediaId} locale={lang} ratio="4/3" sizes="(min-width: 48rem) 25vw, 50vw" class="shape-card__media" />
+        )}
+        <h3>{shape.name}</h3>
+        <p class="shape-card__sizes">{shape.sizes.join(", ")}</p>
+      </li>
+    );
+  })}
+</ul>

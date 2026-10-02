@@ -1,0 +1,32 @@
+---
+import { Picture } from "astro:assets";
+import { CONTACT } from "../config/contact";
+import { getMedia } from "../config/media";
+import type { MediaLocale } from "../config/media-slots";
+import Icon from "./Icon.astro";
+
+interface Props {
+  lang: MediaLocale;
+}
+
+const { lang } = Astro.props;
+const label = lang === "id" ? "Chat WhatsApp" : "Chat on WhatsApp";
+// The official logo lives in src/assets/brand/whatsapp; without it a plain icon button is shown.
+const logo = getMedia("brand/whatsapp");
+---
+
+<a class:list={["whatsapp-float", logo && "whatsapp-float--logo"]} href={`https://wa.me/${CONTACT.whatsappNumber}`} aria-label={label}>
+  {logo
+    ? (
+      <Picture
+        src={logo}
+        alt=""
+        formats={["avif", "webp"]}
+        widths={[60, 120, 180]}
+        sizes="3.75rem"
+        loading="lazy"
+        decoding="async"
+      />
+    )
+    : <Icon name="whatsapp" />}
+</a>

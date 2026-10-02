@@ -1,0 +1,582 @@
+/* Layout building blocks for photo-led pages. Colors come only from tokens.css. */
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Logo */
+.site-home {
+  gap: var(--space-3);
+}
+
+.logo__img {
+  display: block;
+  width: auto;
+  height: 3rem;
+}
+
+.logo-copy {
+  display: grid;
+  gap: 0.125rem;
+}
+
+.logo-tagline {
+  font-family: var(--font-family-body);
+  font-size: 0.6875rem;
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-muted);
+  white-space: normal;
+}
+
+@media (min-width: 48rem) {
+  .logo__img {
+    height: 3.5rem;
+  }
+
+}
+
+.site-footer__brand {
+  display: grid;
+  gap: var(--space-3);
+  justify-items: start;
+}
+
+.site-footer__brand .logo__img {
+  height: 2.25rem;
+}
+
+/* Photos. The frame reserves its aspect ratio so images never shift the layout. */
+.media {
+  margin: 0;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--color-surface);
+}
+
+.media picture {
+  display: block;
+}
+
+.media img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* The ratio belongs to the image frame, so a caption below it is never clipped. */
+.media[class*="media--"] picture,
+.media[class*="media--"] > img {
+  aspect-ratio: var(--media-ratio);
+}
+
+.media[class*="media--"] img {
+  height: 100%;
+  object-fit: cover;
+}
+
+.shape-card .media img {
+  object-fit: contain;
+}
+
+.team-card .media img {
+  object-position: center top;
+}
+
+.media--16-9 { --media-ratio: 16 / 9; }
+.media--3-2 { --media-ratio: 3 / 2; }
+.media--4-3 { --media-ratio: 4 / 3; }
+.media--1-1 { --media-ratio: 1 / 1; }
+.media--4-5 { --media-ratio: 4 / 5; }
+.media--9-16 { --media-ratio: 9 / 16; }
+.media--1-91-1 { --media-ratio: 1.91 / 1; }
+
+/* Cut-out renders and portraits sit on the paper color so dark objects stay visible in dark mode. */
+.shape-card .media,
+.team-card .media {
+  background: var(--color-paper);
+}
+
+.media figcaption {
+  padding: var(--space-2) var(--space-4);
+  background: var(--color-surface);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+}
+
+/* Page heading with an optional photo (prose pages) */
+.page-hero {
+  display: grid;
+  gap: var(--space-6);
+}
+
+.page-hero__media {
+  align-self: start;
+}
+
+/* Sections (spacing lives in composition.css) */
+.section--alt {
+  border-block: 0.0625rem solid var(--color-border);
+  background: var(--color-surface);
+}
+
+.section--accent {
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+}
+
+.section__inner--narrow {
+  max-width: var(--content-width-narrow);
+}
+
+.section-header {
+  max-width: var(--content-width-narrow);
+  margin-block-end: var(--space-6);
+  display: grid;
+  gap: var(--space-3);
+}
+
+.section-header h2 {
+  font-size: var(--font-size-heading-sm);
+}
+
+.section-header__eyebrow {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.section-header__intro {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-lg);
+}
+
+/* Hero */
+.hero {
+  padding-block: var(--space-8) var(--space-9);
+}
+
+.hero__layout {
+  display: grid;
+  gap: var(--space-7);
+  align-items: center;
+}
+
+.hero__text {
+  display: grid;
+  gap: var(--space-5);
+  justify-items: start;
+}
+
+.hero__text h1 {
+  font-size: var(--font-size-heading-lg);
+}
+
+.hero__summary {
+  max-width: 42rem;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-lg);
+}
+
+.hero__actions:empty {
+  display: none;
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+/* Cards */
+.card {
+  border: 0.0625rem solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+}
+
+.section--alt .card {
+  background: var(--color-background);
+}
+
+.feature-grid,
+.shape-gallery,
+.team-grid {
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-4);
+  list-style: none;
+}
+
+.feature-grid > li.card,
+.shape-card {
+  padding: var(--space-5);
+  display: grid;
+  align-content: start;
+  gap: var(--space-3);
+}
+
+.team-card {
+  overflow: hidden;
+  display: grid;
+  align-content: start;
+}
+
+.team-card__body {
+  padding: var(--space-5);
+  display: grid;
+  gap: var(--space-2);
+}
+
+.team-card__role {
+  color: var(--color-text);
+  font-weight: var(--font-weight-medium);
+}
+
+.team-card__bio {
+  margin-block-start: var(--space-2);
+  font-size: var(--font-size-sm);
+}
+
+.card h3 {
+  font-size: var(--font-size-lg);
+}
+
+.card p {
+  color: var(--color-text-muted);
+}
+
+.card__link {
+  justify-self: start;
+  min-height: 2.75rem;
+  display: inline-flex;
+  align-items: center;
+  font-weight: var(--font-weight-bold);
+}
+
+/* Product cards */
+.product-card {
+  overflow: hidden;
+  display: grid;
+  align-content: start;
+}
+
+.product-card .media {
+  border-radius: 0;
+}
+
+.product-card__body {
+  padding: var(--space-5);
+  display: grid;
+  align-content: start;
+  gap: var(--space-3);
+}
+
+.product-card__facts {
+  margin: 0;
+  padding-inline-start: var(--space-5);
+  color: var(--color-text-muted);
+}
+
+/* Shapes, documents, team */
+.shape-card .media {
+  margin: calc(-1 * var(--space-5)) calc(-1 * var(--space-5)) 0;
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+}
+
+.team-card .media {
+  border-radius: 0;
+}
+
+.shape-card__sizes {
+  font-size: var(--font-size-sm);
+}
+
+.document-card {
+  overflow: hidden;
+  display: grid;
+  align-content: start;
+}
+
+.document-card .media {
+  border-radius: 0;
+}
+
+.document-card__body {
+  padding: var(--space-5);
+  display: grid;
+  gap: var(--space-3);
+}
+
+.document-card__meta {
+  margin: 0;
+  display: grid;
+  gap: var(--space-2);
+  font-size: var(--font-size-sm);
+}
+
+.document-card__meta div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-3);
+}
+
+.document-card__meta dt {
+  font-weight: var(--font-weight-bold);
+}
+
+.document-card__meta dd {
+  margin: 0;
+}
+
+/* Process */
+.process-steps {
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-4);
+  list-style: none;
+  counter-reset: step;
+}
+
+.process-steps__item {
+  position: relative;
+  padding: var(--space-5) var(--space-5) var(--space-5) calc(var(--space-5) + 3.25rem);
+  border: 0.0625rem solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  counter-increment: step;
+  display: grid;
+  gap: var(--space-2);
+}
+
+.section--alt .process-steps__item {
+  background: var(--color-background);
+}
+
+.process-steps__item::before {
+  content: counter(step);
+  position: absolute;
+  inset-block-start: var(--space-5);
+  inset-inline-start: var(--space-5);
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: var(--radius-pill);
+  display: grid;
+  place-items: center;
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+  font-family: var(--font-family-heading);
+  font-weight: var(--font-weight-bold);
+}
+
+.process-steps__item h3 {
+  font-size: var(--font-size-lg);
+}
+
+.process-steps__item p {
+  color: var(--color-text-muted);
+}
+
+/* Text beside a photo */
+.media-split {
+  display: grid;
+  gap: var(--space-6);
+  align-items: center;
+}
+
+.media-split__text {
+  display: grid;
+  gap: var(--space-4);
+}
+
+/* Tables */
+.table-scroll {
+  overflow-x: auto;
+}
+
+.spec-table {
+  width: 100%;
+  min-width: 36rem;
+  border-collapse: collapse;
+  background: var(--color-surface);
+  font-size: var(--font-size-sm);
+}
+
+.spec-table th,
+.spec-table td {
+  padding: var(--space-3);
+  border: 0.0625rem solid var(--color-border);
+  text-align: start;
+  vertical-align: top;
+}
+
+.spec-table thead th {
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+  font-family: var(--font-family-heading);
+}
+
+.spec-table tbody th {
+  font-family: var(--font-family-heading);
+}
+
+/* Buttons and call-to-action band */
+.button {
+  min-height: 2.75rem;
+  padding: var(--space-2) var(--space-5);
+  border: 0.125rem solid var(--color-accent);
+  border-radius: var(--radius-pill);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+  font-family: var(--font-family-heading);
+  font-weight: var(--font-weight-bold);
+  text-decoration: none;
+}
+
+.button--secondary {
+  background: transparent;
+  color: var(--color-text);
+}
+
+.cta-band {
+  padding-block: var(--space-7);
+}
+
+.cta-band__inner {
+  display: grid;
+  gap: var(--space-5);
+  align-items: center;
+}
+
+.cta-band h2 {
+  font-size: var(--font-size-heading-sm);
+}
+
+.cta-band p {
+  margin-block-start: var(--space-2);
+}
+
+.cta-band__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.cta-band.section--accent .button {
+  border-color: var(--color-on-accent);
+  background: var(--color-on-accent);
+  color: var(--color-accent);
+}
+
+.cta-band.section--accent .button--secondary {
+  background: transparent;
+  color: var(--color-on-accent);
+}
+
+.cta-band.section--accent :focus-visible {
+  outline-color: var(--color-on-accent);
+}
+
+@media (min-width: 48rem) {
+  .page-hero--media {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    gap: var(--space-7);
+    align-items: center;
+  }
+
+  .page-hero--media .page-intro {
+    max-width: none;
+  }
+
+  .hero__layout--media {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  }
+
+  .feature-grid--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .feature-grid--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .feature-grid--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+  .shape-gallery {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  /* One member per row, photo and text side by side; the photo alternates left and right. */
+  .team-grid {
+    gap: var(--space-6);
+  }
+
+  .team-card:has(.team-card__media) {
+    grid-template-columns: minmax(0, 20rem) minmax(0, 1fr);
+    align-items: center;
+  }
+
+  .team-card:has(.team-card__media):nth-child(even) {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 20rem);
+  }
+
+  .team-card:nth-child(even) .team-card__media {
+    order: 2;
+  }
+
+  .team-card__body {
+    padding: var(--space-7);
+  }
+
+  .team-card__bio {
+    font-size: var(--font-size-base);
+  }
+
+  .media-split--media {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-7);
+  }
+
+  .media-split--reverse .media-split__text {
+    order: 2;
+  }
+
+  .cta-band__inner {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .process-steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.team-grid + .media {
+  margin-block-start: var(--space-6);
+}
+
+.shape-card .media figcaption {
+  padding-inline: var(--space-5);
+}
+
+/* Packaging examples */
+.example-grid {
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-4);
+  list-style: none;
+}
+
+@media (min-width: 48rem) {
+  .example-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

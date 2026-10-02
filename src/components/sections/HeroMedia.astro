@@ -1,0 +1,39 @@
+---
+import { hasMedia } from "../../config/media";
+import type { MediaLocale } from "../../config/media-slots";
+import Media from "../Media.astro";
+import Section from "./Section.astro";
+
+interface Props {
+  title: string;
+  lang: MediaLocale;
+  eyebrow?: string;
+  summary?: string;
+  /** Slot id; the hero stays a single text column until the file exists. */
+  mediaId?: string;
+}
+
+const { title, lang, eyebrow, summary, mediaId } = Astro.props;
+const showMedia = hasMedia(mediaId);
+---
+
+<Section tone="alt" class="hero">
+  <div class:list={["hero__layout", showMedia && "hero__layout--media"]}>
+    <div class="hero__text">
+      {eyebrow && <p class="section-header__eyebrow">{eyebrow}</p>}
+      <h1>{title}</h1>
+      {summary && <p class="hero__summary">{summary}</p>}
+      <div class="hero__actions"><slot name="actions" /></div>
+    </div>
+    {showMedia && mediaId && (
+      <Media
+        id={mediaId}
+        locale={lang}
+        ratio="4/3"
+        loading="eager"
+        sizes="(min-width: 48rem) 45vw, 100vw"
+        class="hero__media"
+      />
+    )}
+  </div>
+</Section>

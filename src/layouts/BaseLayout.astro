@@ -3,7 +3,14 @@ import CloudflareWebAnalytics from "../components/CloudflareWebAnalytics.astro";
 import SeoHead from "../components/SeoHead.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import SiteHeader from "../components/SiteHeader.astro";
-import { createLocalizedSeo, resolveSiteEnvironment } from "../config/seo";
+import WhatsAppButton from "../components/WhatsAppButton.astro";
+import { resolveFaviconHref, resolveSocialImage } from "../config/media-seo";
+import { registerPageCsp, THEME_BOOTSTRAP_SCRIPT } from "../config/security";
+import {
+  createLocalizedSeo,
+  resolveCloudflareAnalytics,
+  resolveSiteEnvironment,
+} from "../config/seo";
 import "../styles/global.css";
 
 interface Props {
@@ -13,9 +20,21 @@ interface Props {
   route: string;
   alternateRoute: string;
   indexable: boolean;
+  loadsTurnstile?: boolean;
+  /** Slot id of the link-preview image; falls back to brand/og-default. */
+  ogImage?: string;
 }
 
-const { title, description, lang, route, alternateRoute, indexable } = Astro.props;
+const {
+  title,
+  description,
+  lang,
+  route,
+  alternateRoute,
+  indexable,
+  loadsTurnstile = false,
+  ogImage,
+} = Astro.props;
 const seo = createLocalizedSeo({
   title,
   description,
@@ -24,6 +43,12 @@ const seo = createLocalizedSeo({
   alternateRoute,
   indexable,
   environment: resolveSiteEnvironment(import.meta.env.SITE_ENV),
+  image: await resolveSocialImage(ogImage, lang),
+});
+const iconHref = await resolveFaviconHref();
+registerPageCsp(Astro.csp, {
+  analytics: resolveCloudflareAnalytics(import.meta.env).enabled,
+  turnstile: loadsTurnstile,
 });
 ---
 
@@ -32,18 +57,9 @@ const seo = createLocalizedSeo({
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
-    <meta name="color-scheme" content="light dark" />
-    <SeoHead seo={seo} />
-    <script is:inline>
-      (() => {
-        try {
-          const savedTheme = localStorage.getItem("theme");
-          if (savedTheme === "light" || savedTheme === "dark") {
-            document.documentElement.dataset.theme = savedTheme;
-          }
-        } catch {}
-      })();
-    </script>
+    <meta name="color-scheme" content="light" />
+    <SeoHead seo={seo} iconHref={iconHref} />
+    <script is:inline set:html={THEME_BOOTSTRAP_SCRIPT}></script>
   </head>
   <body>
     <a class="skip-link" href="#main-content">
@@ -54,6 +70,7 @@ const seo = createLocalizedSeo({
       <slot />
     </main>
     <SiteFooter lang={lang} />
+    <WhatsAppButton lang={lang} />
     <CloudflareWebAnalytics />
   </body>
 </html>

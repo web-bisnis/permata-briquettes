@@ -6,6 +6,7 @@ import {
   statSync,
   writeFileSync,
 } from "node:fs";
+import { createHash } from "node:crypto";
 import { dirname, extname, join, relative, resolve, sep } from "node:path";
 
 const SITE_ORIGIN = "https://www.permatabriquettes.com";
@@ -68,6 +69,23 @@ function elements(html, name) {
   return [...html.matchAll(new RegExp(`<${name}\\b([^>]*)>([\\s\\S]*?)<\\/${name}>`, "giu"))];
 }
 
+function sha256(source) {
+  return `sha256-${createHash("sha256").update(source).digest("base64")}`;
+}
+
+function parseCsp(policy) {
+  return Object.fromEntries(
+    policy.split(";")
+      .map((directive) => directive.trim().split(/\s+/u))
+      .filter(([name]) => Boolean(name))
+      .map(([name, ...sources]) => [name.toLowerCase(), sources]),
+  );
+}
+
+function hasAnalyticsMarkup(html) {
+  return html.includes("static.cloudflareinsights.com/beacon.min.js") || html.includes("data-cf-beacon");
+}
+
 function plainText(value) {
   return decodeHtml(value.replace(/<[^>]+>/gu, " ").replace(/\s+/gu, " ").trim());
 }
@@ -75,6 +93,11 @@ function plainText(value) {
 const allFiles = walk(buildDirectory);
 const htmlFiles = allFiles.filter((file) => file.endsWith(".html"));
 const routes = new Set(htmlFiles.map(routeFromHtmlFile));
+// Ids per built page, so a link such as /id/tentang-kami/#team is checked against its target page.
+const idsByRoute = new Map(htmlFiles.map((file) => [
+  routeFromHtmlFile(file),
+  new Set([...readFileSync(file, "utf8").matchAll(/\sid=(?:"([^"]+)"|'([^']+)')/giu)].map((match) => match[1] ?? match[2])),
+]));
 const failures = [];
 const warnings = [];
 
@@ -164,10 +187,21 @@ const pages = htmlFiles
       hrefs.push(attrs.href);
       if (attrs.href.startsWith("#")) {
         requireCheck(idValues.has(attrs.href.slice(1)), `${route}: missing fragment target ${attrs.href}`);
+      } else if (attrs.href.startsWith("/_astro/")) {
+        // Links to emitted files, such as the full-size document previews.
+        requireCheck(
+          existsSync(join(buildDirectory, decodeURIComponent(new URL(attrs.href, SITE_ORIGIN).pathname))),
+          `${route}: linked asset is not built: ${attrs.href}`,
+        );
       } else if (attrs.href.startsWith("/")) {
         const target = new URL(attrs.href, SITE_ORIGIN);
         requireCheck(routes.has(target.pathname), `${route}: internal link target is not built: ${attrs.href}`);
-        if (target.hash) requireCheck(idValues.has(target.hash.slice(1)), `${route}: missing local target ${target.hash}`);
+        if (target.hash) {
+          requireCheck(
+            idsByRoute.get(target.pathname)?.has(target.hash.slice(1)) === true,
+            `${route}: missing target ${target.hash} on ${target.pathname}`,
+          );
+        }
       }
     }
     requireCheck(
@@ -181,6 +215,37 @@ const pages = htmlFiles
       requireCheck(Boolean(image.width) && Boolean(image.height), `${route}: image lacks intrinsic dimensions`);
     }
 
+    const cspValues = metaTags
+      .filter((tag) => tag["http-equiv"]?.toLowerCase() === "content-security-policy")
+      .map((tag) => tag.content);
+    requireCheck(cspValues.length === 1, `${route}: requires exactly one CSP meta element`);
+    const csp = parseCsp(cspValues[0] ?? "");
+    for (const directive of ["default-src", "script-src", "style-src", "object-src", "base-uri"]) {
+      requireCheck(Boolean(csp[directive]), `${route}: CSP lacks ${directive}`);
+    }
+    requireCheck(!/'unsafe-inline'|'unsafe-eval'/u.test(cspValues[0] ?? ""), `${route}: CSP allows unsafe sources`);
+    requireCheck(csp["script-src"]?.includes("'self'"), `${route}: CSP script-src blocks same-origin bundles`);
+    if (hasAnalyticsMarkup(html)) {
+      requireCheck(
+        csp["script-src"]?.includes("https://static.cloudflareinsights.com")
+          && csp["connect-src"]?.includes("https://cloudflareinsights.com"),
+        `${route}: CSP blocks the analytics beacon`,
+      );
+    }
+    for (const script of elements(html, "script").filter((match) => !attributes(match[1]).src)) {
+      requireCheck(
+        csp["script-src"]?.includes(`'${sha256(script[2])}'`),
+        `${route}: inline script is not covered by a CSP hash`,
+      );
+    }
+    for (const style of elements(html, "style")) {
+      requireCheck(
+        csp["style-src"]?.includes(`'${sha256(style[2])}'`),
+        `${route}: inline style is not covered by a CSP hash`,
+      );
+    }
+    requireCheck(!/<[a-z][^>]*\sstyle=/iu.test(html), `${route}: style attribute is blocked by CSP`);
+
     const htmlWithoutExecutableContent = html
       .replace(/<script\b[^>]*>[\s\S]*?<\/script>/giu, "")
       .replace(/<style\b[^>]*>[\s\S]*?<\/style>/giu, "");
@@ -190,8 +255,7 @@ const pages = htmlFiles
     );
     requireCheck(!/internalNotes|pending-approval/iu.test(html), `${route}: internal content marker found`);
 
-    const hasAnalytics = html.includes("static.cloudflareinsights.com/beacon.min.js")
-      || html.includes("data-cf-beacon");
+    const hasAnalytics = hasAnalyticsMarkup(html);
     requireCheck(
       hasAnalytics === (analyticsExpectation === "present"),
       `${route}: analytics beacon is unexpectedly ${hasAnalytics ? "present" : "absent"}`,
@@ -259,11 +323,26 @@ if (environment === "production") {
   requireCheck(!/^Sitemap:/mu.test(robotsText), `${environment} robots.txt must not advertise a sitemap`);
 }
 
+const STATIC_ROOT_FILES = new Set(["robots.txt", "sitemap.xml", "_headers"]);
 const knownOutput = allFiles.every((file) => {
   const path = relative(buildDirectory, file).split(sep).join("/");
-  return path.endsWith(".html") || path === "robots.txt" || path === "sitemap.xml" || path.startsWith("_astro/");
+  return path.endsWith(".html") || STATIC_ROOT_FILES.has(path) || path.startsWith("_astro/");
 });
 requireCheck(knownOutput, "build contains an unexpected endpoint or internal artifact");
+
+const headersPath = join(buildDirectory, "_headers");
+requireCheck(existsSync(headersPath), "build lacks _headers");
+const headersText = existsSync(headersPath) ? readFileSync(headersPath, "utf8") : "";
+for (const header of [
+  "Content-Security-Policy: frame-ancestors 'none'",
+  "X-Frame-Options: DENY",
+  "X-Content-Type-Options: nosniff",
+  "Referrer-Policy: strict-origin-when-cross-origin",
+  "Permissions-Policy:",
+]) {
+  requireCheck(headersText.includes(header), `_headers lacks ${header}`);
+}
+requireCheck(!/Strict-Transport-Security/iu.test(headersText), "_headers sets HSTS before its rollout decision");
 
 const sizeGroups = {};
 for (const file of allFiles) {

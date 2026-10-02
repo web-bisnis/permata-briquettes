@@ -1,59 +1,59 @@
 ---
 interface Props {
   labels?: {
-    control: string;
-    system: string;
-    light: string;
-    dark: string;
+    toDark: string;
+    toLight: string;
   };
 }
 
 const { labels = {
-  control: "Tema",
-  system: "Sistem",
-  light: "Terang",
-  dark: "Gelap",
+  toDark: "Switch to dark theme",
+  toLight: "Switch to light theme",
 } } = Astro.props;
 ---
 
-<div class="theme-control">
-  <label class="theme-control__label" for="theme-select">{labels.control}</label>
-  <select class="theme-control__select" id="theme-select" data-theme-select>
-    <option value="system">{labels.system}</option>
-    <option value="light">{labels.light}</option>
-    <option value="dark">{labels.dark}</option>
-  </select>
-</div>
+<!-- One toggle for two themes. The icon shows the current theme (CSS, from data-theme set before
+     first paint); the accessible name describes the action and is kept in sync by the script. -->
+<button
+  type="button"
+  class="theme-toggle"
+  data-theme-toggle
+  data-label-to-dark={labels.toDark}
+  data-label-to-light={labels.toLight}
+  aria-label={labels.toDark}
+  title={labels.toDark}
+>
+  <svg class="theme-toggle__sun" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+    <circle cx="12" cy="12" r="4" />
+    <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
+  </svg>
+  <svg class="theme-toggle__moon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+  </svg>
+</button>
 
 <script>
-  const themeSelect = document.querySelector<HTMLSelectElement>("[data-theme-select]");
+  const toggle = document.querySelector<HTMLButtonElement>("[data-theme-toggle]");
 
-  if (themeSelect) {
-    let savedTheme = "system";
-
-    try {
-      const storedTheme = localStorage.getItem("theme");
-      if (storedTheme === "light" || storedTheme === "dark") savedTheme = storedTheme;
-    } catch {
-      // The system preference remains the safe default when storage is unavailable.
-    }
-
-    themeSelect.value = savedTheme;
-
-    themeSelect.addEventListener("change", () => {
-      const selectedTheme = themeSelect.value;
-
-      if (selectedTheme === "light" || selectedTheme === "dark") {
-        document.documentElement.dataset.theme = selectedTheme;
-        try {
-          localStorage.setItem("theme", selectedTheme);
-        } catch {}
-        return;
+  if (toggle) {
+    // Light is the default for every visitor; only an explicit choice is stored.
+    const reflect = (theme: string) => {
+      const label = theme === "dark" ? toggle.dataset.labelToLight : toggle.dataset.labelToDark;
+      if (label) {
+        toggle.setAttribute("aria-label", label);
+        toggle.title = label;
       }
+    };
 
-      document.documentElement.removeAttribute("data-theme");
+    reflect(document.documentElement.dataset.theme === "dark" ? "dark" : "light");
+
+    toggle.addEventListener("click", () => {
+      const next = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+
+      document.documentElement.dataset.theme = next;
+      reflect(next);
       try {
-        localStorage.removeItem("theme");
+        localStorage.setItem("theme", next);
       } catch {}
     });
   }

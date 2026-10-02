@@ -1,0 +1,46 @@
+---
+import type { MediaLocale } from "../../config/media-slots";
+import Media from "../Media.astro";
+
+interface Panel {
+  title: string;
+  body: string;
+  mediaId: string;
+  /** Overlay color: neutral ink or the brand accent. Both keep white text above AA contrast. */
+  tone: "dark" | "accent";
+  linkLabel: string;
+  href: string;
+}
+
+interface Props {
+  id: string;
+  /** Names the region for assistive technology; the panels carry their own visible headings. */
+  title: string;
+  lang: MediaLocale;
+  panels: readonly Panel[];
+}
+
+const { id, title, lang, panels } = Astro.props;
+---
+
+<section class="product-panels" aria-labelledby={id}>
+  <h2 id={id} class="visually-hidden">{title}</h2>
+  <div class="product-panels__grid">
+    {panels.map((panel) => (
+      <article class:list={["product-panel", `product-panel--${panel.tone}`]}>
+        <Media
+          id={panel.mediaId}
+          locale={lang}
+          alt=""
+          sizes="(min-width: 48rem) 50vw, 100vw"
+          class="product-panel__media"
+        />
+        <div class="product-panel__body">
+          <h3>{panel.title}</h3>
+          <p>{panel.body}</p>
+          <a class="button" href={panel.href}>{panel.linkLabel}</a>
+        </div>
+      </article>
+    ))}
+  </div>
+</section>

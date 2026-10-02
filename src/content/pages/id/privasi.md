@@ -5,6 +5,8 @@ alternateRoute: /en/privacy/
 title: Pemberitahuan Privasi
 description: PT Permata Bara Globalindo (“kami”) menghormati privasi Anda. Pemberitahuan Privasi ini menjelaskan bagaimana kami memproses Data Pribadi ketika Anda mengirim inquiry melalui situs Permata Briquettes.
 heroTitle: Pemberitahuan Privasi
+layout: sections
+heroStyle: plain
 internalNotes: []
 ---
 

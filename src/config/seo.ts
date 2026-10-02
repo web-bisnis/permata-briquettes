@@ -12,6 +12,13 @@ export interface SeoAlternates {
   xDefault: string;
 }
 
+export interface SeoImage {
+  url: string;
+  alt: string;
+  width: number;
+  height: number;
+}
+
 export interface SeoMetadata {
   title: string;
   description: string;
@@ -20,7 +27,17 @@ export interface SeoMetadata {
   indexable: boolean;
   robots: RobotsDirective;
   alternates: SeoAlternates;
+  image?: SeoImage;
 }
+
+export const SITE_NAME = "Permata Briquettes";
+export const SITE_TAGLINE = "Beyond Briquettes, Beyond Trust.";
+export const SOCIAL_IMAGE_SIZE = { width: 1200, height: 630 } as const;
+
+export const OPEN_GRAPH_LOCALES: Record<SiteLocale, string> = {
+  en: "en_US",
+  id: "id_ID",
+};
 
 interface LocalizedSeoInput {
   title: string;
@@ -30,6 +47,7 @@ interface LocalizedSeoInput {
   alternateRoute: string;
   indexable: boolean;
   environment: SiteEnvironment;
+  image?: SeoImage;
 }
 
 interface AnalyticsEnvironment {
@@ -68,8 +86,9 @@ export function getRobotsDirective(
   return environment === "production" && indexable ? "index, follow" : "noindex, nofollow";
 }
 
-export function createRootSeo(environment: SiteEnvironment): SeoMetadata {
+export function createRootSeo(environment: SiteEnvironment, image?: SeoImage): SeoMetadata {
   return {
+    ...(image ? { image } : {}),
     title: ROOT_SEO.title,
     description: ROOT_SEO.description,
     canonical: toAbsoluteUrl(ROOT_SEO.route),
@@ -103,6 +122,7 @@ export function createLocalizedSeo(input: LocalizedSeoInput): SeoMetadata {
     : { en: input.alternateRoute, id: input.route };
 
   return {
+    ...(input.image ? { image: input.image } : {}),
     title: input.title,
     description: input.description,
     canonical: toAbsoluteUrl(input.route),
