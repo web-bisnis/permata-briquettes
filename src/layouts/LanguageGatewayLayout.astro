@@ -2,10 +2,21 @@
 import CloudflareWebAnalytics from "../components/CloudflareWebAnalytics.astro";
 import SeoHead from "../components/SeoHead.astro";
 import ThemeControl from "../components/ThemeControl.astro";
-import { createRootSeo, resolveSiteEnvironment } from "../config/seo";
+import { resolveFaviconHref, resolveSocialImage } from "../config/media-seo";
+import { registerPageCsp, THEME_BOOTSTRAP_SCRIPT } from "../config/security";
+import {
+  createRootSeo,
+  resolveCloudflareAnalytics,
+  resolveSiteEnvironment,
+} from "../config/seo";
 import "../styles/global.css";
 
-const seo = createRootSeo(resolveSiteEnvironment(import.meta.env.SITE_ENV));
+const seo = createRootSeo(
+  resolveSiteEnvironment(import.meta.env.SITE_ENV),
+  await resolveSocialImage(undefined, "en"),
+);
+const iconHref = await resolveFaviconHref();
+registerPageCsp(Astro.csp, { analytics: resolveCloudflareAnalytics(import.meta.env).enabled });
 ---
 
 <!doctype html>
@@ -13,30 +24,17 @@ const seo = createRootSeo(resolveSiteEnvironment(import.meta.env.SITE_ENV));
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
-    <meta name="color-scheme" content="light dark" />
-    <SeoHead seo={seo} />
-    <script is:inline>
-      (() => {
-        try {
-          const savedTheme = localStorage.getItem("theme");
-          if (savedTheme === "light" || savedTheme === "dark") {
-            document.documentElement.dataset.theme = savedTheme;
-          }
-        } catch {}
-      })();
-    </script>
+    <meta name="color-scheme" content="light" />
+    <meta http-equiv="refresh" content="0;url=/en/" />
+    <SeoHead seo={seo} iconHref={iconHref} />
+    <script is:inline set:html={THEME_BOOTSTRAP_SCRIPT}></script>
   </head>
   <body>
     <a class="skip-link" href="#main-content">Skip to content / Lewati ke konten</a>
     <header class="gateway-header">
       <div class="container gateway-header__inner">
         <ThemeControl
-          labels={{
-            control: "Theme / Tema",
-            system: "System / Sistem",
-            light: "Light / Terang",
-            dark: "Dark / Gelap",
-          }}
+          labels={{ toDark: "Dark theme / Tema gelap", toLight: "Light theme / Tema terang" }}
         />
       </div>
     </header>

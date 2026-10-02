@@ -1,5 +1,6 @@
 ---
 import { navigationItems } from "../config/navigation";
+import Logo from "./Logo.astro";
 
 interface Props {
   lang: "en" | "id";
@@ -16,7 +17,10 @@ const privacyLink = lang === "id"
 
 <footer class="site-footer">
   <div class="container site-footer__inner">
-    <p>{footerCopy}</p>
+    <div class="site-footer__brand">
+      <Logo markOnly />
+      <p>{footerCopy}</p>
+    </div>
     <nav aria-label={lang === "id" ? "Navigasi footer" : "Footer navigation"}>
       <ul class="footer-navigation">
         {navigationItems[lang].map((item) => (

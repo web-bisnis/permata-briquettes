@@ -1,0 +1,59 @@
+---
+import { Image, Picture } from "astro:assets";
+import { getMedia, getMediaAlt, getMediaCaption } from "../config/media";
+import type { MediaLocale } from "../config/media-slots";
+
+interface Props {
+  /** Slot id such as "products/shape-cube". Renders nothing until the file exists. */
+  id: string;
+  locale: MediaLocale;
+  /** Overrides the slot's alt text. Pass "" for a purely decorative image. */
+  alt?: string;
+  caption?: string;
+  /** CSS aspect-ratio of the frame; the image is cropped to fill it. */
+  ratio?: "16/9" | "3/2" | "4/3" | "1/1" | "4/5" | "9/16" | "1.91/1";
+  sizes?: string;
+  /** Use "eager" only for the one image above the fold. */
+  loading?: "lazy" | "eager";
+  class?: string;
+}
+
+const {
+  id,
+  locale,
+  alt,
+  caption,
+  ratio,
+  sizes = "(min-width: 48rem) 50vw, 100vw",
+  loading = "lazy",
+  class: className,
+} = Astro.props;
+
+const image = getMedia(id);
+const resolvedAlt = alt ?? getMediaAlt(id, locale);
+// A caption is only shown when one is written.
+const resolvedCaption = caption ?? getMediaCaption(id, locale);
+const isVector = image?.format === "svg";
+const ratioClass = ratio ? `media--${ratio.replace(/[/.]/gu, "-")}` : undefined;
+const classes = ["media", ratioClass, className];
+---
+
+{image && (
+  <figure class:list={classes}>
+    {isVector
+      ? <Image src={image} alt={resolvedAlt} loading={loading} />
+      : (
+        <Picture
+          src={image}
+          alt={resolvedAlt}
+          formats={["avif", "webp"]}
+          widths={[480, 768, 1200, 1600]}
+          sizes={sizes}
+          loading={loading}
+          fetchpriority={loading === "eager" ? "high" : undefined}
+          decoding={loading === "eager" ? "sync" : "async"}
+        />
+      )}
+    {resolvedCaption && <figcaption>{resolvedCaption}</figcaption>}
+  </figure>
+)}

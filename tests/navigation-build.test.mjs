@@ -37,7 +37,7 @@ describe("responsive header navigation build", () => {
     for (const html of buildNavigationPages()) {
       expect(html).toMatch(/<details\b[^>]*\bdata-site-navigation\b[^>]*\bopen\b/iu);
       expect(html).toContain("[data-site-navigation]");
-      expect(html).toContain("(min-width: 48rem)");
+      expect(html).toContain("(min-width: 75rem)");
       expect(html).toMatch(/\.open\s*=\s*[^;{}]+\.matches/gu);
       expect(html).toMatch(/addEventListener\([`'"]change[`'"]/gu);
     }
