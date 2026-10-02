@@ -1,0 +1,59 @@
+---
+import { getImage } from "astro:assets";
+import { DOCUMENTS } from "../../config/documents";
+import { getMedia, hasMedia } from "../../config/media";
+import type { MediaLocale } from "../../config/media-slots";
+import DocumentCard from "./DocumentCard.astro";
+import PageBlock from "./PageBlock.astro";
+
+interface Props {
+  lang: MediaLocale;
+}
+
+const { lang } = Astro.props;
+const id = lang === "id";
+const copy = {
+  title: id ? "Pratinjau dokumen" : "Document previews",
+  note: id
+    ? "Dokumen di atas adalah contoh dengan tanggal masing-masing; sebagian data disamarkan. Mintalah dokumen yang berlaku dan laporan batch terkini untuk pesanan Anda."
+    : "The documents above are samples with their own dates; some details are redacted. Ask for the documents that apply and the current batch report for your order.",
+  issuer: id ? "Penerbit" : "Issuer",
+  date: id ? "Tanggal" : "Date",
+  validUntil: id ? "Berlaku sampai" : "Valid until",
+  owner: id ? "Pemilik" : "Owner",
+  open: id ? "Buka dokumen lengkap" : "Open the full document",
+};
+const formatDate = new Intl.DateTimeFormat(id ? "id-ID" : "en-GB", { dateStyle: "long", timeZone: "UTC" });
+const format = (iso: string | undefined) => (iso ? formatDate.format(new Date(`${iso}T00:00:00Z`)) : undefined);
+
+const items = await Promise.all(
+  DOCUMENTS.filter((document) => hasMedia(document.mediaId)).map(async (document) => {
+    const source = getMedia(document.mediaId);
+    const full = source ? await getImage({ src: source, width: 1600, format: "jpg" }) : undefined;
+    return { document, href: full?.src };
+  }),
+);
+---
+
+{items.length > 0 && (
+  <PageBlock id="document-previews" title={copy.title} note={copy.note}>
+    <div class="feature-grid feature-grid--3">
+      {items.map(({ document, href }) => (
+        <DocumentCard
+          lang={lang}
+          title={document.title}
+          description={document.description[lang]}
+          previewId={document.mediaId}
+          previewHref={href}
+          previewLabel={`${copy.open}: ${document.title}, ${document.issuer}`}
+          rows={[
+            { label: copy.issuer, value: document.issuer },
+            { label: copy.date, value: format(document.date) },
+            { label: copy.validUntil, value: format(document.validUntil) },
+            { label: copy.owner, value: document.owner?.[lang] },
+          ]}
+        />
+      ))}
+    </div>
+  </PageBlock>
+)}

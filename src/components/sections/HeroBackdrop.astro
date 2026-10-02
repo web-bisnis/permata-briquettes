@@ -1,0 +1,44 @@
+---
+import { hasMedia } from "../../config/media";
+import type { MediaLocale } from "../../config/media-slots";
+import Media from "../Media.astro";
+
+interface Props {
+  title: string;
+  lang: MediaLocale;
+  eyebrow?: string;
+  summary?: string;
+  /** Slot id of the full-width background; the hero is a plain text section until the file exists. */
+  mediaId?: string;
+  /** Which part of the photo stays visible when the wide frame crops it. */
+  focus?: "top" | "center" | "bottom";
+  /** Rendered markdown shown under the summary, such as one link to a detail page. */
+  introHtml?: string;
+}
+
+const { title, lang, eyebrow, summary, mediaId, focus = "center", introHtml } = Astro.props;
+const showMedia = hasMedia(mediaId);
+---
+
+<section class:list={["hero-backdrop", showMedia && "hero-backdrop--photo", `hero-backdrop--focus-${focus}`]}>
+  {showMedia && mediaId && (
+    <Media
+      id={mediaId}
+      locale={lang}
+      alt=""
+      caption=""
+      loading="eager"
+      sizes="100vw"
+      class="hero-backdrop__media"
+    />
+  )}
+  <div class="container hero-backdrop__inner">
+    <div class="hero__text">
+      {eyebrow && <p class="section-header__eyebrow">{eyebrow}</p>}
+      <h1>{title}</h1>
+      {summary && <p class="hero__summary">{summary}</p>}
+      <div class="hero__actions"><slot name="actions" /></div>
+      {introHtml && <div class="hero__intro" set:html={introHtml} />}
+    </div>
+  </div>
+</section>

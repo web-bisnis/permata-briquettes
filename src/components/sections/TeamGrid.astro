@@ -1,0 +1,43 @@
+---
+import type { MediaLocale } from "../../config/media-slots";
+import Media from "../Media.astro";
+
+interface Member {
+  name: string;
+  role: string;
+  bio?: string;
+  /** Slot id such as "team/nama-anggota"; the card shows text only until the file exists. */
+  photoId?: string;
+  /** Alt text for the portrait; defaults to the person's name. */
+  photoAlt?: string;
+}
+
+interface Props {
+  lang: MediaLocale;
+  members: readonly Member[];
+}
+
+const { lang, members } = Astro.props;
+---
+
+<ul class="team-grid">
+  {members.map((member) => (
+    <li class="card team-card">
+      {member.photoId && (
+        <Media
+          id={member.photoId}
+          locale={lang}
+          alt={member.photoAlt ?? member.name}
+          ratio="4/5"
+          sizes="(min-width: 48rem) 30vw, 100vw"
+          class="team-card__media"
+        />
+      )}
+      <div class="team-card__body">
+        <h3>{member.name}</h3>
+        <p class="team-card__role">{member.role}</p>
+        {member.bio && <p class="team-card__bio">{member.bio}</p>}
+      </div>
+    </li>
+  ))}
+</ul>

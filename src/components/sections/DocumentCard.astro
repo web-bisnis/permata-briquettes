@@ -1,0 +1,40 @@
+---
+import type { MediaLocale } from "../../config/media-slots";
+import Media from "../Media.astro";
+
+interface Props {
+  title: string;
+  description: string;
+  lang: MediaLocale;
+  /** Facts printed on the document, such as issuer and date. Rows without a value are not shown. */
+  rows?: readonly { label: string; value: string | undefined }[];
+  previewId?: string;
+  /** Full-size file; the preview links to it so buyers can read the whole document. */
+  previewHref?: string;
+  previewLabel?: string;
+}
+
+const { title, description, lang, rows = [], previewId, previewHref, previewLabel } = Astro.props;
+const shown = rows.filter((row) => row.value);
+---
+
+<article class="card document-card">
+  {previewId && (
+    previewHref ? (
+      <a class="document-card__preview" href={previewHref} target="_blank" rel="noopener" aria-label={previewLabel}>
+        <Media id={previewId} locale={lang} ratio="4/5" sizes="(min-width: 48rem) 20vw, 60vw" class="document-card__media" />
+      </a>
+    ) : (
+      <Media id={previewId} locale={lang} ratio="4/5" sizes="(min-width: 48rem) 20vw, 60vw" class="document-card__media" />
+    )
+  )}
+  <div class="document-card__body">
+    <h3>{title}</h3>
+    <p>{description}</p>
+    {shown.length > 0 && (
+      <dl class="document-card__meta">
+        {shown.map((row) => <div><dt>{row.label}</dt><dd>{row.value}</dd></div>)}
+      </dl>
+    )}
+  </div>
+</article>

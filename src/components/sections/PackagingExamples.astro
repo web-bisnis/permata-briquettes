@@ -1,0 +1,26 @@
+---
+import { hasMedia } from "../../config/media";
+import type { MediaLocale } from "../../config/media-slots";
+import Media from "../Media.astro";
+import PageBlock from "./PageBlock.astro";
+
+interface Props {
+  lang: MediaLocale;
+}
+
+const { lang } = Astro.props;
+const title = lang === "id" ? "Contoh kemasan" : "Packaging examples";
+const ids = ["packaging/inner-box", "packaging/master-carton", "packaging/private-label"].filter(hasMedia);
+---
+
+{ids.length > 0 && (
+  <PageBlock id="packaging-examples" title={title}>
+    <ul class="example-grid">
+      {ids.map((id) => (
+        <li>
+          <Media id={id} locale={lang} ratio="4/3" sizes="(min-width: 48rem) 30vw, 100vw" />
+        </li>
+      ))}
+    </ul>
+  </PageBlock>
+)}

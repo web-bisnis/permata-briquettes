@@ -1,0 +1,41 @@
+---
+import type { CollectionEntry } from "astro:content";
+import type { MediaLocale } from "../../config/media-slots";
+import GradeList from "./GradeList.astro";
+import PageBlock from "./PageBlock.astro";
+import ShapeGallery from "./ShapeGallery.astro";
+import SpecTable from "./SpecTable.astro";
+
+interface Props {
+  lang: MediaLocale;
+  product: CollectionEntry<"products">["data"];
+}
+
+const { lang, product } = Astro.props;
+
+const copy = lang === "id"
+  ? {
+      listTitle: "Pilihan grade",
+      gradesTitle: "Perbandingan grade",
+      shapesTitle: "Ukuran yang tercatat",
+      shapesNote: "Ukuran khusus perlu disetujui per pesanan.",
+    }
+  : {
+      listTitle: "Grade options",
+      gradesTitle: "Grade comparison",
+      shapesTitle: "Listed dimensions",
+      shapesNote: "Custom sizes require case-by-case confirmation.",
+    };
+---
+
+<PageBlock id="grade-list" title={copy.listTitle}>
+  <GradeList lang={lang} grades={product.grades} />
+</PageBlock>
+
+<PageBlock id="grade-comparison" title={copy.gradesTitle} note={product.referenceOnlyNotice}>
+  <SpecTable lang={lang} grades={product.grades} />
+</PageBlock>
+
+<PageBlock id="listed-dimensions" title={copy.shapesTitle} note={copy.shapesNote}>
+  <ShapeGallery lang={lang} shapes={product.shapes} />
+</PageBlock>

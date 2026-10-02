@@ -1,0 +1,113 @@
+---
+import { hasMedia } from "../../config/media";
+import type { MediaLocale } from "../../config/media-slots";
+import { splitSteps, splitSubsections, type HtmlSection } from "../../lib/compose";
+import Media from "../Media.astro";
+import Section from "./Section.astro";
+import SectionHeader from "./SectionHeader.astro";
+
+interface Props {
+  section: HtmlSection;
+  lang: MediaLocale;
+  kind?: "split" | "media" | "band" | "centered" | "steps" | "grades" | "table";
+  eyebrow?: string;
+  media?: string;
+  reverse?: boolean;
+}
+
+const { section, lang, kind: requestedKind = "split", eyebrow, media, reverse = false } = Astro.props;
+// A photo section reads as plain text until its file exists, so pages never show an empty frame.
+const kind = requestedKind === "media" && !hasMedia(media) ? "split" : requestedKind;
+const { id, title, body } = section;
+
+const steps = kind === "steps" ? splitSteps(body) : undefined;
+const grades = kind === "grades" ? splitSubsections(body) : undefined;
+const gradeMediaId = (name: string) => `products/ash-${name.toLowerCase().replace(/\s+/gu, "-")}`;
+const ashCaption = lang === "id" ? "Abu setelah pembakaran" : "Ash after burning";
+---
+
+{kind === "band" ? (
+  <section class="band" aria-labelledby={id}>
+    <div class="container composed composed--split">
+      <SectionHeader id={id} title={title} eyebrow={eyebrow} />
+      <div class="composed__body" set:html={body} />
+    </div>
+  </section>
+) : (
+  <Section labelledby={id}>
+    {kind === "split" && (
+      <div class="composed composed--split">
+        <SectionHeader id={id} title={title} eyebrow={eyebrow} />
+        <div class="composed__body" set:html={body} />
+      </div>
+    )}
+
+    {kind === "centered" && (
+      <div class="home-intro">
+        <SectionHeader id={id} title={title} eyebrow={eyebrow} align="center" />
+        <div class="composed__body composed__body--centered" set:html={body} />
+      </div>
+    )}
+
+    {kind === "media" && media && (
+      <div class:list={["media-split", "media-split--media", reverse && "media-split--reverse"]}>
+        <div class="media-split__text">
+          <SectionHeader id={id} title={title} eyebrow={eyebrow} />
+          <div class="composed__body" set:html={body} />
+        </div>
+        <Media id={media} locale={lang} ratio="4/3" class="media-split__media" />
+      </div>
+    )}
+
+    {kind === "steps" && steps && (
+      <div class="composed composed--stack">
+        <SectionHeader id={id} title={title} eyebrow={eyebrow} />
+        {steps.before && <div class="composed__body" set:html={steps.before} />}
+        <ol class="step-list">
+          {steps.steps.map((step) => (
+            <li class="step-list__item">
+              {step.title && <h3>{step.title}</h3>}
+              <div set:html={step.body} />
+            </li>
+          ))}
+        </ol>
+        {steps.after && <div class="composed__body" set:html={steps.after} />}
+      </div>
+    )}
+
+    {kind === "grades" && grades && (
+      <div class="composed composed--stack">
+        <SectionHeader id={id} title={title} eyebrow={eyebrow} />
+        {grades.lead && <div class="composed__body" set:html={grades.lead} />}
+        <ol class="grade-list">
+          {grades.items.map((item, index) => (
+            <li class="grade-row">
+              <div class="grade-row__text">
+                <p class="grade-row__number" aria-hidden="true">{String(index + 1).padStart(2, "0")}.</p>
+                <h3>{item.title}</h3>
+                <div class="composed__body" set:html={item.body} />
+              </div>
+              {hasMedia(gradeMediaId(item.title)) && (
+                <Media
+                  id={gradeMediaId(item.title)}
+                  locale={lang}
+                  ratio="4/3"
+                  caption={ashCaption}
+                  sizes="(min-width: 48rem) 20vw, 60vw"
+                  class="grade-row__media"
+                />
+              )}
+            </li>
+          ))}
+        </ol>
+      </div>
+    )}
+
+    {kind === "table" && (
+      <div class="composed composed--stack">
+        <SectionHeader id={id} title={title} eyebrow={eyebrow} />
+        <div class="composed__body composed__body--table" set:html={body} />
+      </div>
+    )}
+  </Section>
+)}

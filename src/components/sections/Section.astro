@@ -1,0 +1,19 @@
+---
+interface Props {
+  /** "alt" uses the surface color, "accent" the brand color; sections alternate to break up long pages. */
+  tone?: "default" | "alt" | "accent";
+  /** Id of the heading that names this section, for the region landmark. */
+  labelledby?: string;
+  /** Narrow keeps long-form text at a readable measure. */
+  narrow?: boolean;
+  class?: string;
+}
+
+const { tone = "default", labelledby, narrow = false, class: className } = Astro.props;
+---
+
+<section class:list={["section", `section--${tone}`, className]} aria-labelledby={labelledby}>
+  <div class:list={["container", narrow && "section__inner--narrow"]}>
+    <slot />
+  </div>
+</section>

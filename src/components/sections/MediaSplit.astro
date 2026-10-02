@@ -1,0 +1,21 @@
+---
+import { hasMedia } from "../../config/media";
+import type { MediaLocale } from "../../config/media-slots";
+import Media from "../Media.astro";
+
+interface Props {
+  mediaId: string;
+  lang: MediaLocale;
+  /** Puts the photo on the other side from the text on wide screens. */
+  reverse?: boolean;
+  ratio?: "16/9" | "3/2" | "4/3" | "1/1" | "4/5";
+}
+
+const { mediaId, lang, reverse = false, ratio = "4/3" } = Astro.props;
+const showMedia = hasMedia(mediaId);
+---
+
+<div class:list={["media-split", showMedia && "media-split--media", reverse && "media-split--reverse"]}>
+  <div class="media-split__text"><slot /></div>
+  {showMedia && <Media id={mediaId} locale={lang} ratio={ratio} class="media-split__media" />}
+</div>

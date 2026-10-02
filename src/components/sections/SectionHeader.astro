@@ -1,0 +1,18 @@
+---
+interface Props {
+  id: string;
+  title: string;
+  eyebrow?: string;
+  intro?: string;
+  /** Centered headings are only for short introductory sections. */
+  align?: "start" | "center";
+}
+
+const { id, title, eyebrow, intro, align = "start" } = Astro.props;
+---
+
+<header class:list={["section-header", align === "center" && "section-header--center"]}>
+  {eyebrow && <p class="section-header__eyebrow">{eyebrow}</p>}
+  <h2 id={id}>{title}</h2>
+  {intro && <p class="section-header__intro">{intro}</p>}
+</header>

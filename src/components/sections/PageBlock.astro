@@ -1,0 +1,20 @@
+---
+import Section from "./Section.astro";
+import SectionHeader from "./SectionHeader.astro";
+
+interface Props {
+  id: string;
+  title: string;
+  eyebrow?: string;
+  /** Short note under the content, for example that figures are reference values. */
+  note?: string;
+}
+
+const { id, title, eyebrow, note } = Astro.props;
+---
+
+<Section labelledby={id}>
+  <SectionHeader id={id} title={title} eyebrow={eyebrow} />
+  <slot />
+  {note && <p class="section-note">{note}</p>}
+</Section>
