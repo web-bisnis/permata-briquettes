@@ -7,6 +7,18 @@ description: Explore bulk, inner-box and master-carton options for coconut charc
 eyebrow: Packaging & Private Label
 heroTitle: Packing that matches the product and your market.
 heroSummary: Choose between bulk and branded inner-box configurations. Confirm box weight, materials and print finish before the order is agreed.
+heroMedia: packaging/overview
+packagingExamples: true
+layout: sections
+heroStyle: backdrop
+heroFocus: center
+closingCta: true
+compose:
+  - kind: split
+  - kind: band
+    eyebrow: Private label
+  - kind: split
+  - kind: centered
 internalNotes:
   - id: packaging-decisions
     topic: Packing configuration and artwork process
@@ -14,8 +26,8 @@ internalNotes:
     required: Approve inner-box weights, master-carton combinations, artwork template, print specifications, design minimums, approval process, and route-specific protection.
   - id: contact-actions
     topic: Packaging calls to action
-    decision: Active links are withheld for this stage.
-    required: Complete the approved contact implementation.
+    decision: The email and WhatsApp buttons use the same official channels as the Contact page (src/config/contact.ts).
+    required: The inquiry form still waits for a separate decision.
 ---
 
 ## Formats in the source data

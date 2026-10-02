@@ -7,6 +7,12 @@ description: Hubungi Permata Briquettes melalui email atau nomor WhatsApp resmi,
 eyebrow: Kontak
 heroTitle: Hubungi Permata Briquettes.
 heroSummary: Gunakan alamat email atau nomor WhatsApp resmi berikut untuk menghubungi kami secara langsung.
+layout: sections
+heroStyle: backdrop
+heroMedia: brand/office
+compose:
+  - kind: split
+  - kind: split
 internalNotes: []
 ---
 

@@ -7,6 +7,17 @@ description: Learn the one-container MOQ, EXW/FOB/CNF/CIF options and possible I
 eyebrow: Ordering & Shipping
 heroTitle: A clear starting point for container orders.
 heroSummary: Tell us what you need and where it is going. We will confirm the product configuration, commercial terms and shipment documents before an order is signed.
+heroMedia: shipping/container-loading
+layout: sections
+heroStyle: backdrop
+heroFocus: center
+closingCta: true
+compose:
+  - kind: centered
+  - kind: split
+  - kind: steps
+  - kind: band
+  - kind: split
 internalNotes:
   - id: commercial-decisions
     topic: Order and shipment terms
@@ -14,8 +25,8 @@ internalNotes:
     required: Approve the relevant values and procedures per offer and route.
   - id: contact-actions
     topic: Inquiry and shipment quote calls to action
-    decision: Active links are withheld for this stage.
-    required: Complete the approved contact implementation.
+    decision: The email and WhatsApp buttons use the same official channels as the Contact page (src/config/contact.ts).
+    required: The inquiry form still waits for a separate decision.
 ---
 
 ## Minimum order

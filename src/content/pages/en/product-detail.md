@@ -7,6 +7,16 @@ description: Review reference specifications for Platinum, Super Premium and Pre
 eyebrow: Product specifications
 heroTitle: Coconut shell charcoal briquettes for shisha and hookah.
 heroSummary: Three active grades, with cube and other listed shapes. Use the figures below to start a specification discussion, then confirm the final values for your order.
+heroMedia: products/line-shisha
+product: en/coconut-charcoal-briquettes
+layout: sections
+heroStyle: backdrop
+heroFocus: center
+closingCta: true
+compose:
+  - kind: centered
+  - kind: split
+  - kind: band
 internalNotes:
   - id: product-decisions
     topic: Product data requiring approval
@@ -14,39 +24,13 @@ internalNotes:
     required: Approve composition wording, Super Premium ash, contractual limits, test methods, tolerances, full dimensions, grade-size combinations, and document links.
   - id: contact-actions
     topic: Specification and inquiry calls to action
-    decision: Active links are withheld for this stage.
-    required: Complete the approved contact implementation.
+    decision: The email and WhatsApp buttons use the same official channels as the Contact page (src/config/contact.ts).
+    required: The inquiry form still waits for a separate decision.
 ---
 
 ## Components and use
 
 The listed components are coconut shell charcoal, food-grade tapioca and water. The briquettes are intended for shisha and hookah. Odor-free burning and no chemical additives are noted in the product information.
-
-## Grade comparison
-
-| Reference parameter | Platinum | Super Premium | Premium |
-| --- | --- | --- | --- |
-| Ash content | 1.6–1.9% | — | 2.3–2.5% |
-| Burn time | 2 h 30 min | 2 h+ | 1 h 30 min+ |
-| Ignition time | 10 min | 10 min | 10 min |
-| Moisture | 5% max | 6% max | 8% max |
-| Fixed carbon | 80% min | 80% min | 75% min |
-| Volatile matter | 14.5% max | 16% max | 18% max |
-| Ash color | Natural white | Natural white | Natural grey |
-
-These are reference figures. The final limits and test methods will be specified for the order.
-
-## Listed dimensions
-
-| Shape | Sizes in the source data |
-| --- | --- |
-| Cube | 20×20×20, 22×22×22, 25×25×25, 26×26×26, 27×27×27, 28×28×28, 31×31×31 mm |
-| Finger | 18×35, 18×50, 20×35, 20×50, 22×48, 22×50 mm |
-| Hexagonal | 18×35, 18×50, 20×35, 20×50, 22×48, 22×50 mm |
-| Flat/Brix | 25×25×17 mm |
-| Dome | 18×35, 18×50, 20×35, 20×50, 22×48, 22×50 mm |
-
-Custom sizes require case-by-case confirmation.
 
 ## Packaging and order volume
 

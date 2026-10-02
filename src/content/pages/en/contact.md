@@ -7,6 +7,12 @@ description: Contact Permata Briquettes through the official email or WhatsApp n
 eyebrow: Contact
 heroTitle: Contact Permata Briquettes.
 heroSummary: Use the official email address or WhatsApp number below to contact us directly.
+layout: sections
+heroStyle: backdrop
+heroMedia: brand/office
+compose:
+  - kind: split
+  - kind: split
 internalNotes: []
 ---
 

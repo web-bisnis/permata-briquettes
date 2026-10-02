@@ -1,0 +1,94 @@
+---
+import { contactActions } from "../config/contact";
+import type { MediaLocale } from "../config/media-slots";
+import CtaBand from "./sections/CtaBand.astro";
+import FeatureGrid from "./sections/FeatureGrid.astro";
+import HeroBackdrop from "./sections/HeroBackdrop.astro";
+import PartnerLogos from "./sections/PartnerLogos.astro";
+import ProductPanels from "./sections/ProductPanels.astro";
+import Section from "./sections/Section.astro";
+import SectionHeader from "./sections/SectionHeader.astro";
+import TeamBand from "./sections/TeamBand.astro";
+
+interface Props {
+  lang: MediaLocale;
+  eyebrow?: string;
+  title: string;
+  summary?: string;
+  heroMedia?: string;
+  home: {
+    profile: { eyebrow: string; title: string; body: string };
+    intro: { eyebrow: string; title: string; body: string; linkLabel: string; href: string };
+    panels: {
+      title: string;
+      items: {
+        title: string;
+        body: string;
+        mediaId: string;
+        tone: "dark" | "accent";
+        linkLabel: string;
+        href: string;
+      }[];
+    };
+    strengths: {
+      eyebrow: string;
+      title: string;
+      items: {
+        icon: "specs" | "quality" | "shipping";
+        title: string;
+        body: string;
+        linkLabel: string;
+        href: string;
+      }[];
+      note?: string;
+    };
+    team: { eyebrow: string; title: string; body: string; linkLabel: string; href: string };
+    cta: { title: string; body: string };
+  };
+  members: { name: string; role: string; photoId?: string }[];
+}
+
+const { lang, eyebrow, title, summary, heroMedia, home, members } = Astro.props;
+const actions = contactActions(lang);
+---
+
+<HeroBackdrop lang={lang} eyebrow={eyebrow} title={title} summary={summary} mediaId={heroMedia} focus="bottom">
+  {actions.map((action) => (
+    <a
+      slot="actions"
+      class:list={["button", action.variant === "secondary" && "button--secondary"]}
+      href={action.href}
+    >
+      {action.label}
+    </a>
+  ))}
+</HeroBackdrop>
+
+<Section labelledby="home-profile">
+  <div class="home-profile">
+    <SectionHeader id="home-profile" eyebrow={home.profile.eyebrow} title={home.profile.title} />
+    <p class="home-profile__body">{home.profile.body}</p>
+  </div>
+</Section>
+
+<Section labelledby="home-intro" class="section--ruled">
+  <div class="home-intro">
+    <SectionHeader id="home-intro" align="center" eyebrow={home.intro.eyebrow} title={home.intro.title} />
+    <p>{home.intro.body}</p>
+    <a class="button" href={home.intro.href}>{home.intro.linkLabel}</a>
+  </div>
+</Section>
+
+<ProductPanels id="home-panels" title={home.panels.title} lang={lang} panels={home.panels.items} />
+
+<Section labelledby="home-strengths">
+  <SectionHeader id="home-strengths" eyebrow={home.strengths.eyebrow} title={home.strengths.title} />
+  <FeatureGrid columns={home.strengths.items.length === 4 ? 4 : 3} items={home.strengths.items} />
+  {home.strengths.note && <p class="section-note">{home.strengths.note}</p>}
+</Section>
+
+<PartnerLogos lang={lang} />
+
+<TeamBand id="home-team" lang={lang} members={members} {...home.team} />
+
+<CtaBand id="home-cta" tone="plain" title={home.cta.title} body={home.cta.body} actions={actions} />

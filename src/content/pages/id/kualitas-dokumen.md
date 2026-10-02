@@ -7,6 +7,17 @@ description: Tinjau parameter mutu serta ketersediaan ROA, SHT, MSDS, ISO, dan F
 eyebrow: Kualitas & Dokumen
 heroTitle: Periksa spesifikasi beserta dokumen pendukungnya.
 heroSummary: Angka produk perlu dilihat bersama grade, metode uji, tanggal laporan, dan batch yang diperiksa. Dokumen yang tersedia menjadi bagian dari pembahasan pesanan.
+layout: sections
+heroStyle: backdrop
+heroMedia: documents/hero
+closingCta: true
+showLabLogos: true
+compose:
+  - kind: split
+  - kind: table
+    attach: documents
+  - kind: band
+  - kind: centered
 internalNotes:
   - id: document-publication
     topic: Detail dan file dokumen
@@ -14,8 +25,8 @@ internalNotes:
     required: Setujui lembar spesifikasi, metadata laporan, cakupan, masa berlaku, pemilik, tautan publik, checklist pengiriman, dan klasifikasi pengangkutan.
   - id: contact-actions
     topic: CTA permintaan dokumen
-    decision: Tautan aktif ditahan pada tahap ini.
-    required: Selesaikan implementasi kontak yang disetujui.
+    decision: Tombol email dan WhatsApp memakai kanal resmi yang sama dengan halaman Kontak (src/config/contact.ts).
+    required: Formulir inquiry tetap menunggu keputusan terpisah.
 ---
 
 ## Parameter produk

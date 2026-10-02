@@ -7,6 +7,18 @@ description: Lihat opsi kemasan bulk, inner box, dan master carton untuk briket 
 eyebrow: Kemasan & Merek Pelanggan
 heroTitle: Kemasan yang sesuai dengan produk dan pasar Anda.
 heroSummary: Pilih kemasan bulk atau inner box bermerek. Berat kotak, bahan, dan hasil cetak perlu disepakati sebelum pesanan ditetapkan.
+heroMedia: packaging/overview
+packagingExamples: true
+layout: sections
+heroStyle: backdrop
+heroFocus: center
+closingCta: true
+compose:
+  - kind: split
+  - kind: band
+    eyebrow: Private label
+  - kind: split
+  - kind: centered
 internalNotes:
   - id: packaging-decisions
     topic: Konfigurasi kemasan dan proses desain
@@ -14,8 +26,8 @@ internalNotes:
     required: Setujui berat inner box, pasangan master carton, template, spesifikasi cetak, minimum per desain, proses persetujuan, dan perlindungan per rute.
   - id: contact-actions
     topic: CTA kemasan
-    decision: Tautan aktif ditahan pada tahap ini.
-    required: Selesaikan implementasi kontak yang disetujui.
+    decision: Tombol email dan WhatsApp memakai kanal resmi yang sama dengan halaman Kontak (src/config/contact.ts).
+    required: Formulir inquiry tetap menunggu keputusan terpisah.
 ---
 
 ## Format dalam data sumber

@@ -1,21 +1,45 @@
 ---
+import { hasMedia } from "../config/media";
+import type { MediaLocale } from "../config/media-slots";
+import Media from "./Media.astro";
+
 interface Props {
   eyebrow?: string;
   title: string;
   summary?: string;
+  /** Slot id of the photo beside the heading; the layout stays text-only without the file. */
+  heroMedia?: string;
+  lang: MediaLocale;
 }
 
-const { eyebrow, title, summary } = Astro.props;
+const { eyebrow, title, summary, heroMedia, lang } = Astro.props;
+const showMedia = hasMedia(heroMedia);
 ---
 
 <article class="container content-page">
-  <header class="page-intro">
-    {eyebrow && <p class="page-intro__eyebrow">{eyebrow}</p>}
-    <h1>{title}</h1>
-    {summary && <p class="page-intro__summary">{summary}</p>}
-  </header>
+  <div class:list={["page-hero", showMedia && "page-hero--media"]}>
+    <header class="page-intro">
+      {eyebrow && <p class="page-intro__eyebrow">{eyebrow}</p>}
+      <h1>{title}</h1>
+      {summary && <p class="page-intro__summary">{summary}</p>}
+    </header>
+    {showMedia && heroMedia && (
+      <Media
+        id={heroMedia}
+        locale={lang}
+        ratio="4/3"
+        loading="eager"
+        sizes="(min-width: 48rem) 40vw, 100vw"
+        class="page-hero__media"
+      />
+    )}
+  </div>
+
+  <slot name="before" />
 
   <div class="prose">
     <slot />
   </div>
+
+  <slot name="after" />
 </article>

@@ -7,6 +7,17 @@ description: Pahami MOQ satu kontainer, pilihan EXW/FOB/CNF/CIF, dan opsi pelabu
 eyebrow: Pemesanan & Pengiriman
 heroTitle: Mulai pesanan kontainer dengan rincian yang jelas.
 heroSummary: Sampaikan produk yang Anda butuhkan dan tujuan pengirimannya. Konfigurasi produk, ketentuan perdagangan, dan dokumen akan dikonfirmasi sebelum pesanan disepakati.
+heroMedia: shipping/container-loading
+layout: sections
+heroStyle: backdrop
+heroFocus: center
+closingCta: true
+compose:
+  - kind: centered
+  - kind: split
+  - kind: steps
+  - kind: band
+  - kind: split
 internalNotes:
   - id: commercial-decisions
     topic: Ketentuan pesanan dan pengiriman
@@ -14,8 +25,8 @@ internalNotes:
     required: Setujui nilai dan prosedur yang relevan per penawaran dan rute.
   - id: contact-actions
     topic: CTA inquiry dan penawaran pengiriman
-    decision: Tautan aktif ditahan pada tahap ini.
-    required: Selesaikan implementasi kontak yang disetujui.
+    decision: Tombol email dan WhatsApp memakai kanal resmi yang sama dengan halaman Kontak (src/config/contact.ts).
+    required: Formulir inquiry tetap menunggu keputusan terpisah.
 ---
 
 ## Minimum pesanan

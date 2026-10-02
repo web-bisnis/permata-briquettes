@@ -5,6 +5,8 @@ alternateRoute: /id/privasi/
 title: Privacy Notice
 description: PT Permata Bara Globalindo (“we”, “us”, or “our”) respects your privacy. This Privacy Notice explains how we process Personal Data when you submit an inquiry through the Permata Briquettes website.
 heroTitle: Privacy Notice
+layout: sections
+heroStyle: plain
 internalNotes: []
 ---
 

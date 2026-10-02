@@ -7,6 +7,17 @@ description: Review the quality parameters and available ROA, SHT, MSDS, ISO and
 eyebrow: Quality & Documents
 heroTitle: Review the specification and the document behind it.
 heroSummary: "Product figures need context: grade, test method, report date and the batch to which they apply. We make the available documents part of the order discussion."
+layout: sections
+heroStyle: backdrop
+heroMedia: documents/hero
+closingCta: true
+showLabLogos: true
+compose:
+  - kind: split
+  - kind: table
+    attach: documents
+  - kind: band
+  - kind: centered
 internalNotes:
   - id: document-publication
     topic: Document details and files
@@ -14,8 +25,8 @@ internalNotes:
     required: Approve the specification sheet, report metadata, scope, validity, owners, public links, shipment checklists, and transport classification.
   - id: contact-actions
     topic: Document request calls to action
-    decision: Active links are withheld for this stage.
-    required: Complete the approved contact implementation.
+    decision: The email and WhatsApp buttons use the same official channels as the Contact page (src/config/contact.ts).
+    required: The inquiry form still waits for a separate decision.
 ---
 
 ## Product parameters
