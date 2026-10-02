@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-10-01T11:13:19.723Z",
+  "generatedAt": "2026-10-01T13:01:36.227Z",
   "target": "https://staging.permatabriquettes.com",
   "method": "Read-only GET requests; CTA hrefs inspected but not opened",
-  "status": "fail",
+  "status": "pass",
   "summary": {
     "routes": 19,
-    "failures": 38
+    "failures": 0
   },
   "robots": {
     "status": 200,
@@ -77,12 +77,12 @@
       "route": "/",
       "http": {
         "requestedUrl": "http://staging.permatabriquettes.com/?qa_redirect=path-query",
-        "status": 200,
-        "location": null,
+        "status": 301,
+        "location": "https://staging.permatabriquettes.com/?qa_redirect=path-query",
         "expectedLocation": "https://staging.permatabriquettes.com/?qa_redirect=path-query",
-        "contentType": "text/html",
-        "bytes": 2479,
-        "servesPageBody": true
+        "contentType": "text/html; charset=UTF-8",
+        "bytes": 167,
+        "servesPageBody": false
       },
       "https": {
         "status": 200,
@@ -121,12 +121,12 @@
       "route": "/en/",
       "http": {
         "requestedUrl": "http://staging.permatabriquettes.com/en/?qa_redirect=path-query",
-        "status": 200,
-        "location": null,
+        "status": 301,
+        "location": "https://staging.permatabriquettes.com/en/?qa_redirect=path-query",
         "expectedLocation": "https://staging.permatabriquettes.com/en/?qa_redirect=path-query",
-        "contentType": "text/html",
-        "bytes": 7089,
-        "servesPageBody": true
+        "contentType": "text/html; charset=UTF-8",
+        "bytes": 167,
+        "servesPageBody": false
       },
       "https": {
         "status": 200,
@@ -171,12 +171,12 @@
       "route": "/en/about/",
       "http": {
         "requestedUrl": "http://staging.permatabriquettes.com/en/about/?qa_redirect=path-query",
-        "status": 200,
-        "location": null,
+        "status": 301,
+        "location": "https://staging.permatabriquettes.com/en/about/?qa_redirect=path-query",
         "expectedLocation": "https://staging.permatabriquettes.com/en/about/?qa_redirect=path-query",
-        "contentType": "text/html",
-        "bytes": 6336,
-        "servesPageBody": true
+        "contentType": "text/html; charset=UTF-8",
+        "bytes": 167,
+        "servesPageBody": false
       },
       "https": {
         "status": 200,
@@ -220,12 +220,12 @@
       "route": "/en/contact/",
       "http": {
         "requestedUrl": "http://staging.permatabriquettes.com/en/contact/?qa_redirect=path-query",
-        "status": 200,
-        "location": null,
+        "status": 301,
+        "location": "https://staging.permatabriquettes.com/en/contact/?qa_redirect=path-query",
         "expectedLocation": "https://staging.permatabriquettes.com/en/contact/?qa_redirect=path-query",
-        "contentType": "text/html",
-        "bytes": 5460,
-        "servesPageBody": true
+        "contentType": "text/html; charset=UTF-8",
+        "bytes": 167,
+        "servesPageBody": false
       },
       "https": {
         "status": 200,
@@ -266,11 +266,11 @@
       "route": "/en/ordering-shipping/",
       "http": {
         "requestedUrl": "http://staging.permatabriquettes.com/en/ordering-shipping/?qa_redirect=path-query",
-        "status": 200,
-        "location": null,
+        "status": 301,
+        "location": "https://staging.permatabriquettes.com/en/ordering-shipping/?qa_redirect=path-query",
         "expectedLocation": "https://staging.permatabriquettes.com/en/ordering-shipping/?qa_redirect=path-query",
-        "contentType": "text/html",
-        "bytes": 7039,
+        "contentType": "text/html; charset=UTF-8",
+        "bytes": 167,
         "servesPageBody": false
       },
       "https": {
@@ -316,11 +316,11 @@
       "route": "/en/packaging/",
       "http": {
         "requestedUrl": "http://staging.permatabriquettes.com/en/packaging/?qa_redirect=path-query",
-        "status": 200,
-        "location": null,
+        "status": 301,
+        "location": "https://staging.permatabriquettes.com/en/packaging/?qa_redirect=path-query",
         "expectedLocation": "https://staging.permatabriquettes.com/en/packaging/?qa_redirect=path-query",
-        "contentType": "text/html",
-        "bytes": 6329,
+        "contentType": "text/html; charset=UTF-8",
+        "bytes": 167,
         "servesPageBody": false
       },
       "https": {
@@ -365,12 +365,12 @@
       "route": "/en/privacy/",
       "http": {
         "requestedUrl": "http://staging.permatabriquettes.com/en/privacy/?qa_redirect=path-query",
-        "status": 200,
-        "location": null,
+        "status": 301,
+        "location": "https://staging.permatabriquettes.com/en/privacy/?qa_redirect=path-query",
         "expectedLocation": "https://staging.permatabriquettes.com/en/privacy/?qa_redirect=path-query",
-        "contentType": "text/html",
-        "bytes": 8803,
-        "servesPageBody": true
+        "contentType": "text/html; charset=UTF-8",
+        "bytes": 167,
+        "servesPageBody": false
       },
       "https": {
         "status": 200,
@@ -418,12 +418,12 @@
       "route": "/en/products/",
       "http": {
         "requestedUrl": "http://staging.permatabriquettes.com/en/products/?qa_redirect=path-query",
-        "status": 200,
-        "location": null,
+        "status": 301,
+        "location": "https://staging.permatabriquettes.com/en/products/?qa_redirect=path-query",
         "expectedLocation": "https://staging.permatabriquettes.com/en/products/?qa_redirect=path-query",
-        "contentType": "text/html",
-        "bytes": 6353,
-        "servesPageBody": true
+        "contentType": "text/html; charset=UTF-8",
+        "bytes": 167,
+        "servesPageBody": false
       },
       "https": {
         "status": 200,
@@ -469,12 +469,12 @@
       "route": "/en/products/coconut-charcoal-briquettes-for-shisha/",
       "http": {
         "requestedUrl": "http://staging.permatabriquettes.com/en/products/coconut-charcoal-briquettes-for-shisha/?qa_redirect=path-query",
-        "status": 200,
-        "location": null,
+        "status": 301,
+        "location": "https://staging.permatabriquettes.com/en/products/coconut-charcoal-briquettes-for-shisha/?qa_redirect=path-query",
         "expectedLocation": "https://staging.permatabriquettes.com/en/products/coconut-charcoal-briquettes-for-shisha/?qa_redirect=path-query",
-        "contentType": "text/html",
-        "bytes": 7726,
-        "servesPageBody": true
+        "contentType": "text/html; charset=UTF-8",
+        "bytes": 167,
+        "servesPageBody": false
       },
       "https": {
         "status": 200,
@@ -519,12 +519,12 @@
       "route": "/en/quality-documents/",
       "http": {
         "requestedUrl": "http://staging.permatabriquettes.com/en/quality-documents/?qa_redirect=path-query",
-        "status": 200,
-        "location": null,
+        "status": 301,
+        "location": "https://staging.permatabriquettes.com/en/quality-documents/?qa_redirect=path-query",
         "expectedLocation": "https://staging.permatabriquettes.com/en/quality-documents/?qa_redirect=path-query",
-        "contentType": "text/html",
-        "bytes": 6888,
-        "servesPageBody": true
+        "contentType": "text/html; charset=UTF-8",
+        "bytes": 167,
+        "servesPageBody": false
       },
       "https": {
         "status": 200,
@@ -568,12 +568,12 @@
       "route": "/id/",
       "http": {
         "requestedUrl": "http://staging.permatabriquettes.com/id/?qa_redirect=path-query",
-        "status": 200,
-        "location": null,
+        "status": 301,
+        "location": "https://staging.permatabriquettes.com/id/?qa_redirect=path-query",
         "expectedLocation": "https://staging.permatabriquettes.com/id/?qa_redirect=path-query",
-        "contentType": "text/html",
-        "bytes": 7146,
-        "servesPageBody": true
+        "contentType": "text/html; charset=UTF-8",
+        "bytes": 167,
+        "servesPageBody": false
       },
       "https": {
         "status": 200,
@@ -618,11 +618,11 @@
       "route": "/id/kemasan/",
       "http": {
         "requestedUrl": "http://staging.permatabriquettes.com/id/kemasan/?qa_redirect=path-query",
-        "status": 200,
-        "location": null,
+        "status": 301,
+        "location": "https://staging.permatabriquettes.com/id/kemasan/?qa_redirect=path-query",
         "expectedLocation": "https://staging.permatabriquettes.com/id/kemasan/?qa_redirect=path-query",
-        "contentType": "text/html",
-        "bytes": 6376,
+        "contentType": "text/html; charset=UTF-8",
+        "bytes": 167,
         "servesPageBody": false
       },
       "https": {
@@ -667,12 +667,12 @@
       "route": "/id/kontak/",
       "http": {
         "requestedUrl": "http://staging.permatabriquettes.com/id/kontak/?qa_redirect=path-query",
-        "status": 200,
-        "location": null,
+        "status": 301,
+        "location": "https://staging.permatabriquettes.com/id/kontak/?qa_redirect=path-query",
         "expectedLocation": "https://staging.permatabriquettes.com/id/kontak/?qa_redirect=path-query",
-        "contentType": "text/html",
-        "bytes": 5499,
-        "servesPageBody": true
+        "contentType": "text/html; charset=UTF-8",
+        "bytes": 167,
+        "servesPageBody": false
       },
       "https": {
         "status": 200,
@@ -713,12 +713,12 @@
       "route": "/id/kualitas-dokumen/",
       "http": {
         "requestedUrl": "http://staging.permatabriquettes.com/id/kualitas-dokumen/?qa_redirect=path-query",
-        "status": 200,
-        "location": null,
+        "status": 301,
+        "location": "https://staging.permatabriquettes.com/id/kualitas-dokumen/?qa_redirect=path-query",
         "expectedLocation": "https://staging.permatabriquettes.com/id/kualitas-dokumen/?qa_redirect=path-query",
-        "contentType": "text/html",
-        "bytes": 6957,
-        "servesPageBody": true
+        "contentType": "text/html; charset=UTF-8",
+        "bytes": 167,
+        "servesPageBody": false
       },
       "https": {
         "status": 200,
@@ -762,11 +762,11 @@
       "route": "/id/pemesanan-pengiriman/",
       "http": {
         "requestedUrl": "http://staging.permatabriquettes.com/id/pemesanan-pengiriman/?qa_redirect=path-query",
-        "status": 200,
-        "location": null,
+        "status": 301,
+        "location": "https://staging.permatabriquettes.com/id/pemesanan-pengiriman/?qa_redirect=path-query",
         "expectedLocation": "https://staging.permatabriquettes.com/id/pemesanan-pengiriman/?qa_redirect=path-query",
-        "contentType": "text/html",
-        "bytes": 7089,
+        "contentType": "text/html; charset=UTF-8",
+        "bytes": 167,
         "servesPageBody": false
       },
       "https": {
@@ -812,12 +812,12 @@
       "route": "/id/privasi/",
       "http": {
         "requestedUrl": "http://staging.permatabriquettes.com/id/privasi/?qa_redirect=path-query",
-        "status": 200,
-        "location": null,
+        "status": 301,
+        "location": "https://staging.permatabriquettes.com/id/privasi/?qa_redirect=path-query",
         "expectedLocation": "https://staging.permatabriquettes.com/id/privasi/?qa_redirect=path-query",
-        "contentType": "text/html",
-        "bytes": 9044,
-        "servesPageBody": true
+        "contentType": "text/html; charset=UTF-8",
+        "bytes": 167,
+        "servesPageBody": false
       },
       "https": {
         "status": 200,
@@ -865,12 +865,12 @@
       "route": "/id/produk/",
       "http": {
         "requestedUrl": "http://staging.permatabriquettes.com/id/produk/?qa_redirect=path-query",
-        "status": 200,
-        "location": null,
+        "status": 301,
+        "location": "https://staging.permatabriquettes.com/id/produk/?qa_redirect=path-query",
         "expectedLocation": "https://staging.permatabriquettes.com/id/produk/?qa_redirect=path-query",
-        "contentType": "text/html",
-        "bytes": 6466,
-        "servesPageBody": true
+        "contentType": "text/html; charset=UTF-8",
+        "bytes": 167,
+        "servesPageBody": false
       },
       "https": {
         "status": 200,
@@ -916,12 +916,12 @@
       "route": "/id/produk/briket-arang-tempurung-kelapa-untuk-shisha/",
       "http": {
         "requestedUrl": "http://staging.permatabriquettes.com/id/produk/briket-arang-tempurung-kelapa-untuk-shisha/?qa_redirect=path-query",
-        "status": 200,
-        "location": null,
+        "status": 301,
+        "location": "https://staging.permatabriquettes.com/id/produk/briket-arang-tempurung-kelapa-untuk-shisha/?qa_redirect=path-query",
         "expectedLocation": "https://staging.permatabriquettes.com/id/produk/briket-arang-tempurung-kelapa-untuk-shisha/?qa_redirect=path-query",
-        "contentType": "text/html",
-        "bytes": 7790,
-        "servesPageBody": true
+        "contentType": "text/html; charset=UTF-8",
+        "bytes": 167,
+        "servesPageBody": false
       },
       "https": {
         "status": 200,
@@ -966,12 +966,12 @@
       "route": "/id/tentang-kami/",
       "http": {
         "requestedUrl": "http://staging.permatabriquettes.com/id/tentang-kami/?qa_redirect=path-query",
-        "status": 200,
-        "location": null,
+        "status": 301,
+        "location": "https://staging.permatabriquettes.com/id/tentang-kami/?qa_redirect=path-query",
         "expectedLocation": "https://staging.permatabriquettes.com/id/tentang-kami/?qa_redirect=path-query",
-        "contentType": "text/html",
-        "bytes": 6320,
-        "servesPageBody": true
+        "contentType": "text/html; charset=UTF-8",
+        "bytes": 167,
+        "servesPageBody": false
       },
       "https": {
         "status": 200,
@@ -1012,44 +1012,5 @@
       "externalScripts": []
     }
   ],
-  "failures": [
-    "/: HTTP did not redirect (200)",
-    "/: HTTP redirect does not preserve the staging host, path, and query",
-    "/en/: HTTP did not redirect (200)",
-    "/en/: HTTP redirect does not preserve the staging host, path, and query",
-    "/en/about/: HTTP did not redirect (200)",
-    "/en/about/: HTTP redirect does not preserve the staging host, path, and query",
-    "/en/contact/: HTTP did not redirect (200)",
-    "/en/contact/: HTTP redirect does not preserve the staging host, path, and query",
-    "/en/ordering-shipping/: HTTP did not redirect (200)",
-    "/en/ordering-shipping/: HTTP redirect does not preserve the staging host, path, and query",
-    "/en/packaging/: HTTP did not redirect (200)",
-    "/en/packaging/: HTTP redirect does not preserve the staging host, path, and query",
-    "/en/privacy/: HTTP did not redirect (200)",
-    "/en/privacy/: HTTP redirect does not preserve the staging host, path, and query",
-    "/en/products/: HTTP did not redirect (200)",
-    "/en/products/: HTTP redirect does not preserve the staging host, path, and query",
-    "/en/products/coconut-charcoal-briquettes-for-shisha/: HTTP did not redirect (200)",
-    "/en/products/coconut-charcoal-briquettes-for-shisha/: HTTP redirect does not preserve the staging host, path, and query",
-    "/en/quality-documents/: HTTP did not redirect (200)",
-    "/en/quality-documents/: HTTP redirect does not preserve the staging host, path, and query",
-    "/id/: HTTP did not redirect (200)",
-    "/id/: HTTP redirect does not preserve the staging host, path, and query",
-    "/id/kemasan/: HTTP did not redirect (200)",
-    "/id/kemasan/: HTTP redirect does not preserve the staging host, path, and query",
-    "/id/kontak/: HTTP did not redirect (200)",
-    "/id/kontak/: HTTP redirect does not preserve the staging host, path, and query",
-    "/id/kualitas-dokumen/: HTTP did not redirect (200)",
-    "/id/kualitas-dokumen/: HTTP redirect does not preserve the staging host, path, and query",
-    "/id/pemesanan-pengiriman/: HTTP did not redirect (200)",
-    "/id/pemesanan-pengiriman/: HTTP redirect does not preserve the staging host, path, and query",
-    "/id/privasi/: HTTP did not redirect (200)",
-    "/id/privasi/: HTTP redirect does not preserve the staging host, path, and query",
-    "/id/produk/: HTTP did not redirect (200)",
-    "/id/produk/: HTTP redirect does not preserve the staging host, path, and query",
-    "/id/produk/briket-arang-tempurung-kelapa-untuk-shisha/: HTTP did not redirect (200)",
-    "/id/produk/briket-arang-tempurung-kelapa-untuk-shisha/: HTTP redirect does not preserve the staging host, path, and query",
-    "/id/tentang-kami/: HTTP did not redirect (200)",
-    "/id/tentang-kami/: HTTP redirect does not preserve the staging host, path, and query"
-  ]
+  "failures": []
 }
