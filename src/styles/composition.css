@@ -61,6 +61,12 @@
   stroke-linejoin: round;
 }
 
+/* The coconut icon is a filled outline, not a stroked one. */
+.icon--filled {
+  fill: currentColor;
+  stroke: none;
+}
+
 .section--ruled {
   padding-block-start: 0;
 }
