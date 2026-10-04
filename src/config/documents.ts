@@ -7,7 +7,9 @@ import type { MediaLocale } from "./media-slots";
 export interface DocumentEntry {
   /** Preview slot in src/assets/documents. */
   mediaId: string;
-  title: string;
+  /** "legal" documents belong to the company itself; "quality" documents describe the product. */
+  kind: "quality" | "legal";
+  title: Record<MediaLocale, string>;
   description: Record<MediaLocale, string>;
   /** Issuing laboratory, surveyor, or certification body, as printed on the document. */
   issuer: string;
@@ -19,56 +21,83 @@ export interface DocumentEntry {
   owner?: Record<MediaLocale, string>;
 }
 
+const COMPANY = { id: "PT Permata Bara Globalindo", en: "PT Permata Bara Globalindo" } as const;
 const MANUFACTURER = { id: "Manufacturer", en: "Manufacturer" } as const;
 
 export const DOCUMENTS: readonly DocumentEntry[] = [
   {
+    mediaId: "documents/preview-sk-kemenkum",
+    kind: "legal",
+    title: {
+      id: "Keputusan Menteri Hukum RI tentang Pengesahan Pendirian Badan Hukum",
+      en: "Decree of the Minister of Law approving the company's establishment",
+    },
+    description: {
+      id: "Pengesahan pendirian badan hukum Perseroan Terbatas PT Permata Bara Globalindo, Nomor AHU-0072428.AH.01.01.Tahun 2026.",
+      en: "Approval of the establishment of PT Permata Bara Globalindo as a limited liability company, No. AHU-0072428.AH.01.01.Tahun 2026.",
+    },
+    issuer: "Kementerian Hukum Republik Indonesia",
+    date: "2026-09-08",
+    owner: COMPANY,
+  },
+  {
+    mediaId: "documents/preview-nib",
+    kind: "legal",
+    title: {
+      id: "Perizinan Berusaha Berbasis Risiko (NIB)",
+      en: "Risk-Based Business Licensing (NIB)",
+    },
+    description: {
+      id: "Nomor Induk Berusaha (NIB) PT Permata Bara Globalindo: 2009260012752.",
+      en: "Business Identification Number (NIB) of PT Permata Bara Globalindo: 2009260012752.",
+    },
+    issuer: "Pemerintah Republik Indonesia (OSS)",
+    date: "2026-09-20",
+    owner: COMPANY,
+  },
+  {
     mediaId: "documents/preview-roa-carsurin",
-    title: "ROA / Report of Analysis",
+    kind: "quality",
+    title: { id: "ROA / Report of Analysis", en: "ROA / Report of Analysis" },
     description: { id: "Analisis produk atau batch.", en: "Product or batch analysis." },
     issuer: "PT Carsurin",
     date: "2022-08-29",
   },
   {
     mediaId: "documents/preview-roa-beckjorindo",
-    title: "ROA / Report of Analysis",
+    kind: "quality",
+    title: { id: "ROA / Report of Analysis", en: "ROA / Report of Analysis" },
     description: { id: "Analisis produk atau batch.", en: "Product or batch analysis." },
     issuer: "PT Beckjorindo Paryaweksana",
     date: "2023-10-14",
   },
   {
     mediaId: "documents/preview-sht-carsurin",
-    title: "SHT / Self-Heating Test",
+    kind: "quality",
+    title: { id: "SHT / Self-Heating Test", en: "SHT / Self-Heating Test" },
     description: { id: "Dokumen uji terkait pengangkutan.", en: "Transport-related test document." },
     issuer: "PT Carsurin",
     date: "2022-05-31",
   },
   {
     mediaId: "documents/preview-msds-sgs",
-    title: "MSDS",
+    kind: "quality",
+    title: { id: "MSDS", en: "MSDS" },
     description: { id: "Dokumen keselamatan dan penanganan produk.", en: "Product safety and handling document." },
     issuer: "SGS Korea Co., Ltd.",
     date: "2013-12-19",
   },
   {
     mediaId: "documents/preview-iso",
-    title: "ISO 9001:2015",
+    kind: "quality",
+    title: { id: "ISO 9001:2015", en: "ISO 9001:2015" },
     description: {
-      id: "Sertifikasi manufacturer, bukan sertifikasi PT Permata Bara Globalindo.",
-      en: "Manufacturer's certification, not PT Permata Bara Globalindo's certification.",
+      id: "Sertifikasi manufacturer.",
+      en: "Manufacturer's certification.",
     },
     issuer: "PT SOA Sertifikasi Indonesia",
     date: "2024-04-16",
     validUntil: "2027-04-16",
-    owner: MANUFACTURER,
-  },
-  {
-    mediaId: "documents/preview-factory-audit",
-    title: "Factory Audit",
-    description: { id: "Dokumen audit terkait manufacturer.", en: "Manufacturer-related audit document." },
-    issuer: "PT Carsurin",
-    date: "2023-03-02",
-    validUntil: "2025-03-01",
     owner: MANUFACTURER,
   },
 ];
