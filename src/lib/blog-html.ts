@@ -6,3 +6,11 @@ export function secureExternalLinks(html: string): string {
     return withoutRel.replace(/>$/u, ' rel="noopener noreferrer">');
   });
 }
+
+/**
+ * Markdown tables with aligned columns come out with style="text-align: ..." attributes, which the
+ * page CSP blocks. Alignment is set in blog.css / global.css instead, so the attributes are dropped.
+ */
+export function removeInlineStyles(html: string): string {
+  return html.replace(/\sstyle=(?:"[^"]*"|'[^']*')/giu, "");
+}

@@ -5,7 +5,7 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
 import { BLOG_COPY, blogFeedPath, blogListPath, formatBlogDate } from "../../../config/blog";
 import { contactActions } from "../../../config/contact";
 import { loadBlog, type BlogPost } from "../../../lib/blog";
-import { secureExternalLinks } from "../../../lib/blog-html";
+import { removeInlineStyles, secureExternalLinks } from "../../../lib/blog-html";
 
 export async function getStaticPaths() {
   const { posts } = await loadBlog();
@@ -23,7 +23,7 @@ const { post } = Astro.props;
 const lang = post.locale;
 const copy = BLOG_COPY[lang];
 const { data } = post.entry;
-// The glob loader already rendered the Markdown; external links get their rel attribute here.
+// The glob loader already rendered the Markdown; links get their rel attribute and inline styles go here.
 const html = post.entry.rendered?.html;
 if (html === undefined) throw new Error(`Blog article ${post.entry.id} has no rendered HTML`);
 const contactHref = lang === "id" ? "/id/kontak/" : "/en/contact/";
@@ -72,7 +72,7 @@ const contactHref = lang === "id" ? "/id/kontak/" : "/en/contact/";
     )}
 
     <div class="prose">
-      <Fragment set:html={secureExternalLinks(html)} />
+      <Fragment set:html={secureExternalLinks(removeInlineStyles(html))} />
     </div>
 
     <p><a class="blog-back" href={blogListPath(lang)}>{copy.back}</a></p>
