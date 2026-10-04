@@ -1,0 +1,46 @@
+---
+import { Picture } from "astro:assets";
+import { BLOG_COPY, formatBlogDate, type BlogLocale } from "../config/blog";
+import type { BlogPost } from "../lib/blog";
+
+interface Props {
+  post: BlogPost;
+  lang: BlogLocale;
+  /** Only the first card can be above the fold. */
+  eagerCover?: boolean;
+}
+
+const { post, lang, eagerCover = false } = Astro.props;
+const { data } = post.entry;
+const copy = BLOG_COPY[lang];
+---
+
+<article class="blog-card">
+  {post.cover && data.coverAlt && (
+    <div class="blog-card__media">
+      <Picture
+        src={post.cover}
+        alt=""
+        formats={["avif", "webp"]}
+        widths={[480, 768, 1200]}
+        sizes="(min-width: 48rem) 50vw, 100vw"
+        loading={eagerCover ? "eager" : "lazy"}
+        fetchpriority={eagerCover ? "high" : undefined}
+        decoding={eagerCover ? "sync" : "async"}
+      />
+    </div>
+  )}
+  <div class="blog-card__body">
+    <p class="blog-meta">
+      <time datetime={data.date.toISOString().slice(0, 10)}>{formatBlogDate(data.date, lang)}</time>
+      {data.draft && <span class="blog-badge">{copy.draftBadge}</span>}
+    </p>
+    <h2 class="blog-card__title"><a href={post.route}>{data.title}</a></h2>
+    <p>{data.description}</p>
+    {data.tags.length > 0 && (
+      <ul class="blog-tags" aria-label={copy.tags}>
+        {data.tags.map((tag) => <li>{tag}</li>)}
+      </ul>
+    )}
+  </div>
+</article>
