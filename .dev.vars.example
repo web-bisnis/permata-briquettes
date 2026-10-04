@@ -15,7 +15,7 @@ RESEND_FROM_ADDRESS=
 RESEND_REPLY_TO=
 
 # Deterministic SHA-256 versions generated from the approved bilingual source.
-PRIVACY_NOTICE_VERSION="sha256-82f9288a6b820a24513d1f6041b2d7bfdd4d9a2067f909c010eb28c683a5f611"
+PRIVACY_NOTICE_VERSION="sha256-796520ac81b51f3b47e55d7b870a39d4443962c43da2495a487c087974f67878"
 MARKETING_CONSENT_VERSION="sha256-b7f8c726daf971743ef9295167b2852f98ef4495eb2399f30264ca02344909b3"
 
 # Approved buyer-confirmation copy. These values are public content, not secrets.
