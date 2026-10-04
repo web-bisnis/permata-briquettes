@@ -30,17 +30,17 @@ internalNotes:
 
 ## Komponen dan kegunaan
 
-Komponen yang tercantum adalah arang tempurung kelapa, tapioka food grade, dan air. Briket ini ditujukan untuk shisha dan hookah. Informasi produk menyebut pembakaran tanpa bau dan tanpa bahan kimia tambahan.
+Komponen yang tersedia adalah arang tempurung kelapa, tapioka food grade, dan air. Briket ini ditujukan untuk shisha dan hookah. Informasi produk menyebut pembakaran tanpa bau dan tanpa bahan kimia tambahan.
 
 ## Kemasan dan volume pesanan
 
-Sumber mencantumkan kemasan bulk dan inner box. Master carton 10 atau 20 kg juga disebut, sedangkan pilihan berat inner box perlu dikonfirmasi untuk tiap konfigurasi. MOQ adalah satu kontainer 20 ft; berat bersihnya bergantung pada produk dan kemasan. Campuran ukuran atau kemasan perlu disetujui dalam penawaran.
+Sumber mencantumkan kemasan bulk dan inner box. Master carton tersedia dalam 5, 10, atau 20 kg, sedangkan pilihan berat inner box perlu dikonfirmasi untuk tiap konfigurasi. MOQ adalah satu kontainer 20 ft; berat bersihnya bergantung pada produk dan kemasan. Campuran ukuran atau kemasan perlu disetujui dalam penawaran.
 
 [Lihat Pilihan Kemasan](/id/kemasan/)
 
 ## Dokumen untuk pemeriksaan produk
 
-Dokumen ROA, SHT, dan MSDS tersedia, bersama dokumen ISO 9001:2015 dan Factory Audit milik manufacturer. Mintalah dokumen yang sesuai dengan produk dan pengiriman yang sedang dibahas.
+Dokumen ROA, SHT, dan MSDS tersedia, bersama dokumen ISO 9001:2015 milik manufacturer. Mintalah dokumen yang sesuai dengan produk dan pengiriman yang sedang dibahas.
 
 ## Tetapkan spesifikasi yang sesuai pasar Anda.
 

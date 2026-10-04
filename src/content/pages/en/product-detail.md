@@ -34,13 +34,13 @@ The listed components are coconut shell charcoal, food-grade tapioca and water. 
 
 ## Packaging and order volume
 
-Bulk and inner-box packaging are described in the source. Master cartons of 10 or 20 kg are listed, alongside inner-box options that require confirmation by configuration. The minimum order is one 20 ft container; the net weight depends on product and packing. Mixed sizes or packaging require approval in the quotation.
+Bulk and inner-box packaging are described in the source. Master cartons are available in 5, 10 or 20 kg, alongside inner-box options that require confirmation by configuration. The minimum order is one 20 ft container; the net weight depends on product and packing. Mixed sizes or packaging require approval in the quotation.
 
 [Review Packaging Options](/en/packaging/)
 
 ## Documents for product review
 
-ROA, SHT and MSDS documents are available, together with manufacturer ISO 9001:2015 and Factory Audit documents. Ask for documents that correspond to the product and shipment under discussion.
+ROA, SHT and MSDS documents are available, together with manufacturer ISO 9001:2015 documents. Ask for documents that correspond to the product and shipment under discussion.
 
 ## Confirm the specification for your market.
 

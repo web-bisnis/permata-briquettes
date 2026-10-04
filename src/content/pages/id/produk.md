@@ -31,7 +31,7 @@ internalNotes:
 
 ## Briket arang tempurung kelapa untuk shisha dan hookah
 
-Komponen yang tercantum adalah arang tempurung kelapa, tapioka food grade, dan air. Karakteristik referensi meliputi tidak berbau dan tiga grade dengan angka kadar abu, kadar air, serta waktu bakar yang berbeda. Kecocokan produk dan spesifikasi akhir perlu diperiksa melalui sampel yang relevan dan kontrak penjualan.
+Komponen yang tersedia adalah arang tempurung kelapa, tapioka food grade, dan air. Karakteristik referensi meliputi tidak berbau dan tiga grade dengan angka kadar abu, kadar air, serta waktu bakar yang berbeda. Kecocokan produk dan spesifikasi akhir perlu diperiksa melalui sampel yang relevan dan kontrak penjualan.
 
 ### Platinum
 
@@ -47,7 +47,7 @@ Kadar abu 2,3–2,5%; waktu bakar referensi 1 jam 30 menit+; kadar air maks. 8%;
 
 ## Bentuk dan ukuran
 
-Bentuk yang tercantum meliputi cube, finger, hexagonal, flat/brix, dan dome. Belum ada kepastian bahwa setiap kombinasi grade dan ukuran tersedia. Sampaikan dimensi yang Anda perlukan untuk dikonfirmasi.
+Bentuk yang tersedia meliputi cube, finger, hexagonal, flat/brix, dan dome. Belum ada kepastian bahwa setiap kombinasi grade dan ukuran tersedia. Sampaikan dimensi yang Anda perlukan untuk dikonfirmasi.
 
 ## Dasar pemesanan
 
