@@ -11,7 +11,10 @@ Fondasi website statis menggunakan Astro dan TypeScript.
 - `npm test` — menjalankan pengujian Worker, copy, dan build gated dengan mock lokal.
 - `npm run worker:check` — membundel Worker sebagai dry-run tanpa deployment.
 - `npm run build:staging` / `npm run build:production` — build reproducible
-  dengan inquiry dan Cloudflare Web Analytics dipaksa nonaktif.
+  dengan Cloudflare Web Analytics dipaksa nonaktif. Inquiry nonaktif kecuali
+  staging diberi `PUBLIC_INQUIRY_FORM_ENABLED=true`, mode `live`, dan
+  `PUBLIC_TURNSTILE_SITE_KEY`; production menolak (build gagal) bila salah satunya
+  diisi.
 - `npm run worker:check:staging` / `npm run worker:check:production` — dry-run
   konfigurasi Wrangler bernama tanpa upload.
 - `npm run db:migrate:local` — menerapkan migration hanya ke simulator D1 lokal.
@@ -31,5 +34,7 @@ bukti copy, feature gate, versi deterministik, dan hasil pengujian.
 
 Runbook provisioning, deployment, migration, rollback, dan aktivasi terpisah
 tersedia di `docs/cloudflare-deployment.md`. Workflow GitHub hanya dapat dipicu
-manual dan selalu membangun rilis awal dengan inquiry, cron retry, dan analytics
-nonaktif.
+manual. Target staging membangun form live dan mengaktifkan Worker inquiry
+(`INQUIRY_ENABLED="true"` hanya pada config deploy yang dihasilkan); target
+production selalu membangun inquiry, cron retry, dan analytics nonaktif. Cron
+retry tidak diaktifkan oleh workflow.

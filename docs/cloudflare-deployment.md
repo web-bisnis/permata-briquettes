@@ -68,9 +68,12 @@ workflow dipakai.
 
 Nilai berikut ada per environment di `wrangler.jsonc`: `INQUIRY_ENABLED`,
 `RUNTIME_MODE`, `USE_LOCAL_MOCKS`, `PRIVACY_NOTICE_VERSION`,
-`MARKETING_CONSENT_VERSION`, serta empat template konfirmasi buyer. Rilis awal
-selalu memakai `INQUIRY_ENABLED=false` dan `USE_LOCAL_MOCKS=false` untuk
-environment publik.
+`MARKETING_CONSENT_VERSION`, serta empat template konfirmasi buyer. Config yang
+di-commit selalu `INQUIRY_ENABLED=false` dan `USE_LOCAL_MOCKS=false` untuk
+environment publik. `npm run prepare:deploy-config -- staging` mengubah
+`INQUIRY_ENABLED` menjadi `"true"` hanya pada `wrangler.deploy.jsonc` yang
+dihasilkan; target production tetap `"false"` dan skrip menolak bila ada upaya
+mengaktifkannya. `crons` selalu kosong.
 
 ### Worker secrets untuk aktivasi inquiry yang terpisah
 
@@ -150,10 +153,10 @@ versi npm, versi Wrangler, hasil command, dan checksum artifact sebagai bukti.
 Jangan memakai artifact staging untuk production karena directive indexing
 berbeda.
 
-## Deployment staging disabled
+## Deployment staging
 
 Prerequisite: seluruh checklist staging terpenuhi dan keputusan
-`DEPLOY_STAGING_DISABLED_WITH_CUSTOM_DOMAIN` diberikan eksplisit oleh release
+`DEPLOY_STAGING_INQUIRY_ACTIVE_WITH_CUSTOM_DOMAIN` diberikan eksplisit oleh release
 owner. Frasa tersebut juga mengotorisasi pemasangan custom-domain route yang
 dapat membuat atau mengubah record DNS Cloudflare; tanpa otorisasi gabungan ini,
 jangan jalankan deploy.
@@ -169,10 +172,22 @@ npx wrangler deploy --config wrangler.deploy.jsonc --env staging --strict
 npm run smoke:deployment -- --environment staging --base-url https://staging.permatabriquettes.com
 ```
 
-Smoke script hanya melakukan `GET`. Probe `GET /api/inquiries` mengharapkan
-`503 inquiry_unavailable`, sehingga status fail closed dibuktikan tanpa
-mengirim payload inquiry atau email. Jangan menyatakan staging terverifikasi
-bila satu pemeriksaan gagal.
+Smoke script hanya melakukan `GET`. Pada staging (form live) skrip mengharapkan
+form dan Turnstile pada kedua halaman kontak serta `405 method_not_allowed` dari
+`GET /api/inquiries` dan `GET /api/webhooks/resend`; `503` berarti secret atau
+binding Worker belum lengkap sehingga smoke gagal. Pada production skrip tetap
+mengharapkan form absen dan `503 inquiry_unavailable`. Tidak ada payload inquiry
+atau email yang dikirim. Jangan menyatakan staging terverifikasi bila satu
+pemeriksaan gagal.
+
+### Aktivasi staging lewat workflow
+
+Konfirmasi workflow staging adalah `DEPLOY_STAGING_INQUIRY_ACTIVE_WITH_CUSTOM_DOMAIN`
+(production tetap `DEPLOY_PRODUCTION_DISABLED_WITH_CUSTOM_DOMAIN`). Buat variable
+(bukan secret) GitHub Environment `staging` bernama `PUBLIC_TURNSTILE_SITE_KEY`
+berisi site key publik Turnstile staging. Migration D1, delapan secret Worker,
+dan webhook Resend harus sudah ada sebelum workflow dijalankan; tanpa itu smoke
+akan gagal dengan `503`.
 
 Workflow `.github/workflows/cloudflare-deploy.yml` menjalankan urutan yang sama
 melalui `workflow_dispatch`. Konfirmasi harus persis sesuai target. Production
