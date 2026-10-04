@@ -6,6 +6,7 @@
 @import "./composed-pages.css";
 @import "./nav-underline.css";
 @import "./whatsapp-float.css";
+@import "./blog.css";
 
 *,
 *::before,
@@ -487,6 +488,8 @@ select {
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: flex-end;
+    /* Tight enough that the longer Indonesian labels, with Blog, leave room for the logo tagline. */
+    gap: 0;
   }
 
 }
@@ -517,5 +520,56 @@ select {
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+}
+
+/* Hover feedback shared by every button-like control. */
+.button,
+.hero__intro a,
+.theme-toggle,
+.inquiry__form button,
+.transit__select {
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    filter 0.15s ease,
+    background-color 0.15s ease;
+}
+
+.button:hover,
+.hero__intro a:hover,
+.inquiry__form button:hover {
+  filter: brightness(1.12);
+  box-shadow: 0 0.375rem 1rem color-mix(in srgb, var(--color-ink) 25%, transparent);
+  transform: translateY(-0.125rem);
+}
+
+.button--secondary:hover {
+  background: color-mix(in srgb, currentColor 12%, transparent);
+  filter: none;
+}
+
+.theme-toggle:hover {
+  background: var(--color-band);
+  transform: scale(1.06);
+}
+
+.transit__select:hover {
+  text-decoration-color: currentColor;
+}
+
+.button:active,
+.hero__intro a:active,
+.inquiry__form button:active {
+  box-shadow: none;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button:hover,
+  .hero__intro a:hover,
+  .inquiry__form button:hover,
+  .theme-toggle:hover {
+    transform: none;
   }
 }

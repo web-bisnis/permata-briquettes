@@ -22,7 +22,6 @@ export interface DocumentEntry {
 }
 
 const COMPANY = { id: "PT Permata Bara Globalindo", en: "PT Permata Bara Globalindo" } as const;
-const MANUFACTURER = { id: "Manufacturer", en: "Manufacturer" } as const;
 
 export const DOCUMENTS: readonly DocumentEntry[] = [
   {
@@ -56,6 +55,21 @@ export const DOCUMENTS: readonly DocumentEntry[] = [
     owner: COMPANY,
   },
   {
+    mediaId: "documents/preview-npwp",
+    kind: "legal",
+    title: {
+      id: "Nomor Pokok Wajib Pajak (NPWP)",
+      en: "Taxpayer Identification Number (NPWP)",
+    },
+    description: {
+      id: "Kartu NPWP PT Permata Bara Globalindo: 1000 0000 1113 8680.",
+      en: "NPWP card of PT Permata Bara Globalindo: 1000 0000 1113 8680.",
+    },
+    issuer: "Direktorat Jenderal Pajak",
+    date: "2026-09-10",
+    owner: COMPANY,
+  },
+  {
     mediaId: "documents/preview-roa-carsurin",
     kind: "quality",
     title: { id: "ROA / Report of Analysis", en: "ROA / Report of Analysis" },
@@ -86,18 +100,5 @@ export const DOCUMENTS: readonly DocumentEntry[] = [
     description: { id: "Dokumen keselamatan dan penanganan produk.", en: "Product safety and handling document." },
     issuer: "SGS Korea Co., Ltd.",
     date: "2013-12-19",
-  },
-  {
-    mediaId: "documents/preview-iso",
-    kind: "quality",
-    title: { id: "ISO 9001:2015", en: "ISO 9001:2015" },
-    description: {
-      id: "Sertifikasi manufacturer.",
-      en: "Manufacturer's certification.",
-    },
-    issuer: "PT SOA Sertifikasi Indonesia",
-    date: "2024-04-16",
-    validUntil: "2027-04-16",
-    owner: MANUFACTURER,
   },
 ];

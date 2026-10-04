@@ -1,14 +1,21 @@
 import { getCollection } from "astro:content";
 import type { APIRoute } from "astro";
+import { blogListPath } from "../config/blog";
 import { ROOT_SEO, toAbsoluteUrl } from "../config/seo";
+import { loadBlog } from "../lib/blog";
 
 export const prerender = true;
 
 export const GET: APIRoute = async () => {
   const pages = await getCollection("pages");
+  const { posts } = await loadBlog();
   const routes = [
     ...(ROOT_SEO.indexable ? [ROOT_SEO.route] : []),
     ...pages.filter((page) => page.data.indexable).map((page) => page.data.route),
+    // The blog index exists even while empty; articles are listed only when published.
+    blogListPath("en"),
+    blogListPath("id"),
+    ...[...posts.en, ...posts.id].filter((post) => !post.entry.data.draft).map((post) => post.route),
   ].sort((left, right) => left.localeCompare(right));
 
   const urls = routes

@@ -27,7 +27,6 @@ home:
       - icon: burn-time
         title: 2+ Hours Burning Time
         body: Two hours or more of burn time, depending on grade.
-    note: Figures are reference values. Final limits and test methods are agreed with the order.
   profile:
     eyebrow: How we work
     title: Built around the buyer's workflow
@@ -64,7 +63,7 @@ home:
         href: /en/products/
       - icon: quality
         title: Quality information you can review
-        body: Ash, moisture, fixed carbon, volatile matter and burn-time references. ISO 9001:2015, ROA, SHT and MSDS documents are available for review.
+        body: Ash, moisture, fixed carbon, volatile matter and burn-time references. ROA, SHT and MSDS documents are available for review.
         linkLabel: See Quality & Documents
         href: /en/quality-documents/
       - icon: shipping

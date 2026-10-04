@@ -40,7 +40,6 @@ The grade data includes ash content, moisture, fixed carbon, volatile matter, ig
 | ROA / Report of Analysis | Product or batch analysis. |
 | SHT / Self-Heating Test | Transport-related test document. |
 | MSDS | Product safety and handling document. |
-| ISO 9001:2015 | Manufacturer's certification. |
 | Company registration | PT Permata Bara Globalindo's legal documents. |
 
 ## Documents for shipment

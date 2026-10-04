@@ -1,6 +1,8 @@
 export interface NavigationItem {
   label: string;
   href: `/${string}` | "/";
+  /** Also current on every page below `href`, such as the articles under /en/blog/. */
+  section?: boolean;
 }
 
 export const navigationItems = {
@@ -21,3 +23,19 @@ export const navigationItems = {
     { label: "Kontak", href: "/id/kontak/" },
   ],
 } as const satisfies Record<"en" | "id", readonly NavigationItem[]>;
+
+const blogNavigationItem = {
+  en: { label: "Blog", href: "/en/blog/", section: true },
+  id: { label: "Blog", href: "/id/blog/", section: true },
+} as const satisfies Record<"en" | "id", NavigationItem>;
+
+/** Blog sits before Contact, so Contact stays the last link; shown only when `showBlog`. */
+export function getNavigationItems(lang: "en" | "id", showBlog: boolean): readonly NavigationItem[] {
+  const items = navigationItems[lang];
+  if (!showBlog) return items;
+  return [...items.slice(0, -1), blogNavigationItem[lang], items[items.length - 1]];
+}
+
+export function isCurrentNavigationItem(item: NavigationItem, currentPath: string): boolean {
+  return currentPath === item.href || (item.section === true && currentPath.startsWith(item.href));
+}

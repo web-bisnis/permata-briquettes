@@ -29,7 +29,9 @@ function createProject() {
   cpSync(join(projectRoot, "public"), join(root, "public"), { recursive: true });
   cpSync(join(projectRoot, "src"), join(root, "src"), {
     recursive: true,
-    filter: (source) => !/[\\/]src[\\/]assets([\\/]|$)/u.test(source) || /[\\/]src[\\/]assets$/u.test(source),
+    // Blog articles reference covers in src/assets, which this copy leaves out.
+    filter: (source) => !/[\\/]src[\\/]content[\\/]blog[\\/](?:en|id)[\\/]/u.test(source)
+      && (!/[\\/]src[\\/]assets([\\/]|$)/u.test(source) || /[\\/]src[\\/]assets$/u.test(source)),
   });
   symlinkSync(join(projectRoot, "node_modules"), join(root, "node_modules"), "junction");
   return root;

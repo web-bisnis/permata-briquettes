@@ -27,7 +27,6 @@ home:
       - icon: burn-time
         title: Waktu Bakar 2+ Jam
         body: Waktu bakar dua jam atau lebih, tergantung grade.
-    note: Angka bersifat referensi. Batas akhir dan metode uji disepakati dalam pesanan.
   profile:
     eyebrow: Cara kerja kami
     title: Satu alur komunikasi untuk buyer
@@ -64,7 +63,7 @@ home:
         href: /id/produk/
       - icon: quality
         title: Data kualitas yang dapat diperiksa
-        body: Referensi kadar abu, kadar air, fixed carbon, volatile matter, dan waktu bakar. Dokumen ISO 9001:2015, ROA, SHT, dan MSDS tersedia untuk diperiksa.
+        body: Referensi kadar abu, kadar air, fixed carbon, volatile matter, dan waktu bakar. Dokumen ROA, SHT, dan MSDS tersedia untuk diperiksa.
         linkLabel: Lihat Kualitas & Dokumen
         href: /id/kualitas-dokumen/
       - icon: shipping

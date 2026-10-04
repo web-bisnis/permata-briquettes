@@ -325,7 +325,7 @@ if (environment === "production") {
   requireCheck(!/^Sitemap:/mu.test(robotsText), `${environment} robots.txt must not advertise a sitemap`);
 }
 
-const STATIC_ROOT_FILES = new Set(["robots.txt", "sitemap.xml", "_headers"]);
+const STATIC_ROOT_FILES = new Set(["robots.txt", "sitemap.xml", "_headers", "en/blog/rss.xml", "id/blog/rss.xml"]);
 const knownOutput = allFiles.every((file) => {
   const path = relative(buildDirectory, file).split(sep).join("/");
   return path.endsWith(".html") || STATIC_ROOT_FILES.has(path) || path.startsWith("_astro/");

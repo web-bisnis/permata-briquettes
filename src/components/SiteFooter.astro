@@ -1,5 +1,6 @@
 ---
-import { navigationItems } from "../config/navigation";
+import { getNavigationItems } from "../config/navigation";
+import { shouldShowBlogNav } from "../lib/blog";
 import Logo from "./Logo.astro";
 
 interface Props {
@@ -7,6 +8,7 @@ interface Props {
 }
 
 const { lang } = Astro.props;
+const items = getNavigationItems(lang, await shouldShowBlogNav());
 const footerCopy = lang === "id"
   ? "Permata Briquettes adalah merek dagang PT Permata Bara Globalindo. Briket arang tempurung kelapa untuk pembeli B2B."
   : "Permata Briquettes is the trading brand of PT Permata Bara Globalindo. Coconut charcoal briquettes for B2B buyers.";
@@ -23,7 +25,7 @@ const privacyLink = lang === "id"
     </div>
     <nav aria-label={lang === "id" ? "Navigasi footer" : "Footer navigation"}>
       <ul class="footer-navigation">
-        {navigationItems[lang].map((item) => (
+        {items.map((item) => (
           <li><a href={item.href}>{item.label}</a></li>
         ))}
         <li><a href={privacyLink.href}>{privacyLink.label}</a></li>

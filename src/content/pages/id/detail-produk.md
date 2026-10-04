@@ -40,7 +40,7 @@ Sumber mencantumkan kemasan bulk dan inner box. Master carton tersedia dalam 5, 
 
 ## Dokumen untuk pemeriksaan produk
 
-Dokumen ROA, SHT, dan MSDS tersedia, bersama dokumen ISO 9001:2015 milik manufacturer. Mintalah dokumen yang sesuai dengan produk dan pengiriman yang sedang dibahas.
+Dokumen ROA, SHT, dan MSDS tersedia, bersama dokumen legalitas perusahaan. Mintalah dokumen yang sesuai dengan produk dan pengiriman yang sedang dibahas.
 
 ## Tetapkan spesifikasi yang sesuai pasar Anda.
 

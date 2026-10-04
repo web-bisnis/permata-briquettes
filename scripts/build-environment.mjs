@@ -16,6 +16,8 @@ const buildEnvironment = {
 
 delete buildEnvironment.PUBLIC_TURNSTILE_SITE_KEY;
 delete buildEnvironment.PUBLIC_CLOUDFLARE_WEB_ANALYTICS_TOKEN;
+// Draft preview is for `astro dev` only; a deployed build must never see it.
+delete buildEnvironment.PUBLIC_BLOG_PREVIEW_DRAFTS;
 
 const astro = join(process.cwd(), "node_modules", "astro", "bin", "astro.mjs");
 const result = spawnSync(process.execPath, [astro, "build"], {

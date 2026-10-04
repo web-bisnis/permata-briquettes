@@ -40,7 +40,7 @@ Bulk and inner-box packaging are described in the source. Master cartons are ava
 
 ## Documents for product review
 
-ROA, SHT and MSDS documents are available, together with manufacturer ISO 9001:2015 documents. Ask for documents that correspond to the product and shipment under discussion.
+ROA, SHT and MSDS documents are available, together with company legal documents. Ask for documents that correspond to the product and shipment under discussion.
 
 ## Confirm the specification for your market.
 
