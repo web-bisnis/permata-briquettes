@@ -1,11 +1,12 @@
 ---
 import Icon from "../Icon.astro";
+import type { IconName } from "../Icon.astro";
 
 interface Item {
   title: string;
   body: string;
   /** Round badge above the title. */
-  icon?: "specs" | "quality" | "shipping";
+  icon?: IconName;
   href?: string;
   linkLabel?: string;
 }
