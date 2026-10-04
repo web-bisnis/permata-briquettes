@@ -54,6 +54,14 @@ function article(root, locale, name, { draft, slug, cover }) {
     "",
     "Body with an [external link](https://example.com/page).",
     "",
+    // A Markdown image is resolved and optimised by Astro, not left as a placeholder.
+    // Only articles with a cover have the fixture image next to them.
+    ...(cover ? [`![Fixture chart (${locale})](../../../assets/blog/${name}/cover.png)`, "", "*Fixture caption.*", ""] : []),
+    // Aligned columns make the renderer emit inline styles, which the page CSP blocks.
+    "| Year | Volume |",
+    "| :--- | ---: |",
+    "| 2024 | 203,010 |",
+    "",
     "## References",
     "",
     "1. Fixture source",
@@ -172,6 +180,12 @@ describe("blog with a published article", () => {
     expect(en).toContain('alt="Fixture cover (en)"');
     const externalLink = en.match(/<a [^>]*href="https:\/\/example\.com\/page"[^>]*>/u)?.[0];
     expect(externalLink).toContain('rel="noopener noreferrer"');
+    expect(en).not.toContain("__ASTRO_IMAGE_");
+    expect(en).not.toMatch(/\sstyle=/u);
+    const bodyImage = en.match(/<img[^>]*alt="Fixture chart \(en\)"[^>]*>/u)?.[0];
+    expect(bodyImage).toMatch(/src="\/_astro\//u);
+    expect(bodyImage).toMatch(/width="\d+"/u);
+    expect(bodyImage).toMatch(/height="\d+"/u);
     expect((en.match(/<title>/gu) ?? []).length).toBe(1);
 
     const jsonLd = en.match(/<script type="application\/ld\+json">([^<]+)<\/script>/u);
