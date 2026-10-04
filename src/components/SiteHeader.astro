@@ -1,5 +1,6 @@
 ---
-import { navigationItems } from "../config/navigation";
+import { getNavigationItems, isCurrentNavigationItem } from "../config/navigation";
+import { shouldShowBlogNav } from "../lib/blog";
 import FlagGb from "./FlagGb.astro";
 import FlagId from "./FlagId.astro";
 import Logo from "./Logo.astro";
@@ -13,6 +14,7 @@ interface Props {
 const { lang, alternateRoute } = Astro.props;
 const currentPath = Astro.url.pathname;
 const homePath = lang === "id" ? "/id/" : "/en/";
+const items = getNavigationItems(lang, await shouldShowBlogNav());
 const labels = lang === "id"
   ? {
       home: "Beranda Permata Briquettes",
@@ -43,12 +45,12 @@ const labels = lang === "id"
       <div class="site-navigation__panel">
         <nav aria-label={labels.nav}>
           <ul class="site-navigation__list">
-            {navigationItems[lang].map((item) => (
+            {items.map((item) => (
               <li>
                 <a
                   class="site-navigation__link"
                   href={item.href}
-                  aria-current={currentPath === item.href ? "page" : undefined}
+                  aria-current={isCurrentNavigationItem(item, currentPath) ? "page" : undefined}
                 >
                   {item.label}
                 </a>
