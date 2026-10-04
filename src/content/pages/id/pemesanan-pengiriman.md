@@ -17,6 +17,7 @@ compose:
   - kind: split
   - kind: steps
   - kind: band
+    attach: transit
   - kind: split
 internalNotes:
   - id: commercial-decisions
@@ -35,7 +36,7 @@ MOQ adalah satu kontainer 20 ft. Berat bersih produk di dalamnya bukan angka tet
 
 ## Ketentuan perdagangan dan pelabuhan
 
-Permata Briquettes dapat menawarkan EXW, FOB, CNF, dan CIF. Penawaran harus menyebut lokasi atau pelabuhan yang disepakati, biaya yang termasuk, asuransi jika berlaku, serta tanggung jawab masing-masing pihak. Dalam data sumber, Semarang (Tanjung Emas, IDSRG) adalah pelabuhan muat utama. Surabaya (Tanjung Perak, IDSUB) dan Jakarta (IDTPP) merupakan alternatif yang perlu dikonfirmasi untuk tiap pengiriman.
+Permata Briquettes dapat menawarkan EXW, FOB, CNF, dan CIF. Penawaran harus menyebut lokasi atau pelabuhan yang disepakati, biaya yang termasuk, asuransi jika berlaku, serta tanggung jawab masing-masing pihak. Surabaya (Tanjung Perak, IDSUB) adalah pelabuhan muat utama. Semarang (Tanjung Emas, IDSRG) dan Jakarta (IDTPP) merupakan alternatif yang perlu dikonfirmasi untuk tiap pengiriman.
 
 ## Alur pemesanan
 
@@ -50,7 +51,7 @@ Jadwal dan daftar dokumen akan dikonfirmasi dalam penawaran. Dokumen dapat menca
 
 ## Pengaturan di negara tujuan
 
-Untuk ekspor, buyer perlu menyampaikan tujuan, consignee, serta dokumen yang diminta customs broker. Pengurusan impor, bea, biaya di pelabuhan tujuan, dan pengiriman lanjutan harus dibagi secara tegas dalam penawaran dan kontrak. DDP tidak tercantum sebagai ketentuan yang tersedia.
+Untuk ekspor, buyer perlu menyampaikan tujuan, consignee, serta dokumen yang diminta customs broker. Pengurusan impor, bea, biaya di pelabuhan tujuan, dan pengiriman lanjutan harus dibagi secara tegas dalam penawaran dan kontrak. DDP tidak tersedia.
 
 ## Sudah tahu tujuan pengiriman Anda?
 
