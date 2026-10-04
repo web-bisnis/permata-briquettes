@@ -10,6 +10,7 @@ import PartnerLogos from "../components/sections/PartnerLogos.astro";
 import PackagingExamples from "../components/sections/PackagingExamples.astro";
 import PageBlock from "../components/sections/PageBlock.astro";
 import ProductSpecBlocks from "../components/sections/ProductSpecBlocks.astro";
+import TransitTimes from "../components/sections/TransitTimes.astro";
 import TeamGrid from "../components/sections/TeamGrid.astro";
 import { INQUIRY_COPY } from "../config/inquiry-copy";
 import { resolveInquiryFeature } from "../config/inquiry-feature";
@@ -77,13 +78,15 @@ const privacyHref = page.data.locale === "en" ? "/en/privacy/" : "/id/privasi/";
         name: member.data.name,
         role: member.data.role,
         photoId: member.data.photo,
+        portraitOrder: member.data.portraitOrder,
       }))}
     />
   ) : isSections ? (
     <ComposedPage data={page.data} html={renderedHtml} lang={page.data.locale}>
       {product && <ProductSpecBlocks slot="before" lang={page.data.locale} product={product.data} />}
       {page.data.packagingExamples && <PackagingExamples slot="before" lang={page.data.locale} />}
-      <DocumentGallery slot="attach-documents" lang={page.data.locale} />
+      <DocumentGallery slot="attach-documents" lang={page.data.locale} kind={page.data.documentKind} />
+      <TransitTimes slot="attach-transit" lang={page.data.locale} />
       {page.data.showLabLogos && <PartnerLogos slot="after" lang={page.data.locale} />}
       {teamMembers.length > 0 && (
         <PageBlock slot="after" id="team" title={teamTitle}>
