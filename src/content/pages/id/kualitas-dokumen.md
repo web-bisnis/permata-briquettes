@@ -40,7 +40,6 @@ Data per grade mencakup kadar abu, kadar air, fixed carbon, volatile matter, wak
 | ROA / Report of Analysis | Analisis produk atau batch. |
 | SHT / Self-Heating Test | Dokumen uji terkait pengangkutan. |
 | MSDS | Dokumen keselamatan dan penanganan produk. |
-| ISO 9001:2015 | Sertifikasi manufacturer. |
 | Legalitas perusahaan | Dokumen PT Permata Bara Globalindo. |
 
 ## Dokumen pengiriman
