@@ -169,7 +169,7 @@ export interface ExecutionContextLike {
 
 export const PUBLIC_ORIGINS = new Set([
   "https://www.permatabriquettes.com",
-  "https://www.staging.permatabriquettes.com",
+  "https://staging.permatabriquettes.com",
 ]);
 
 export const LOCAL_ORIGINS = new Set([

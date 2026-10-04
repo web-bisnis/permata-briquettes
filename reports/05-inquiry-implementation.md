@@ -3,6 +3,21 @@
 Tanggal implementasi: 1 Oktober 2026  
 Root proyek: `C:\Users\akmal\Documents\PT Web Bisnis Solusi Teknologi\Permata Briquettes`
 
+## Pembaruan status (4 Oktober 2026)
+
+Catatan ini mengoreksi bagian di bawah yang ditulis pada 1 Oktober 2026:
+
+- Copy form, pesan validasi, label consent, dan konfirmasi buyer EN/ID kini
+  tersedia di `src/config/inquiry-copy.ts`; versi privacy/consent berupa hash
+  SHA-256 deterministik. Blocker copy pada bagian di bawah sudah tidak berlaku.
+- Form terhubung ke halaman kontak melalui flag build-time
+  (`src/config/inquiry-feature.ts`), tetap nonaktif secara default.
+- Origin staging pada allowlist dikoreksi menjadi
+  `https://staging.permatabriquettes.com` (sebelumnya `www.staging...`, yang
+  akan menolak seluruh submit dari staging) dan dicakup test.
+- Aktivasi tetap diblokir oleh resource dan administrasi: D1 remote, secret,
+  Turnstile, domain Resend, webhook, cron, dan review legal.
+
 ## Ringkasan hasil dan status aktivasi
 
 Status: **SELESAI NAMUN BELUM DIAKTIFKAN**.
