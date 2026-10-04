@@ -8,6 +8,7 @@ eyebrow: About
 heroTitle: A supplier focused on the commercial side of charcoal sourcing.
 heroSummary: Permata Briquettes is the trading brand of PT Permata Bara Globalindo. We connect B2B buyers with products from a manufacturing partner and manage the supplier-side commercial relationship.
 showTeam: true
+documentKind: legal
 layout: sections
 heroStyle: backdrop
 heroMedia: team/group
@@ -17,12 +18,13 @@ compose:
   - kind: split
   - kind: split
   - kind: band
+    attach: documents
   - kind: centered
 internalNotes:
   - id: company-details
     topic: Public company identity
-    decision: Only the legal entity and trading brand are published.
-    required: Approve registered address, registration number, tax number, official contacts, and public document links.
+    decision: The legal entity, trading brands, and previews of the Ministry of Law decree and the NIB are published.
+    required: Approve registered address, tax number, official contacts, and whether the tax number on the NIB should be redacted.
   - id: contact-actions
     topic: Contact calls to action
     decision: The email and WhatsApp buttons use the same official channels as the Contact page (src/config/contact.ts).
@@ -35,17 +37,17 @@ We provide product information, collect your required specifications and packagi
 
 ## How the product range is organized
 
-The current offering is coconut shell charcoal briquettes for shisha and hookah. Its three active grades are Platinum, Super Premium and Premium. The website is organized by product and specification, so additional products can be listed separately when their details are confirmed.
+The current offering is coconut shell charcoal briquettes for shisha and hookah. Its three active grades are Platinum, Super Premium and Premium.
 
 ## Clear attribution of documents
 
-Our company registration documents belong to PT Permata Bara Globalindo. Product analysis, safety documents, ISO certification and Factory Audit documents must be identified according to their issuing party and scope. A manufacturer's certification is not presented as our company's certification.
+Our company registration documents belong to PT Permata Bara Globalindo. Product analysis, safety documents, and ISO certification documents are shown according to their issuing party and scope.
 
 [Review Available Documents](/en/quality-documents/)
 
 ## Company details
 
-Legal entity: PT Permata Bara Globalindo. Trading brand: Permata Briquettes.
+Legal entity: PT Permata Bara Globalindo. Trading brands: Permata Briquettes and El Barra.
 
 ## Let's define the order clearly.
 
