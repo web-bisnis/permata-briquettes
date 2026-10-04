@@ -1,3 +1,5 @@
+import { inspectContactPage, inspectInquiryProbes } from "./smoke-checks.mjs";
+
 const args = process.argv.slice(2);
 
 function argument(name) {
@@ -66,17 +68,32 @@ requireCheck(sitemap.response.ok && sitemap.body.includes("<urlset"), "sitemap.x
 requireCheck(sitemap.body.includes("https://www.permatabriquettes.com/"), "sitemap uses the production origin");
 requireCheck(!/staging|localhost|127\.0\.0\.1|\/api\//iu.test(sitemap.body), "sitemap excludes non-production origins and API routes");
 
+// Staging serves the live inquiry form; production must keep it off.
+const formExpected = environment === "staging";
+
+async function probe(path) {
+  const response = await fetch(new URL(path, baseUrl), {
+    method: "GET",
+    redirect: "manual",
+    headers: { "User-Agent": "permata-briquettes-read-only-smoke/1.0" },
+  });
+  return { status: response.status, body: await response.text() };
+}
+
 for (const path of ["/en/contact/", "/id/kontak/"]) {
   const page = await get(path);
   requireCheck(page.response.ok, `${path} is served`);
-  requireCheck(page.body.includes("mailto:marketing@permatabriquettes.com"), `${path} keeps the email CTA`);
-  requireCheck(page.body.includes("https://wa.me/6281130887797"), `${path} keeps the WhatsApp CTA`);
-  requireCheck(!/<form\b/iu.test(page.body), `${path} inquiry form is absent`);
-  requireCheck(!page.body.includes("challenges.cloudflare.com"), `${path} Turnstile is absent`);
+  for (const result of inspectContactPage(path, page.body, { formExpected })) {
+    requireCheck(result.ok, result.message);
+  }
 }
 
-const inquiry = await get("/api/inquiries");
-requireCheck(inquiry.response.status === 503, "read-only inquiry probe returns 503 fail closed");
-requireCheck(inquiry.body.includes("inquiry_unavailable"), "inquiry probe reports unavailable");
+// GET is never a valid inquiry call. A configured Worker answers 405; 503 means
+// the gate is closed (production by design, staging if a secret or binding is missing).
+const inquiry = await probe("/api/inquiries");
+const webhook = await probe("/api/webhooks/resend");
+for (const result of inspectInquiryProbes({ formExpected, inquiry, webhook })) {
+  requireCheck(result.ok, result.message);
+}
 
 process.stdout.write(`PASS: ${environment} read-only smoke test; ${checks.length} checks.\n`);

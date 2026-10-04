@@ -57,6 +57,24 @@ describe("inquiry endpoint", () => {
     expect((await handleInquiry(inquiryRequest(), testConfig(), deps.service, context)).status).toBe(400);
   });
 
+  it.each([
+    ["https://staging.permatabriquettes.com", 202],
+    ["https://www.permatabriquettes.com", 202],
+    ["https://www.staging.permatabriquettes.com", 403],
+    ["https://permatabriquettes.com", 403],
+    ["http://localhost:8787", 403],
+  ] as const)("applies the public origin allowlist outside local mode: %s -> %i", async (origin, status) => {
+    const deps = dependencies();
+    const config = { ...testConfig(), runtimeMode: "staging" as const };
+    const response = await handleInquiry(
+      inquiryRequest(validPayload(), { origin }),
+      config,
+      deps.service,
+      new TestContext(),
+    );
+    expect(response.status).toBe(status);
+  });
+
   it.each(["en", "id"] as const)("stores before email and keeps %s buyer confirmation free of reflected PII", async (locale) => {
     const deps = dependencies();
     const context = new TestContext();

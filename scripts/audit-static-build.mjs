@@ -164,7 +164,19 @@ const pages = htmlFiles
     requireCheck(idList.length === idValues.size, `${route}: duplicate id found`);
 
     const labels = tags(html, "label").map(attributes);
-    const controls = ["input", "select", "textarea"].flatMap((name) => tags(html, name).map(attributes));
+    // A control wrapped in a <label> with text is implicitly labelled (the
+    // inquiry form uses this); only controls outside labels need for/aria.
+    const wrappingLabels = elements(html, "label");
+    for (const label of wrappingLabels) {
+      const wrapped = ["input", "select", "textarea"]
+        .flatMap((name) => tags(label[2], name).map(attributes))
+        .filter((entry) => entry.type !== "hidden");
+      if (wrapped.length > 0) {
+        requireCheck(plainText(label[2]) !== "", `${route}: wrapping label has no text`);
+      }
+    }
+    const htmlOutsideLabels = html.replace(/<label\b[^>]*>[\s\S]*?<\/label>/giu, "");
+    const controls = ["input", "select", "textarea"].flatMap((name) => tags(htmlOutsideLabels, name).map(attributes));
     for (const control of controls.filter((entry) => entry.type !== "hidden")) {
       const hasName = Boolean(control["aria-label"] || control["aria-labelledby"])
         || (Boolean(control.id) && labels.some((label) => label.for === control.id));

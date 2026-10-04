@@ -11,7 +11,7 @@ on:
           - staging
           - production
       release_confirmation:
-        description: Type DEPLOY_STAGING_DISABLED_WITH_CUSTOM_DOMAIN or DEPLOY_PRODUCTION_DISABLED_WITH_CUSTOM_DOMAIN
+        description: Type DEPLOY_STAGING_INQUIRY_ACTIVE_WITH_CUSTOM_DOMAIN (staging) or DEPLOY_PRODUCTION_DISABLED_WITH_CUSTOM_DOMAIN (production)
         required: true
         type: string
       staging_verified:
@@ -31,7 +31,7 @@ concurrency:
 
 jobs:
   deploy:
-    name: Verify and deploy disabled release
+    name: Verify and deploy release
     runs-on: ubuntu-latest
     environment: ${{ inputs.target }}
     env:
@@ -42,7 +42,11 @@ jobs:
       - name: Enforce release decision
         shell: bash
         run: |
-          expected="DEPLOY_${TARGET^^}_DISABLED_WITH_CUSTOM_DOMAIN"
+          if [[ "$TARGET" == "staging" ]]; then
+            expected="DEPLOY_STAGING_INQUIRY_ACTIVE_WITH_CUSTOM_DOMAIN"
+          else
+            expected="DEPLOY_PRODUCTION_DISABLED_WITH_CUSTOM_DOMAIN"
+          fi
           if [[ "$CONFIRMATION" != "$expected" ]]; then
             echo "Release confirmation did not match $expected."
             exit 1
@@ -81,8 +85,16 @@ jobs:
         run: npm ci
       - name: Check source
         run: npm run check
-      - name: Build disabled release
+      - name: Build release
+        # Only staging enables the inquiry form; the site key is a public value
+        # kept in the staging GitHub Environment variable PUBLIC_TURNSTILE_SITE_KEY.
+        # Production receives empty values, and the build script refuses
+        # production if any form variable is set.
         run: npm run build:${{ inputs.target }}
+        env:
+          PUBLIC_INQUIRY_FORM_ENABLED: ${{ inputs.target == 'staging' && 'true' || '' }}
+          PUBLIC_INQUIRY_FORM_MODE: ${{ inputs.target == 'staging' && 'live' || '' }}
+          PUBLIC_TURNSTILE_SITE_KEY: ${{ inputs.target == 'staging' && vars.PUBLIC_TURNSTILE_SITE_KEY || '' }}
       - name: Audit static output
         run: npm run audit:${{ inputs.target }}
       - name: Run tests
@@ -91,7 +103,7 @@ jobs:
         run: npm run prepare:deploy-config -- ${{ inputs.target }}
       - name: Dry-run Worker bundle
         run: npx wrangler deploy --config wrangler.deploy.jsonc --env ${{ inputs.target }} --dry-run --outdir .wrangler/release-dry-run
-      - name: Deploy disabled release
+      - name: Deploy release
         run: npx wrangler deploy --config wrangler.deploy.jsonc --env ${{ inputs.target }} --strict
       - name: Read-only HTTPS smoke test
         run: npm run smoke:deployment -- --environment ${{ inputs.target }} --base-url https://${{ inputs.target == 'staging' && 'staging.permatabriquettes.com' || 'www.permatabriquettes.com' }}
