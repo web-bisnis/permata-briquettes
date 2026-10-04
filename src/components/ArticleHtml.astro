@@ -1,0 +1,9 @@
+---
+import { removeInlineStyles, secureExternalLinks } from "../lib/blog-html";
+
+// The Markdown body is rendered by Astro (which also resolves its images) and captured as a string,
+// so links get their rel attribute and blocked inline styles are dropped before it reaches the page.
+const html = await Astro.slots.render("default");
+---
+
+<Fragment set:html={secureExternalLinks(removeInlineStyles(html))} />

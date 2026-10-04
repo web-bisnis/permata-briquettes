@@ -1,11 +1,12 @@
 ---
 import { Picture } from "astro:assets";
+import { render } from "astro:content";
+import ArticleHtml from "../../../components/ArticleHtml.astro";
 import CtaBand from "../../../components/sections/CtaBand.astro";
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import { BLOG_COPY, blogFeedPath, blogListPath, formatBlogDate } from "../../../config/blog";
 import { contactActions } from "../../../config/contact";
 import { loadBlog, type BlogPost } from "../../../lib/blog";
-import { removeInlineStyles, secureExternalLinks } from "../../../lib/blog-html";
 
 export async function getStaticPaths() {
   const { posts } = await loadBlog();
@@ -23,9 +24,7 @@ const { post } = Astro.props;
 const lang = post.locale;
 const copy = BLOG_COPY[lang];
 const { data } = post.entry;
-// The glob loader already rendered the Markdown; links get their rel attribute and inline styles go here.
-const html = post.entry.rendered?.html;
-if (html === undefined) throw new Error(`Blog article ${post.entry.id} has no rendered HTML`);
+const { Content } = await render(post.entry);
 const contactHref = lang === "id" ? "/id/kontak/" : "/en/contact/";
 ---
 
@@ -72,7 +71,7 @@ const contactHref = lang === "id" ? "/id/kontak/" : "/en/contact/";
     )}
 
     <div class="prose">
-      <Fragment set:html={secureExternalLinks(removeInlineStyles(html))} />
+      <ArticleHtml><Content /></ArticleHtml>
     </div>
 
     <p><a class="blog-back" href={blogListPath(lang)}>{copy.back}</a></p>
