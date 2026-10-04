@@ -110,7 +110,9 @@ const pages = htmlFiles
     const html = readFileSync(file, "utf8");
     const route = routeFromHtmlFile(file);
     const htmlTag = attributes(tags(html, "html")[0] ?? "");
-    const titleValues = elements(html, "title").map((match) => plainText(match[2]));
+    // Only the document title counts; inline SVG <title> tooltips (e.g. the transit map) live in <body>.
+    const head = html.match(/<head\b[^>]*>([\s\S]*?)<\/head>/iu)?.[1] ?? "";
+    const titleValues = elements(head, "title").map((match) => plainText(match[2]));
     const metaTags = tags(html, "meta").map(attributes);
     const linkTags = tags(html, "link").map(attributes);
     const description = metaTags.find((tag) => tag.name === "description")?.content;
