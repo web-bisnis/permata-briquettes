@@ -175,31 +175,31 @@ export const MEDIA_SLOTS: readonly MediaSlot[] = [
     alt: { en: "A cube-shaped briquette", id: "Briket berbentuk cube" },
   }),
   slot({
-    id: "products/shape-finger",
+    id: "products/shape-cylindrical-finger",
     priority: "P1",
-    subject: "Briket bentuk finger, latar polos",
+    subject: "Briket bentuk cylindrical/finger, latar polos",
     aspect: "4/3",
     minWidth: 720,
     usedOn: "Galeri bentuk produk",
     alt: { en: "A finger-shaped briquette", id: "Briket berbentuk finger" },
   }),
   slot({
-    id: "products/shape-hexagonal",
+    id: "products/shape-hexagonal-finger",
     priority: "P1",
-    subject: "Briket bentuk hexagonal, latar polos",
+    subject: "Briket bentuk hexagonal finger, latar polos",
     aspect: "4/3",
     minWidth: 720,
     usedOn: "Galeri bentuk produk",
-    alt: { en: "A hexagonal briquette", id: "Briket berbentuk hexagonal" },
+    alt: { en: "A hexagonal finger briquette", id: "Briket berbentuk hexagonal finger" },
   }),
   slot({
-    id: "products/shape-flat",
+    id: "products/shape-flat-cube",
     priority: "P1",
-    subject: "Briket bentuk flat/brix, latar polos",
+    subject: "Briket bentuk flat cube (flat/brix), latar polos",
     aspect: "4/3",
     minWidth: 720,
     usedOn: "Galeri bentuk produk",
-    alt: { en: "A flat briquette", id: "Briket berbentuk flat" },
+    alt: { en: "A flat cube briquette", id: "Briket berbentuk flat cube" },
   }),
   slot({
     id: "products/shape-dome",
@@ -209,6 +209,15 @@ export const MEDIA_SLOTS: readonly MediaSlot[] = [
     minWidth: 720,
     usedOn: "Galeri bentuk produk",
     alt: { en: "Dome-shaped briquettes", id: "Briket berbentuk dome" },
+  }),
+  slot({
+    id: "products/shape-hexagonal-bbq",
+    priority: "P1",
+    subject: "Briket bentuk hexagonal BBQ (big hexagon), latar polos",
+    aspect: "4/3",
+    minWidth: 720,
+    usedOn: "Galeri bentuk produk BBQ",
+    alt: { en: "A hexagonal barbecue briquette", id: "Briket barbecue berbentuk hexagonal" },
   }),
   slot({
     id: "products/ash-platinum",
@@ -464,9 +473,10 @@ export function isKnownMediaSlot(id: string): boolean {
 export function shapeMediaId(shapeName: string): string | undefined {
   const key = shapeName.toLowerCase();
   if (key.startsWith("cube")) return "products/shape-cube";
-  if (key.startsWith("finger")) return "products/shape-finger";
-  if (key.startsWith("hex")) return "products/shape-hexagonal";
-  if (key.startsWith("flat")) return "products/shape-flat";
+  if (key.startsWith("cylindrical") || key.startsWith("finger")) return "products/shape-cylindrical-finger";
+  if (key.startsWith("hexagonal bbq")) return "products/shape-hexagonal-bbq";
+  if (key.startsWith("hex")) return "products/shape-hexagonal-finger";
+  if (key.startsWith("flat")) return "products/shape-flat-cube";
   if (key.startsWith("dome")) return "products/shape-dome";
   return undefined;
 }

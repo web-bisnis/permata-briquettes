@@ -47,11 +47,11 @@ home:
         linkLabel: View specifications
         href: /en/products/coconut-charcoal-briquettes-for-shisha/
       - title: Barbecue (BBQ)
-        body: A briquette line for barbecue. Ask us directly about availability and specifications.
+        body: Hexagonal briquettes made from hardwood and coconut charcoal granule, in three sizes.
         mediaId: products/line-bbq
         tone: accent
-        linkLabel: Ask about BBQ
-        href: /en/contact/
+        linkLabel: View specifications
+        href: /en/products/barbecue-charcoal-briquettes/
   strengths:
     eyebrow: Before you order
     title: What to prepare and review

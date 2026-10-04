@@ -7,7 +7,7 @@ import Media from "../Media.astro";
 
 interface Props {
   lang: MediaLocale;
-  grades: CollectionEntry<"products">["data"]["grades"];
+  grades: NonNullable<CollectionEntry<"products">["data"]["grades"]>;
 }
 
 const { lang, grades } = Astro.props;

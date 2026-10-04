@@ -1,0 +1,63 @@
+locale: en
+name: Barbecue charcoal briquettes
+components:
+  - Hardwood
+  - Coconut charcoal granule
+uses:
+  - Barbecue grill
+referenceOnlyNotice: These figures are references. Final limits and test methods will be specified for the order.
+specs:
+  - label: Raw material
+    value: Hardwood mixed with coconut charcoal granule
+  - label: Fixed carbon
+    value: 70% min
+  - label: Ash content
+    value: 8–15%
+  - label: Volatile matter
+    value: 13–15%
+  - label: Moisture
+    value: 8% max
+  - label: Spark
+    value: None
+  - label: Calorific value
+    value: Above 6,500 kcal/kg
+  - label: Density
+    value: 1,200–1,300 kg/m³
+  - label: Box weight (average)
+    value: 10 kg
+  - label: Recommended use
+    value: Barbecue grill
+shapes:
+  - name: Hexagonal BBQ
+    sizes: [50×50 mm (72 pcs/kg), 50×100 mm (48 pcs/kg), 50×200 mm (24 pcs/kg)]
+packaging:
+  masterCartonKg: [10]
+internalNotes:
+  - id: calorific-value-units
+    topic: Calorific value in two units
+    decision: Only kcal/kg is published. The supplied 14,390.3 btu/lb was copied from the hookah charcoal data sheet (above 7,300 kcal/kg), so it is a source error and is not used.
+    required: None. Add a btu/lb value only if it is recalculated from 6,500 kcal/kg.
+  - id: density-units
+    topic: Density in two units
+    decision: Only kg/m³ is published. The catalogue lb/ft³ range of 79–81 is rounded up; 1,200–1,300 kg/m³ is about 74.9–81.2 lb/ft³.
+    required: None. Keep SI units to avoid confusion.
+  - id: morphology-big-cube
+    topic: Big Cube format
+    decision: The supplied morphology lists Big Hexagon and Big Cube, but sizes were supplied only for Hexagonal BBQ. Big Cube is not listed.
+    required: Supply Big Cube sizes and a photo, or confirm it is not offered.
+  - id: claims-smokeless-odorless
+    topic: Smokeless and odorless claims
+    decision: Not stated on the page; the specification table lists Spark as None only.
+    required: Approve the wording, with the test or document that supports it.
+  - id: manufacturer-name
+    topic: Manufacturer name
+    decision: Not shown on the website, following the current policy for manufacturer names.
+    required: Decide whether the manufacturer name may be shown and how.
+  - id: minimum-order-incoterm
+    topic: Minimum order and incoterm for the BBQ line
+    decision: No minimum order is published for this line.
+    required: Approve the minimum order, the incoterm, and packing options beyond the 10 kg box.
+  - id: documents
+    topic: BBQ line documents
+    decision: No BBQ document is linked.
+    required: Approve the ROA, SHT, MSDS and legal documents that may be shown, with dates and scope.

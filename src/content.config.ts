@@ -148,17 +148,24 @@ const products = defineCollection({
     components: z.array(z.string().min(1)).min(1),
     uses: z.array(z.string().min(1)).min(1),
     referenceOnlyNotice: z.string().min(1),
+    /** Shisha lines compare three grades; a line without grades (barbecue) uses `specs` instead. */
     grades: z.array(z.object({
       name: z.enum(["Platinum", "Super Premium", "Premium"]),
       specifications: referenceSpecificationSchema,
-    })).length(3),
+    })).length(3).optional(),
+    /** One reference table for a line that has no grades. Labels and values are written per locale. */
+    specs: z.array(z.object({
+      label: z.string().min(1),
+      value: z.string().min(1),
+    })).optional(),
     shapes: z.array(z.object({
       name: z.string().min(1),
       sizes: z.array(z.string().min(1)).min(1),
     })).min(1),
     packaging: z.object({
       masterCartonKg: z.array(z.number().positive()).min(1),
-      minimumOrder: z.string().min(1),
+      /** Left out until the minimum order is approved for the line. */
+      minimumOrder: z.string().min(1).optional(),
     }),
     internalNotes: z.array(internalNoteSchema).default([]),
   }),

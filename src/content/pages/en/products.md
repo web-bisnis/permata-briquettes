@@ -6,7 +6,7 @@ title: Coconut Charcoal Briquettes for Shisha | Products
 description: Explore Platinum, Super Premium and Premium coconut charcoal briquettes for shisha. Compare reference specifications and request a B2B quote.
 eyebrow: Products
 heroTitle: Products with specifications you can compare.
-heroSummary: Our current B2B range covers coconut shell charcoal briquettes for shisha and hookah. Select a grade, then confirm shape, size and packing for your order.
+heroSummary: Our current B2B range covers coconut shell charcoal briquettes for shisha and hookah, and barbecue briquettes. Select a grade or size, then confirm shape and packing for your order.
 layout: sections
 heroStyle: split
 heroMedia: products/hero-lineup
@@ -14,6 +14,7 @@ closingCta: true
 compose:
   - kind: grades
     eyebrow: Grades
+  - kind: split
   - kind: split
   - kind: band
 internalNotes:
@@ -48,6 +49,12 @@ Ash 2.3–2.5%; reference burn time 1 h 30 min+; moisture 8% max; fixed carbon 7
 ## Shapes and sizes
 
 Listed formats include cube, finger, hexagonal, flat/brix and dome. Availability is not established for every grade-size combination. Send the dimensions you need for confirmation.
+
+## Barbecue briquettes
+
+Hexagonal briquettes made from hardwood mixed with coconut charcoal granule, for barbecue grills. Listed sizes are 50×50, 50×100 and 50×200 mm, packed in boxes averaging 10 kg.
+
+[View Barbecue Specifications](/en/products/barbecue-charcoal-briquettes/)
 
 ## Ordering basis
 

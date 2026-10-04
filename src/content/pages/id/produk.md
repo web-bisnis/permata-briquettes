@@ -6,7 +6,7 @@ title: Produk Briket Arang untuk Shisha | Permata Briquettes
 description: Jelajahi briket arang tempurung kelapa grade Platinum, Super Premium, dan Premium. Bandingkan spesifikasi referensi dan minta penawaran B2B.
 eyebrow: Produk
 heroTitle: Pilih produk berdasarkan spesifikasinya.
-heroSummary: Katalog B2B kami saat ini berisi briket arang tempurung kelapa untuk shisha dan hookah. Pilih grade, lalu konfirmasi bentuk, ukuran, dan kemasan untuk pesanan Anda.
+heroSummary: Katalog B2B kami saat ini berisi briket arang tempurung kelapa untuk shisha dan hookah, serta briket barbecue. Pilih grade atau ukuran, lalu konfirmasi bentuk dan kemasan untuk pesanan Anda.
 layout: sections
 heroStyle: split
 heroMedia: products/hero-lineup
@@ -14,6 +14,7 @@ closingCta: true
 compose:
   - kind: grades
     eyebrow: Grade
+  - kind: split
   - kind: split
   - kind: band
 internalNotes:
@@ -48,6 +49,12 @@ Kadar abu 2,3–2,5%; waktu bakar referensi 1 jam 30 menit+; kadar air maks. 8%;
 ## Bentuk dan ukuran
 
 Bentuk yang tersedia meliputi cube, finger, hexagonal, flat/brix, dan dome. Belum ada kepastian bahwa setiap kombinasi grade dan ukuran tersedia. Sampaikan dimensi yang Anda perlukan untuk dikonfirmasi.
+
+## Briket barbecue
+
+Briket hexagonal dari kayu keras yang dicampur granul arang kelapa, untuk panggangan barbecue. Ukuran yang tercatat adalah 50×50, 50×100, dan 50×200 mm, dikemas dalam boks rata-rata 10 kg.
+
+[Lihat Spesifikasi Barbecue](/id/produk/briket-arang-barbecue/)
 
 ## Dasar pemesanan
 

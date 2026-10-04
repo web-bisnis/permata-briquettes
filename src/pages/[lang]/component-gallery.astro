@@ -103,7 +103,7 @@ const sample = lang === "id"
         href="#products"
         linkLabel={sample.link}
         mediaId="products/line-shisha"
-        facts={product.data.grades.map((grade) => grade.name)}
+        facts={(product.data.grades ?? []).map((grade) => grade.name)}
       />
       <ProductCard
         lang={lang}
@@ -118,7 +118,7 @@ const sample = lang === "id"
 
   <Section labelledby="specs">
     <SectionHeader id="specs" title={sample.sectionTitle} />
-    <SpecTable lang={lang} grades={product.data.grades} />
+    <SpecTable lang={lang} grades={product.data.grades ?? []} />
   </Section>
 
   <Section tone="alt" labelledby="shapes">

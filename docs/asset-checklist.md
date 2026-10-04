@@ -21,10 +21,11 @@ Taruh setiap file di folder `src/assets/<folder>/` dengan nama persis seperti di
 | `products/` | `line-shisha` | Foto produk shisha/hookah (briket cube yang menyala atau close-up produk) | 3:2 | 1100 px | Kartu lini produk, halaman detail produk shisha |  |
 | `products/` | `line-bbq` | Foto produk briket BBQ (Mix): briket utuh dan saat dipakai memanggang bila ada | 3:2 | 1100 px | Kartu lini produk, halaman detail produk BBQ |  |
 | `products/` | `shape-cube` | Briket bentuk cube, satu kelompok pada latar polos, dengan penggaris/koin untuk skala bila memungkinkan | 4:3 | 720 px | Galeri bentuk produk |  |
-| `products/` | `shape-finger` | Briket bentuk finger, latar polos | 4:3 | 720 px | Galeri bentuk produk |  |
-| `products/` | `shape-hexagonal` | Briket bentuk hexagonal, latar polos | 4:3 | 720 px | Galeri bentuk produk |  |
-| `products/` | `shape-flat` | Briket bentuk flat/brix, latar polos | 4:3 | 720 px | Galeri bentuk produk |  |
+| `products/` | `shape-cylindrical-finger` | Briket bentuk cylindrical/finger, latar polos | 4:3 | 720 px | Galeri bentuk produk |  |
+| `products/` | `shape-hexagonal-finger` | Briket bentuk hexagonal finger, latar polos | 4:3 | 720 px | Galeri bentuk produk |  |
+| `products/` | `shape-flat-cube` | Briket bentuk flat cube (flat/brix), latar polos | 4:3 | 720 px | Galeri bentuk produk |  |
 | `products/` | `shape-dome` | Briket bentuk dome, latar polos | 4:3 | 720 px | Galeri bentuk produk |  |
+| `products/` | `shape-hexagonal-bbq` | Briket bentuk hexagonal BBQ (big hexagon), latar polos | 4:3 | 720 px | Galeri bentuk produk BBQ |  |
 | `packaging/` | `overview` | Semua jenis kemasan dalam satu foto: bulk, inner box, master carton | 4:3 | 1200 px | Hero halaman Kemasan |  |
 | `packaging/` | `inner-box` | Inner box produk (bagian luar dan isi) | 4:3 | 900 px | Halaman Kemasan |  |
 | `packaging/` | `master-carton` | Master carton 10 kg atau 20 kg (tampak luar, label terbaca) | 4:3 | 900 px | Halaman Kemasan |  |

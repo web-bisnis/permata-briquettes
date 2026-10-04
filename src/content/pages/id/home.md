@@ -46,12 +46,12 @@ home:
         tone: dark
         linkLabel: Lihat spesifikasi
         href: /id/produk/briket-arang-tempurung-kelapa-untuk-shisha/
-      - title: Barbeque (BBQ)
-        body: Lini briket untuk barbeque. Tanyakan ketersediaan dan spesifikasinya langsung kepada kami.
+      - title: Barbecue (BBQ)
+        body: Briket hexagonal dari kayu keras dan granul arang kelapa, dalam tiga ukuran.
         mediaId: products/line-bbq
         tone: accent
-        linkLabel: Tanyakan lini BBQ
-        href: /id/kontak/
+        linkLabel: Lihat spesifikasi
+        href: /id/produk/briket-arang-barbecue/
   strengths:
     eyebrow: Sebelum memesan
     title: Yang perlu Anda siapkan dan periksa
