@@ -18,10 +18,11 @@ Taruh file di folder ini dengan nama persis seperti di tabel. File ini dibuat ot
 | `line-shisha` | P1 | Foto produk shisha/hookah (briket cube yang menyala atau close-up produk) | 3:2 | 1100 px | Kartu lini produk, halaman detail produk shisha |  |
 | `line-bbq` | P1 | Foto produk briket BBQ (Mix): briket utuh dan saat dipakai memanggang bila ada | 3:2 | 1100 px | Kartu lini produk, halaman detail produk BBQ |  |
 | `shape-cube` | P1 | Briket bentuk cube, satu kelompok pada latar polos, dengan penggaris/koin untuk skala bila memungkinkan | 4:3 | 720 px | Galeri bentuk produk |  |
-| `shape-finger` | P1 | Briket bentuk finger, latar polos | 4:3 | 720 px | Galeri bentuk produk |  |
-| `shape-hexagonal` | P1 | Briket bentuk hexagonal, latar polos | 4:3 | 720 px | Galeri bentuk produk |  |
-| `shape-flat` | P1 | Briket bentuk flat/brix, latar polos | 4:3 | 720 px | Galeri bentuk produk |  |
+| `shape-cylindrical-finger` | P1 | Briket bentuk cylindrical/finger, latar polos | 4:3 | 720 px | Galeri bentuk produk |  |
+| `shape-hexagonal-finger` | P1 | Briket bentuk hexagonal finger, latar polos | 4:3 | 720 px | Galeri bentuk produk |  |
+| `shape-flat-cube` | P1 | Briket bentuk flat cube (flat/brix), latar polos | 4:3 | 720 px | Galeri bentuk produk |  |
 | `shape-dome` | P1 | Briket bentuk dome, latar polos | 4:3 | 720 px | Galeri bentuk produk |  |
+| `shape-hexagonal-bbq` | P1 | Briket bentuk hexagonal BBQ (big hexagon), latar polos | 4:3 | 720 px | Galeri bentuk produk BBQ |  |
 | `ash-platinum` | P2 | Close-up abu hasil pembakaran grade Platinum | 4:3 | 600 px | Detail produk, perbandingan grade |  |
 | `ash-super-premium` | P2 | Close-up abu hasil pembakaran grade Super Premium | 4:3 | 600 px | Detail produk, perbandingan grade |  |
 | `ash-premium` | P2 | Close-up abu hasil pembakaran grade Premium | 4:3 | 600 px | Detail produk, perbandingan grade |  |
