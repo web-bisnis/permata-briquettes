@@ -32,6 +32,7 @@ shapes:
     sizes: [50×50 mm (72 pcs/kg), 50×100 mm (48 pcs/kg), 50×200 mm (24 pcs/kg)]
 packaging:
   masterCartonKg: [10]
+  minimumOrder: Satu kontainer 20 ft
 internalNotes:
   - id: calorific-value-units
     topic: Nilai kalor dalam dua satuan
@@ -53,10 +54,10 @@ internalNotes:
     topic: Nama manufacturer
     decision: Tidak ditampilkan di website, mengikuti kebijakan saat ini untuk nama manufacturer.
     required: Putuskan apakah nama manufacturer boleh ditampilkan dan bagaimana rumusannya.
-  - id: minimum-order-incoterm
-    topic: MOQ dan incoterm lini BBQ
-    decision: MOQ tidak dipublikasikan untuk lini ini.
-    required: Setujui MOQ, incoterm, dan opsi kemasan selain boks 10 kg.
+  - id: incoterm-packing
+    topic: Incoterm dan kemasan lini BBQ
+    decision: MOQ satu kontainer 20 ft dipublikasikan; incoterm dan opsi kemasan selain boks 10 kg belum.
+    required: Setujui incoterm dan opsi kemasan lain bila ada.
   - id: documents
     topic: Dokumen lini BBQ
     decision: Tidak ada dokumen BBQ yang ditautkan.

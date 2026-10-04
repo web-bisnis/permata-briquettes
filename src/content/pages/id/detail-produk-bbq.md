@@ -33,7 +33,7 @@ Briket dibuat dari kayu keras yang dicampur granul arang kelapa. Produk ini ditu
 
 ## Kemasan dan volume pesanan
 
-Berat boks rata-rata adalah 10 kg. MOQ, incoterm, dan opsi kemasan lain untuk lini ini dikonfirmasi dalam penawaran. Harga diberikan melalui penawaran dan tidak ditampilkan di website.
+Berat boks rata-rata adalah 10 kg. MOQ adalah satu kontainer 20 ft. Incoterm dan opsi kemasan lain untuk lini ini dikonfirmasi dalam penawaran. Harga diberikan melalui penawaran dan tidak ditampilkan di website.
 
 [Lihat Opsi Kemasan](/id/kemasan/)
 

@@ -32,6 +32,7 @@ shapes:
     sizes: [50×50 mm (72 pcs/kg), 50×100 mm (48 pcs/kg), 50×200 mm (24 pcs/kg)]
 packaging:
   masterCartonKg: [10]
+  minimumOrder: One 20 ft container
 internalNotes:
   - id: calorific-value-units
     topic: Calorific value in two units
@@ -53,10 +54,10 @@ internalNotes:
     topic: Manufacturer name
     decision: Not shown on the website, following the current policy for manufacturer names.
     required: Decide whether the manufacturer name may be shown and how.
-  - id: minimum-order-incoterm
-    topic: Minimum order and incoterm for the BBQ line
-    decision: No minimum order is published for this line.
-    required: Approve the minimum order, the incoterm, and packing options beyond the 10 kg box.
+  - id: incoterm-packing
+    topic: Incoterm and packing for the BBQ line
+    decision: The minimum order of one 20 ft container is published; the incoterm and packing options beyond the 10 kg box are not.
+    required: Approve the incoterm and any other packing options.
   - id: documents
     topic: BBQ line documents
     decision: No BBQ document is linked.
