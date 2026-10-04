@@ -1,0 +1,44 @@
+---
+import BlogCard from "../../../components/BlogCard.astro";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { BLOG_COPY, blogFeedPath, blogListPath, type BlogLocale } from "../../../config/blog";
+import { loadBlog } from "../../../lib/blog";
+
+export function getStaticPaths() {
+  return [{ params: { lang: "en" } }, { params: { lang: "id" } }];
+}
+
+const lang = Astro.params.lang as BlogLocale;
+const copy = BLOG_COPY[lang];
+const otherLocale: BlogLocale = lang === "en" ? "id" : "en";
+const { posts } = await loadBlog();
+const visiblePosts = posts[lang];
+---
+
+<BaseLayout
+  title={copy.title}
+  description={copy.description}
+  lang={lang}
+  route={blogListPath(lang)}
+  alternateRoute={blogListPath(otherLocale)}
+  indexable
+  feed={visiblePosts.length > 0 ? { href: blogFeedPath(lang), title: copy.feed } : undefined}
+>
+  <div class="container content-page blog-list">
+    <header class="page-intro">
+      <p class="page-intro__eyebrow">{copy.eyebrow}</p>
+      <h1>{copy.title}</h1>
+      <p class="page-intro__summary">{copy.summary}</p>
+    </header>
+
+    {visiblePosts.length === 0
+      ? <p class="blog-empty">{copy.empty}</p>
+      : (
+        <ul class="blog-grid">
+          {visiblePosts.map((post, index) => (
+            <li><BlogCard post={post} lang={lang} eagerCover={index === 0} /></li>
+          ))}
+        </ul>
+      )}
+  </div>
+</BaseLayout>
