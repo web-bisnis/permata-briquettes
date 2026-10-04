@@ -1,0 +1,41 @@
+---
+import type { MediaLocale } from "../../config/media-slots";
+
+interface Props {
+  lang: MediaLocale;
+  specs: readonly { label: string; value: string }[];
+}
+
+const { lang, specs } = Astro.props;
+
+const copy = lang === "id"
+  ? {
+      region: "Spesifikasi referensi produk. Geser ke samping bila tabel terpotong.",
+      parameter: "Parameter referensi",
+      value: "Nilai",
+    }
+  : {
+      region: "Reference product specifications. Scroll sideways if the table is cut off.",
+      parameter: "Reference parameter",
+      value: "Value",
+    };
+---
+
+<div class="table-scroll" role="region" aria-label={copy.region} tabindex="0">
+  <table class="spec-table">
+    <thead>
+      <tr>
+        <th scope="col">{copy.parameter}</th>
+        <th scope="col">{copy.value}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {specs.map((spec) => (
+        <tr>
+          <th scope="row">{spec.label}</th>
+          <td>{spec.value}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>

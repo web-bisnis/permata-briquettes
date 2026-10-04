@@ -5,7 +5,7 @@ import { specRows } from "../../config/spec-rows";
 
 interface Props {
   lang: MediaLocale;
-  grades: CollectionEntry<"products">["data"]["grades"];
+  grades: NonNullable<CollectionEntry<"products">["data"]["grades"]>;
   /** Text shown for a value that has not been approved for publication. */
   missingValue?: string;
 }
