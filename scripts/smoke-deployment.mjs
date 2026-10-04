@@ -1,3 +1,5 @@
+import { inspectContactPage, inspectInquiryProbes } from "./smoke-checks.mjs";
+
 const args = process.argv.slice(2);
 
 function argument(name) {
@@ -81,17 +83,8 @@ async function probe(path) {
 for (const path of ["/en/contact/", "/id/kontak/"]) {
   const page = await get(path);
   requireCheck(page.response.ok, `${path} is served`);
-  requireCheck(page.body.includes("mailto:marketing@permatabriquettes.com"), `${path} keeps the email CTA`);
-  requireCheck(page.body.includes("https://wa.me/6281130887797"), `${path} keeps the WhatsApp CTA`);
-  if (formExpected) {
-    requireCheck(/<form[^>]*data-inquiry-form/iu.test(page.body), `${path} renders the inquiry form`);
-    requireCheck(/data-sitekey="[^"]+"/u.test(page.body), `${path} carries a Turnstile site key`);
-    requireCheck(page.body.includes("challenges.cloudflare.com"), `${path} loads Turnstile`);
-    requireCheck(!page.body.includes("local-turnstile-pass"), `${path} does not use the local mock token`);
-    requireCheck(!/type="file"/iu.test(page.body), `${path} has no file input`);
-  } else {
-    requireCheck(!/<form/iu.test(page.body), `${path} inquiry form is absent`);
-    requireCheck(!page.body.includes("challenges.cloudflare.com"), `${path} Turnstile is absent`);
+  for (const result of inspectContactPage(path, page.body, { formExpected })) {
+    requireCheck(result.ok, result.message);
   }
 }
 
@@ -99,14 +92,8 @@ for (const path of ["/en/contact/", "/id/kontak/"]) {
 // the gate is closed (production by design, staging if a secret or binding is missing).
 const inquiry = await probe("/api/inquiries");
 const webhook = await probe("/api/webhooks/resend");
-if (formExpected) {
-  requireCheck(inquiry.status === 405, `read-only inquiry probe returns 405 on a configured staging Worker (got ${inquiry.status})`);
-  requireCheck(inquiry.body.includes("method_not_allowed"), "inquiry probe reports method_not_allowed");
-  requireCheck(webhook.status === 405, `read-only webhook probe returns 405 on a configured staging Worker (got ${webhook.status})`);
-} else {
-  requireCheck(inquiry.status === 503, "read-only inquiry probe returns 503 fail closed");
-  requireCheck(inquiry.body.includes("inquiry_unavailable"), "inquiry probe reports unavailable");
-  requireCheck(webhook.status === 503, "read-only webhook probe returns 503 fail closed");
+for (const result of inspectInquiryProbes({ formExpected, inquiry, webhook })) {
+  requireCheck(result.ok, result.message);
 }
 
 process.stdout.write(`PASS: ${environment} read-only smoke test; ${checks.length} checks.\n`);

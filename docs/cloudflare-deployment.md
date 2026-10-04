@@ -176,7 +176,9 @@ Smoke script hanya melakukan `GET`. Pada staging (form live) skrip mengharapkan
 form dan Turnstile pada kedua halaman kontak serta `405 method_not_allowed` dari
 `GET /api/inquiries` dan `GET /api/webhooks/resend`; `503` berarti secret atau
 binding Worker belum lengkap sehingga smoke gagal. Pada production skrip tetap
-mengharapkan form absen dan `503 inquiry_unavailable`. Tidak ada payload inquiry
+mengharapkan form absen dan `503 inquiry_unavailable`. Pengecekan halaman dan probe berada di
+`scripts/smoke-checks.mjs` dan diuji tanpa jaringan terhadap HTML hasil build
+lokal (`tests/smoke-checks.test.mjs`). Tidak ada payload inquiry
 atau email yang dikirim. Jangan menyatakan staging terverifikasi bila satu
 pemeriksaan gagal.
 
