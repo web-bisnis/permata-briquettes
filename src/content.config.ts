@@ -53,11 +53,21 @@ const homeSchema = z.object({
   team: z.object({
     eyebrow: z.string().min(1),
     title: z.string().min(1),
-    body: z.string().min(1),
+    body: z.string().min(1).optional(),
     linkLabel: z.string().min(1),
     href: routeLinkSchema,
   }),
   cta: z.object({ title: z.string().min(1), body: z.string().min(1) }),
+  /** Four short product facts shown under the hero. */
+  highlights: z.object({
+    title: z.string().min(1),
+    items: z.array(z.object({
+      icon: z.enum(["coconut", "odor-free", "ash", "burn-time"]),
+      title: z.string().min(1),
+      body: z.string().min(1),
+    })).length(4),
+    note: z.string().min(1).optional(),
+  }).optional(),
 });
 
 /** How one h2 section of the markdown body is presented on a composed page. */
@@ -69,7 +79,7 @@ const composeSchema = z.object({
   /** Photo on the left, text on the right. */
   reverse: z.boolean().default(false),
   /** Renders a named block of the page directly after this section. */
-  attach: z.enum(["documents"]).optional(),
+  attach: z.enum(["documents", "transit"]).optional(),
 });
 
 const pages = defineCollection({
@@ -92,6 +102,8 @@ const pages = defineCollection({
     product: reference("products").optional(),
     /** Renders the team section from the team collection. */
     showTeam: z.boolean().default(false),
+    /** Limits the document previews attached to this page to one kind. */
+    documentKind: z.enum(["quality", "legal"]).optional(),
     /** Renders the inner box, master carton, and private label examples. */
     packagingExamples: z.boolean().default(false),
     /**
@@ -156,6 +168,8 @@ const team = defineCollection({
   schema: z.object({
     locale: z.enum(["en", "id"]),
     order: z.number().int().positive(),
+    /** Position in the portrait band when it differs from the name order. */
+    portraitOrder: z.number().int().positive().optional(),
     name: z.string().min(1),
     role: z.string().min(1),
     bio: z.string().min(1),
