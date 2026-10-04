@@ -42,7 +42,12 @@ describe("media slot registry", () => {
   });
 
   it("resolves a gallery slot for every product shape in the product data", () => {
-    for (const locale of ["en/coconut-charcoal-briquettes", "id/briket-arang-tempurung-kelapa"]) {
+    for (const locale of [
+      "en/coconut-charcoal-briquettes",
+      "id/briket-arang-tempurung-kelapa",
+      "en/barbecue-charcoal-briquettes",
+      "id/briket-arang-barbecue",
+    ]) {
       const yaml = readFileSync(join(process.cwd(), "src/content/products", `${locale}.yaml`), "utf8");
       const shapeNames = [...yaml.matchAll(/^ {2}- name: (.+)$/gmu)]
         .map((match) => match[1].trim())
