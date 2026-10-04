@@ -3,8 +3,8 @@ title: "Ekspor Arang Tempurung Kelapa Indonesia, 2022 sampai 2024"
 description: "Kementerian Pertanian mencatat ekspor arang tempurung kelapa Indonesia 203.010 ton pada 2024, beserta tujuan ekspor, karakteristik produk, dan risiko pasokan."
 date: 2026-10-04
 draft: false
-cover: ""
-coverAlt: ""
+cover: cover.jpeg
+coverAlt: "Piramida kubus arang kelapa yang membara di samping tempurung kelapa pecah dan sebuah briket, dengan grafik batang menanjak di atas peta dunia di latar belakang."
 tags: [ekspor, data-pasar, arang-kelapa]
 ---
 
@@ -31,6 +31,10 @@ Data pengapalan ekspor komersial untuk periode berjalan 2026 memberi gambaran se
 Pada 2023, total nilai ekspor arang dan briket dari Indonesia, dengan arang tempurung kelapa sebagai kontributor utama, tercatat hampir **US$466 juta**, atau sekitar **43 persen** pasar ekspor arang global menurut basis data ITC Trade Map.[4] Badan Pusat Statistik juga mencatat pertumbuhan rata-rata nilai ekspor briket arang kelapa sekitar **15 persen per tahun** dalam beberapa tahun terakhir.[2] Angka-angka ini mencakup lingkup dan periode yang berbeda (seluruh arang dan briket pada 2023, hanya briket pada periode berjalan 2026), sehingga tidak dapat dibandingkan langsung.
 
 Angka final tahunan resmi untuk 2025 dan 2026 tidak dimuat dalam artikel ini. Tren tiga tahun bertumpu pada data resmi 2022 sampai 2024. Angka pengapalan 2026 berasal dari catatan komersial dan bersifat sementara, sehingga menunjukkan arah pasar, bukan angka final.
+
+![Grafik batang nilai ekspor arang dan briket Indonesia dengan kode HS 4402 pada 2021 sampai 2025: US$292,1 juta, US$360,0 juta, US$389,0 juta, US$370,0 juta, dan US$428,7 juta, tertinggi dalam lima tahun.](../../../assets/blog/coconut-charcoal-export-data/grafik-tren-nilai-ekspor-arang-briket-indonesia-2021-2025.png)
+
+*Grafik: nilai ekspor arang dan briket Indonesia dengan kode HS 4402 (termasuk arang kayu), 2021 sampai 2025. Angka berasal dari basis data yang disebut pada grafik, yang berbeda dari angka ITC Trade Map 2023 di atas.*
 
 ## Mengapa Indonesia Sering Dijadikan Acuan
 
@@ -64,6 +68,10 @@ Peta ekspor briket arang kelapa Indonesia mencakup beragam pasar:
 * **Eropa:** Jerman menjadi pintu masuk utama ke Eropa Barat, disusul Belanda dan Belgia, terutama untuk pasar bahan bakar barbekyu ramah lingkungan.[2, 3]
 * **Pasar berkembang:** Rusia, Brasil, dan Amerika Serikat menunjukkan permintaan yang tumbuh untuk briket BBQ premium dan produk biomassa ramah lingkungan di luar pasar tradisional Timur Tengah.[3]
 * **Asia:** Tiongkok rutin mengimpor arang kelapa untuk karbon aktif di industri kosmetik dan kimia, sementara Jepang dan Korea Selatan konsisten mengimpornya untuk kebutuhan energi alternatif.[2]
+
+![Grafik batang 10 negara tujuan utama ekspor briket arang Indonesia menurut pangsa nilai ekspor: Arab Saudi 17,90%, Turki 13,06%, Jerman 9,97%, Lebanon 8,45%, Irak 6,93%, Yordania 6,15%, Rusia 5,09%, Uni Emirat Arab 3,37%, Brasil 3,37%, dan Amerika Serikat 2,44%.](../../../assets/blog/coconut-charcoal-export-data/grafik-10-negara-tujuan-utama-ekspor-briket-arang-indonesia.png)
+
+*Grafik: 10 negara tujuan utama ekspor briket arang Indonesia menurut pangsa nilai ekspor, dari cuplikan data pengiriman TradeInt Indonesia yang diakses pada 2026.*
 
 Permintaan global briket arang kelapa diproyeksikan tumbuh rata-rata **4,3 persen** per tahun pada 2024 sampai 2031. Nilai pasar global pada 2024 diperkirakan melampaui **US$421 juta**, menurut riset Cognitive Market Research. Kawasan Asia-Pasifik tumbuh paling cepat, sedangkan Eropa dan Amerika Utara tetap menjadi pasar bernilai tertinggi karena preferensi terhadap bahan bakar ramah lingkungan.[2]
 

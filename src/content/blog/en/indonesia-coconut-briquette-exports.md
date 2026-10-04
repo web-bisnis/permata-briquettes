@@ -3,8 +3,8 @@ title: "Indonesia Leads Coconut Briquette Exports as Shipping Costs Rise"
 description: "Indonesia supplies over 44% of global coconut charcoal briquette exports. This article covers market growth, 2026 shipping pressures, and buyer standards."
 date: 2026-10-04
 draft: false
-cover: ""
-coverAlt: ""
+cover: cover.jpeg
+coverAlt: "Glowing coconut charcoal cubes on a shisha bowl in a Middle Eastern lounge, with a container ship in a storm visible through the arched window."
 tags: [coconut-charcoal, briquette-export, indonesia, shipping-logistics]
 ---
 

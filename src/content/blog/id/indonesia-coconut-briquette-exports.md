@@ -3,8 +3,8 @@ title: "Indonesia Pimpin Ekspor Briket Kelapa saat Biaya Logistik Naik"
 description: "Indonesia memasok lebih dari 44% ekspor briket arang kelapa dunia. Artikel ini membahas pasar, tekanan pengiriman 2026, dan standar yang dicari pembeli."
 date: 2026-10-04
 draft: false
-cover: ""
-coverAlt: ""
+cover: cover.jpeg
+coverAlt: "Kubus arang kelapa membara di atas mangkuk shisha di lounge bergaya Timur Tengah, dengan kapal kontainer di tengah badai terlihat dari jendela melengkung."
 tags: [arang-kelapa, ekspor-briket, indonesia, logistik-pengiriman]
 ---
 

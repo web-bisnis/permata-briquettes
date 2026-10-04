@@ -3,8 +3,8 @@ title: "Indonesia's Coconut Shell Charcoal Exports, 2022 to 2024"
 description: "Ministry of Agriculture data shows Indonesian coconut shell charcoal exports reached 203,010 tons in 2024, with destinations, product traits, and supply risks."
 date: 2026-10-04
 draft: false
-cover: ""
-coverAlt: ""
+cover: cover.jpeg
+coverAlt: "A pyramid of glowing coconut charcoal cubes next to broken coconut shells and a briquette, with a rising bar chart over a world map in the background."
 tags: [export, market-data, coconut-charcoal]
 ---
 
@@ -31,6 +31,10 @@ Commercial export shipping data for the ongoing 2026 period gives a provisional 
 In 2023, the total export value of charcoal and briquettes from Indonesia, with coconut shell charcoal as the main contributor, was nearly **US$466 million**, or about **43 percent** of the global charcoal export market according to the ITC Trade Map database.[4] Statistics Indonesia also noted average growth in the export value of coconut charcoal briquettes of about **15 percent per year** in recent years.[2] These figures cover different scopes and periods (all charcoal and briquettes in 2023, briquettes only in the ongoing 2026 period), so they are not directly comparable.
 
 Finalized official full-year figures for 2025 and 2026 are not included in this article. The three-year trend relies on official data for 2022 to 2024. The 2026 shipping figures come from commercial records and are provisional, so they indicate market direction rather than final numbers.
+
+![Bar chart of the value of Indonesian charcoal and briquette exports under HS 4402 from 2021 to 2025: US$292.1 million, US$360.0 million, US$389.0 million, US$370.0 million and US$428.7 million, the highest of the five years.](../../../assets/blog/coconut-charcoal-export-data/chart-export-value-trend-2021-2025-en.png)
+
+*Chart: value of Indonesian charcoal and briquette exports under HS 4402 (includes wood charcoal), 2021 to 2025. The figures come from the databases named in the chart, which differ from the 2023 ITC Trade Map figure cited above.*
 
 ## Why Indonesia Is Often Cited as a Reference
 
@@ -64,6 +68,10 @@ The export map of Indonesian coconut charcoal briquettes covers a broad set of m
 * **Europe:** Germany is the main gateway to Western Europe, followed by the Netherlands and Belgium, mainly supplying eco-friendly barbecue fuel markets.[2, 3]
 * **Emerging markets:** Russia, Brazil, and the United States show growing demand for premium BBQ briquettes and eco-friendly biomass products beyond the traditional Middle Eastern markets.[3]
 * **Asia:** China regularly imports coconut charcoal for activated carbon used in the cosmetics and chemical industries, while Japan and South Korea consistently import it for alternative energy needs.[2]
+
+![Bar chart of the top 10 destinations for Indonesian charcoal briquette exports by share of export value: Saudi Arabia 17.90%, Turkey 13.06%, Germany 9.97%, Lebanon 8.45%, Iraq 6.93%, Jordan 6.15%, Russia 5.09%, United Arab Emirates 3.37%, Brazil 3.37% and United States 2.44%.](../../../assets/blog/coconut-charcoal-export-data/chart-top-10-export-destinations-en.png)
+
+*Chart: top 10 destinations for Indonesian charcoal briquettes by share of export value, from a TradeInt Indonesia shipment-level snapshot accessed in 2026.*
 
 Global demand for coconut charcoal briquettes is projected to grow by an average of **4.3 percent** per year from 2024 to 2031. The global market value in 2024 was estimated to exceed **US$421 million**, according to research by Cognitive Market Research. The Asia-Pacific region is expanding at the fastest pace, while Europe and North America remain the highest-value markets because of their preference for eco-friendly fuels.[2]
 
