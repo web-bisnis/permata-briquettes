@@ -2,6 +2,7 @@ import { defineCollection, reference } from "astro:content";
 import { glob } from "astro/loaders";
 import { z } from "astro/zod";
 import { isKnownMediaSlot } from "./config/media-slots";
+import { blogSchema } from "./lib/blog-schema";
 
 const internalNoteSchema = z.object({
   id: z.string().min(1),
@@ -193,4 +194,15 @@ const decisions = defineCollection({
   }),
 });
 
-export const collections = { pages, products, team, decisions };
+/** Articles live in en/ and id/; the same file name in both marks a translation pair (see src/lib/blog.ts). */
+const blog = defineCollection({
+  loader: glob({
+    pattern: "{en,id}/*.md",
+    base: "./src/content/blog",
+    // The default id would be the front matter `slug`, which differs per language; keep the path.
+    generateId: ({ entry }) => entry.replace(/\.md$/u, ""),
+  }),
+  schema: blogSchema,
+});
+
+export const collections = { pages, products, team, decisions, blog };
