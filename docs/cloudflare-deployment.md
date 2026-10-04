@@ -104,6 +104,11 @@ commit, artifact, screenshot, atau laporan.
 `npm run build:staging` dan `npm run build:production` sengaja menimpa flags
 dengan nilai aman serta menghapus site key/token dari environment build.
 
+`PUBLIC_BLOG_PREVIEW_DRAFTS` hanya untuk `npm run dev` lokal (meninjau artikel
+`draft: true`). Build apa pun mengabaikannya dan kedua skrip build di atas
+menghapusnya; jangan menyetelnya di Cloudflare. Artikel baru terbit dengan
+`draft: false` pada file `en/` dan `id/` (lihat `src/content/blog/README.md`).
+
 ## Urutan provisioning
 
 1. Verifikasi `git --version`, clean/known worktree, remote, current branch,

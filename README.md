@@ -16,6 +16,12 @@ Fondasi website statis menggunakan Astro dan TypeScript.
   konfigurasi Wrangler bernama tanpa upload.
 - `npm run db:migrate:local` — menerapkan migration hanya ke simulator D1 lokal.
 
+Blog: artikel Markdown di `src/content/blog/{en,id}/` dan gambar di
+`src/assets/blog/<nama-artikel>/`. Hanya `draft: false` yang dirender; untuk
+meninjau draft secara lokal jalankan `npm run dev` dengan
+`PUBLIC_BLOG_PREVIEW_DRAFTS=true`. Cara menerbitkan ada di
+`src/content/blog/README.md`.
+
 Inquiry Worker dan form nonaktif secara default. Build hanya merender form bila
 `PUBLIC_INQUIRY_FORM_ENABLED=true` dan `PUBLIC_INQUIRY_FORM_MODE` bernilai
 `local-mock`, atau bernilai `live` dengan `PUBLIC_TURNSTILE_SITE_KEY` tersedia.
