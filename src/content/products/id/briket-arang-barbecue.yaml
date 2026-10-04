@@ -1,0 +1,63 @@
+locale: id
+name: Briket arang barbecue
+components:
+  - Kayu keras (hardwood)
+  - Granul arang kelapa
+uses:
+  - Panggangan barbecue
+referenceOnlyNotice: Angka ini merupakan referensi. Batas akhir dan metode uji akan ditetapkan untuk pesanan.
+specs:
+  - label: Bahan baku
+    value: Kayu keras dicampur granul arang kelapa
+  - label: Fixed carbon
+    value: min. 70%
+  - label: Kadar abu
+    value: 8–15%
+  - label: Volatile matter
+    value: 13–15%
+  - label: Kadar air
+    value: maks. 8%
+  - label: Percikan api
+    value: Tidak ada
+  - label: Nilai kalor
+    value: Di atas 6.500 kkal/kg
+  - label: Densitas
+    value: 1.200–1.300 kg/m³
+  - label: Berat boks (rata-rata)
+    value: 10 kg
+  - label: Penggunaan yang disarankan
+    value: Panggangan barbecue
+shapes:
+  - name: Hexagonal BBQ
+    sizes: [50×50 mm (72 pcs/kg), 50×100 mm (48 pcs/kg), 50×200 mm (24 pcs/kg)]
+packaging:
+  masterCartonKg: [10]
+internalNotes:
+  - id: calorific-value-units
+    topic: Nilai kalor dalam dua satuan
+    decision: Hanya kkal/kg yang dipublikasikan. Nilai 14.390,3 btu/lb yang diberikan disalin dari data sheet arang hookah (di atas 7.300 kkal/kg), sehingga merupakan kesalahan sumber dan tidak dipakai.
+    required: Tidak ada. Tambahkan nilai btu/lb hanya bila dihitung ulang dari 6.500 kkal/kg.
+  - id: density-units
+    topic: Densitas dalam dua satuan
+    decision: Hanya kg/m³ yang dipublikasikan. Rentang lb/ft³ 79–81 di katalog dibulatkan ke atas; 1.200–1.300 kg/m³ setara sekitar 74,9–81,2 lb/ft³.
+    required: Tidak ada. Pertahankan satuan SI agar tidak membingungkan.
+  - id: morphology-big-cube
+    topic: Format Big Cube
+    decision: Morfologi yang diberikan menyebut Big Hexagon dan Big Cube, tetapi ukuran hanya diberikan untuk Hexagonal BBQ. Big Cube tidak dicantumkan.
+    required: Berikan ukuran dan foto Big Cube, atau konfirmasi bahwa bentuk ini tidak ditawarkan.
+  - id: claims-smokeless-odorless
+    topic: Klaim tanpa asap dan tanpa bau
+    decision: Tidak dinyatakan di halaman; tabel spesifikasi hanya mencantumkan percikan api sebagai tidak ada.
+    required: Setujui rumusan beserta uji atau dokumen pendukungnya.
+  - id: manufacturer-name
+    topic: Nama manufacturer
+    decision: Tidak ditampilkan di website, mengikuti kebijakan saat ini untuk nama manufacturer.
+    required: Putuskan apakah nama manufacturer boleh ditampilkan dan bagaimana rumusannya.
+  - id: minimum-order-incoterm
+    topic: MOQ dan incoterm lini BBQ
+    decision: MOQ tidak dipublikasikan untuk lini ini.
+    required: Setujui MOQ, incoterm, dan opsi kemasan selain boks 10 kg.
+  - id: documents
+    topic: Dokumen lini BBQ
+    decision: Tidak ada dokumen BBQ yang ditautkan.
+    required: Setujui dokumen ROA, SHT, MSDS, dan legalitas yang boleh ditampilkan, beserta tanggal dan cakupannya.
