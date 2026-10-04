@@ -4,8 +4,10 @@ import SeoHead from "../components/SeoHead.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import SiteHeader from "../components/SiteHeader.astro";
 import WhatsAppButton from "../components/WhatsAppButton.astro";
-import { resolveFaviconHref, resolveSocialImage } from "../config/media-seo";
-import { registerPageCsp, THEME_BOOTSTRAP_SCRIPT } from "../config/security";
+import type { ImageMetadata } from "astro";
+import { createArticleJsonLd, serializeJsonLd } from "../config/blog";
+import { cropSocialImage, resolveFaviconHref, resolveSocialImage } from "../config/media-seo";
+import { registerPageCsp, sha256Source, THEME_BOOTSTRAP_SCRIPT } from "../config/security";
 import {
   createLocalizedSeo,
   resolveCloudflareAnalytics,
@@ -23,6 +25,12 @@ interface Props {
   loadsTurnstile?: boolean;
   /** Slot id of the link-preview image; falls back to brand/og-default. */
   ogImage?: string;
+  /** A picture that is not a media slot, such as a blog cover; wins over `ogImage`. */
+  socialImage?: { source: ImageMetadata; alt: string };
+  /** Marks the page as an article: og:type, publication date and JSON-LD. */
+  article?: { publishedAt: Date };
+  /** RSS feed advertised in <head>. */
+  feed?: { href: string; title: string };
 }
 
 const {
@@ -34,6 +42,9 @@ const {
   indexable,
   loadsTurnstile = false,
   ogImage,
+  socialImage,
+  article,
+  feed,
 } = Astro.props;
 const seo = createLocalizedSeo({
   title,
@@ -43,12 +54,26 @@ const seo = createLocalizedSeo({
   alternateRoute,
   indexable,
   environment: resolveSiteEnvironment(import.meta.env.SITE_ENV),
-  image: await resolveSocialImage(ogImage, lang),
+  image: socialImage
+    ? await cropSocialImage(socialImage.source, socialImage.alt)
+    : await resolveSocialImage(ogImage, lang),
 });
+// Inline scripts are not hashed by Astro, so the JSON-LD block is hashed here, before <head> renders.
+const jsonLd = article
+  ? serializeJsonLd(createArticleJsonLd({
+      headline: title,
+      description,
+      datePublished: article.publishedAt,
+      locale: lang,
+      url: seo.canonical,
+      imageUrl: seo.image?.url,
+    }))
+  : undefined;
 const iconHref = await resolveFaviconHref();
 registerPageCsp(Astro.csp, {
   analytics: resolveCloudflareAnalytics(import.meta.env).enabled,
   turnstile: loadsTurnstile,
+  scriptHashes: jsonLd ? [await sha256Source(jsonLd)] : [],
 });
 ---
 
@@ -58,7 +83,14 @@ registerPageCsp(Astro.csp, {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <meta name="color-scheme" content="light" />
-    <SeoHead seo={seo} iconHref={iconHref} />
+    <SeoHead
+      seo={seo}
+      iconHref={iconHref}
+      ogType={article ? "article" : "website"}
+      publishedTime={article?.publishedAt.toISOString()}
+      feed={feed}
+    />
+    {jsonLd && <script is:inline type="application/ld+json" set:html={jsonLd}></script>}
     <script is:inline set:html={THEME_BOOTSTRAP_SCRIPT}></script>
   </head>
   <body>
