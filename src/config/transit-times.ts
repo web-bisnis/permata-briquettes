@@ -41,7 +41,7 @@ export const TRANSIT_REGIONS: readonly TransitRegion[] = [
     },
     days: "25–45",
   },
-  { key: "canada", countries: ["CA"], region: same("Kanada"), ports: same("Halifax, Montreal, Vancouver"), days: "35–65" },
+  { key: "canada", countries: ["CA"], region: { id: "Kanada", en: "Canada" }, ports: same("Halifax, Montreal, Vancouver"), days: "35–65" },
   { key: "india", countries: ["IN"], region: same("India"), ports: same("Mumbai, Chennai"), days: "35–65" },
   { key: "japan", countries: ["JP"], region: { id: "Jepang", en: "Japan" }, ports: same("Nagoya"), days: "35–65" },
 ];
