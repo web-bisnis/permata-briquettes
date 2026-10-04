@@ -33,6 +33,8 @@ export const CSP_DIRECTIVES = [
 interface ThirdPartyScripts {
   analytics: boolean;
   turnstile?: boolean;
+  /** Hashes of other inline scripts on the page, such as its JSON-LD block. */
+  scriptHashes?: readonly `sha256-${string}`[];
 }
 
 // The CSP <meta> is written when <head> renders, so this must run in page or
@@ -43,6 +45,7 @@ export function registerPageCsp(
 ): void {
   if (!csp) return;
   csp.insertScriptHash(THEME_BOOTSTRAP_HASH);
+  for (const hash of scripts.scriptHashes ?? []) csp.insertScriptHash(hash);
   // Inserting any script resource replaces Astro's default 'self', which the
   // bundled /_astro/*.js files need.
   if (scripts.analytics || scripts.turnstile) csp.insertScriptResource("'self'");

@@ -1,3 +1,4 @@
+import type { ImageMetadata } from "astro";
 import { getImage } from "astro:assets";
 import { getMedia, getMediaAlt } from "./media";
 import { LOGO_ID, type MediaLocale } from "./media-slots";
@@ -54,6 +55,19 @@ export async function resolveSocialImage(
     alt: getMediaAlt(LOGO_ID, locale),
     ...SOCIAL_IMAGE_SIZE,
   };
+}
+
+/** Link-preview crop of an image that is not a registered slot, such as a blog cover. */
+export async function cropSocialImage(source: ImageMetadata, alt: string): Promise<SeoImage> {
+  const optimized = await getImage({
+    src: source,
+    width: SOCIAL_IMAGE_SIZE.width,
+    height: SOCIAL_IMAGE_SIZE.height,
+    fit: "cover",
+    format: "jpg",
+    quality: 82,
+  });
+  return { url: toAbsoluteUrl(optimized.src), alt, ...SOCIAL_IMAGE_SIZE };
 }
 
 /** The favicon slot, or the logo mark until a dedicated square icon is supplied. */
