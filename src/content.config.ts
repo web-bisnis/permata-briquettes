@@ -17,6 +17,19 @@ const mediaSlotSchema = z.string().refine(isKnownMediaSlot, {
 
 const routeLinkSchema = z.string().regex(/^\/(en|id)\/(?:[^/]+\/)*(?:#[a-z0-9-]+)?$/);
 
+/** Two product-line panels; shared by the home page and the product list page. */
+const panelsSchema = z.object({
+  title: z.string().min(1),
+  items: z.array(z.object({
+    title: z.string().min(1),
+    body: z.string().min(1),
+    mediaId: mediaSlotSchema,
+    tone: z.enum(["dark", "accent"]),
+    linkLabel: z.string().min(1),
+    href: routeLinkSchema,
+  })).length(2),
+});
+
 /** Copy for the composed home page; every string here is shown to buyers. */
 const homeSchema = z.object({
   profile: z.object({ eyebrow: z.string().min(1), title: z.string().min(1), body: z.string().min(1) }),
@@ -27,17 +40,7 @@ const homeSchema = z.object({
     linkLabel: z.string().min(1),
     href: routeLinkSchema,
   }),
-  panels: z.object({
-    title: z.string().min(1),
-    items: z.array(z.object({
-      title: z.string().min(1),
-      body: z.string().min(1),
-      mediaId: mediaSlotSchema,
-      tone: z.enum(["dark", "accent"]),
-      linkLabel: z.string().min(1),
-      href: routeLinkSchema,
-    })).length(2),
-  }),
+  panels: panelsSchema,
   strengths: z.object({
     eyebrow: z.string().min(1),
     title: z.string().min(1),
@@ -123,6 +126,8 @@ const pages = defineCollection({
     /** The last h2 becomes the closing call to action with the email and WhatsApp buttons. */
     closingCta: z.boolean().default(false),
     home: homeSchema.optional(),
+    /** Shows the two product-line panels right after the hero of a "sections" page. */
+    lineup: panelsSchema.optional(),
     internalNotes: z.array(internalNoteSchema).default([]),
   }).refine((page) => page.layout !== "home" || page.home !== undefined, {
     message: "layout: home needs a `home` block",
