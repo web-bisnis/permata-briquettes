@@ -1,0 +1,151 @@
+---
+import { getMediaAlt, hasMedia } from "../../config/media";
+import type { MediaLocale } from "../../config/media-slots";
+import { ORIGIN_COUNTRIES, TRANSIT_REGIONS } from "../../config/transit-times";
+import { buildWorldMap } from "../../lib/world-map";
+import PageBlock from "./PageBlock.astro";
+
+interface Props {
+  lang: MediaLocale;
+}
+
+const { lang } = Astro.props;
+const copy = lang === "id"
+  ? {
+      title: "Perkiraan durasi pengiriman",
+      note: "Durasi adalah perkiraan dalam hari. Durasi sebenarnya bergantung pada rute, jadwal kapal, dan dokumen, dan dikonfirmasi dalam penawaran.",
+      region: "Perkiraan durasi pengiriman per wilayah tujuan. Geser ke samping bila tabel terpotong.",
+      columns: { region: "Negara / wilayah", ports: "Pelabuhan", days: "Hari" },
+      origin: "Indonesia (asal)",
+      destination: "Wilayah tujuan",
+      hint: "Pilih wilayah di peta atau tabel untuk melihat durasinya.",
+      daysUnit: "hari",
+      select: (name: string) => `Tandai ${name} di peta`,
+    }
+  : {
+      title: "Estimated transit times",
+      note: "Durations are estimates in days. Actual times depend on the route, vessel schedule and documents, and are confirmed in the quotation.",
+      region: "Estimated transit time by destination region. Scroll sideways if the table is cut off.",
+      columns: { region: "Country / region", ports: "Ports", days: "Days" },
+      origin: "Indonesia (origin)",
+      destination: "Destination regions",
+      hint: "Select a region on the map or in the table to see its transit time.",
+      daysUnit: "days",
+      select: (name: string) => `Highlight ${name} on the map`,
+    };
+
+const groups: Record<string, readonly string[]> = Object.fromEntries(
+  TRANSIT_REGIONS.map((row) => [row.key, row.countries]),
+);
+groups.origin = ORIGIN_COUNTRIES;
+const map = hasMedia("shipping/world-map") ? buildWorldMap(groups) : undefined;
+---
+
+<PageBlock id="transit-times" title={copy.title} note={copy.note}>
+  <div class="transit" data-transit data-days-unit={copy.daysUnit}>
+    {map && (
+      <figure class="transit__figure">
+        <svg
+          class="transit__map"
+          viewBox={map.viewBox}
+          role="img"
+          aria-label={getMediaAlt("shipping/world-map", lang)}
+          focusable="false"
+        >
+          <path class="transit__land" d={map.land} />
+          <path class="transit__origin" d={map.groups.origin} />
+          {TRANSIT_REGIONS.map((row) => (
+            <path class="transit__region" data-region={row.key} d={map.groups[row.key]}>
+              <title>{`${row.region[lang]}: ${row.days} ${copy.daysUnit}`}</title>
+            </path>
+          ))}
+        </svg>
+        <figcaption class="transit__legend">
+          <span><i class="transit__swatch transit__swatch--origin"></i>{copy.origin}</span>
+          <span><i class="transit__swatch transit__swatch--region"></i>{copy.destination}</span>
+        </figcaption>
+        <p class="transit__status" data-transit-status aria-live="polite" data-hint={copy.hint}>{copy.hint}</p>
+      </figure>
+    )}
+    <div class="table-scroll" role="region" aria-label={copy.region} tabindex="0">
+      <table class="spec-table transit__table">
+        <thead>
+          <tr>
+            <th scope="col">{copy.columns.region}</th>
+            <th scope="col">{copy.columns.ports}</th>
+            <th scope="col">{copy.columns.days}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {TRANSIT_REGIONS.map((row) => (
+            <tr data-region-row={row.key}>
+              <th scope="row">
+                {map
+                  ? (
+                    <button
+                      type="button"
+                      class="transit__select"
+                      aria-pressed="false"
+                      aria-label={copy.select(row.region[lang])}
+                      data-region-button={row.key}
+                    >
+                      {row.region[lang]}
+                    </button>
+                  )
+                  : row.region[lang]}
+              </th>
+              <td>{row.ports[lang]}</td>
+              <td>{row.days}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</PageBlock>
+
+<script>
+  for (const root of document.querySelectorAll<HTMLElement>("[data-transit]")) {
+    const regions = root.querySelectorAll<SVGPathElement>("[data-region]");
+    const rows = [...root.querySelectorAll<HTMLTableRowElement>("[data-region-row]")];
+    const buttons = root.querySelectorAll<HTMLButtonElement>("[data-region-button]");
+    const status = root.querySelector<HTMLElement>("[data-transit-status]");
+    const unit = root.dataset.daysUnit ?? "";
+    let selected: string | undefined;
+
+    const render = () => {
+      for (const region of regions) region.classList.toggle("is-active", region.dataset.region === selected);
+      for (const row of rows) row.classList.toggle("is-active", row.dataset.regionRow === selected);
+      for (const button of buttons) {
+        button.setAttribute("aria-pressed", String(button.dataset.regionButton === selected));
+      }
+      if (status) {
+        const row = rows.find((candidate) => candidate.dataset.regionRow === selected);
+        status.textContent = row
+          ? `${row.cells[0].textContent?.trim()} · ${row.cells[2].textContent?.trim()} ${unit}`
+          : (status.dataset.hint ?? "");
+      }
+    };
+
+    const select = (key: string | undefined, scroll = false) => {
+      selected = selected === key ? undefined : key;
+      render();
+      if (scroll && selected) {
+        const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        rows
+          .find((candidate) => candidate.dataset.regionRow === selected)
+          ?.scrollIntoView({ block: "nearest", behavior: reduced ? "auto" : "smooth" });
+      }
+    };
+
+    for (const row of rows) {
+      const hover = (on: boolean) =>
+        root.querySelector(`[data-region="${row.dataset.regionRow}"]`)?.classList.toggle("is-hover", on);
+      row.addEventListener("mouseenter", () => hover(true));
+      row.addEventListener("mouseleave", () => hover(false));
+    }
+
+    for (const region of regions) region.addEventListener("click", () => select(region.dataset.region, true));
+    for (const button of buttons) button.addEventListener("click", () => select(button.dataset.regionButton));
+  }
+</script>

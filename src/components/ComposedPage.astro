@@ -53,6 +53,7 @@ const photoBehind = data.heroStyle === "backdrop";
       reverse={spec?.reverse}
     />
     {spec?.attach === "documents" && <slot name="attach-documents" />}
+    {spec?.attach === "transit" && <slot name="attach-transit" />}
     </>
   );
 })}

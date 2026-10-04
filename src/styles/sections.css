@@ -599,3 +599,122 @@
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
+
+/* Transit times: the map colours each destination region and is linked to the table rows */
+.transit {
+  display: grid;
+  gap: var(--space-6);
+}
+
+.transit__figure {
+  margin: 0;
+  display: grid;
+  gap: var(--space-3);
+}
+
+.transit__map {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 36rem;
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+}
+
+.transit__land {
+  fill: color-mix(in srgb, var(--color-text) 14%, var(--color-surface));
+}
+
+.transit__origin {
+  fill: var(--color-text);
+}
+
+.transit__region {
+  fill: color-mix(in srgb, var(--color-accent) 70%, var(--color-surface));
+  stroke: var(--color-surface);
+  stroke-width: 0.4;
+  cursor: pointer;
+  transition: fill 120ms ease;
+}
+
+.transit__region:hover,
+.transit__region.is-hover,
+.transit__region.is-active {
+  fill: var(--color-accent);
+}
+
+.transit__region.is-active {
+  stroke: var(--color-text);
+  stroke-width: 0.8;
+}
+
+.transit__legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-5);
+  font-size: var(--font-size-sm);
+}
+
+.transit__legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.transit__swatch {
+  width: 0.875rem;
+  height: 0.875rem;
+  border-radius: 0.25rem;
+  display: inline-block;
+}
+
+.transit__swatch--origin {
+  background: var(--color-text);
+}
+
+.transit__swatch--region {
+  background: color-mix(in srgb, var(--color-accent) 70%, var(--color-surface));
+}
+
+.transit__status {
+  min-height: 1.5em;
+  margin: 0;
+  font-family: var(--font-family-heading);
+  font-weight: var(--font-weight-medium);
+}
+
+.transit__table {
+  min-width: 32rem;
+}
+
+.transit__table th,
+.transit__table td {
+  vertical-align: middle;
+}
+
+.transit__table tbody td:last-child {
+  white-space: nowrap;
+  font-weight: var(--font-weight-medium);
+}
+
+.transit__table tbody tr.is-active > * {
+  background: var(--color-band);
+}
+
+.transit__select {
+  min-height: 2.75rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: start;
+  text-decoration: underline;
+  text-decoration-color: var(--color-border);
+  text-underline-offset: 0.25em;
+  cursor: pointer;
+}
+
+.transit__select[aria-pressed="true"] {
+  text-decoration-thickness: 0.125rem;
+}
