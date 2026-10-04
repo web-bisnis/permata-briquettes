@@ -124,6 +124,19 @@
   display: grid;
 }
 
+/* On pages with a text column the panels sit inside the same left and right margins. */
+.product-panels--contained {
+  padding-block-start: var(--space-7);
+}
+
+.product-panels--contained .product-panels__grid {
+  gap: var(--space-4);
+}
+
+.product-panels--contained .product-panel {
+  border-radius: var(--radius-sm);
+}
+
 .product-panel {
   position: relative;
   isolation: isolate;

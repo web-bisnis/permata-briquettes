@@ -40,7 +40,7 @@ const photoBehind = data.heroStyle === "backdrop";
 )}
 
 {data.lineup && (
-  <ProductPanels id="lineup" title={data.lineup.title} lang={lang} panels={data.lineup.items} />
+  <ProductPanels id="lineup" title={data.lineup.title} lang={lang} panels={data.lineup.items} contained />
 )}
 
 <slot name="before" />
