@@ -54,6 +54,11 @@ function article(root, locale, name, { draft, slug, cover }) {
     "",
     "Body with an [external link](https://example.com/page).",
     "",
+    // Aligned columns make the renderer emit inline styles, which the page CSP blocks.
+    "| Year | Volume |",
+    "| :--- | ---: |",
+    "| 2024 | 203,010 |",
+    "",
     "## References",
     "",
     "1. Fixture source",

@@ -8,7 +8,7 @@ import {
   serializeJsonLd,
 } from "../src/config/blog";
 import { getNavigationItems, isCurrentNavigationItem } from "../src/config/navigation";
-import { secureExternalLinks } from "../src/lib/blog-html";
+import { removeInlineStyles, secureExternalLinks } from "../src/lib/blog-html";
 import { blogSchema, type BlogData } from "../src/lib/blog-schema";
 import { validateBlogEntries } from "../src/lib/blog-validate";
 
@@ -176,5 +176,14 @@ describe("external links in article HTML", () => {
     expect(secureExternalLinks('<a rel="opener" href="http://a.test">a</a>')).toBe(
       '<a href="http://a.test" rel="noopener noreferrer">a</a>',
     );
+  });
+});
+
+describe("inline styles in article HTML", () => {
+  it("drops style attributes from aligned table cells and leaves other attributes", () => {
+    expect(removeInlineStyles(`<th style="text-align: left">A</th><td style='text-align:right' class="x">B</td>`)).toBe(
+      '<th>A</th><td class="x">B</td>',
+    );
+    expect(removeInlineStyles('<p class="a">no style</p>')).toBe('<p class="a">no style</p>');
   });
 });
