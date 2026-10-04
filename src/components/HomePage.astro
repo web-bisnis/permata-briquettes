@@ -1,6 +1,7 @@
 ---
 import { contactActions } from "../config/contact";
 import type { MediaLocale } from "../config/media-slots";
+import type { IconName } from "./Icon.astro";
 import CtaBand from "./sections/CtaBand.astro";
 import FeatureGrid from "./sections/FeatureGrid.astro";
 import HeroBackdrop from "./sections/HeroBackdrop.astro";
@@ -42,10 +43,15 @@ interface Props {
       }[];
       note?: string;
     };
-    team: { eyebrow: string; title: string; body: string; linkLabel: string; href: string };
+    team: { eyebrow: string; title: string; body?: string; linkLabel: string; href: string };
     cta: { title: string; body: string };
+    highlights?: {
+      title: string;
+      items: { icon: IconName; title: string; body: string }[];
+      note?: string;
+    };
   };
-  members: { name: string; role: string; photoId?: string }[];
+  members: { name: string; role: string; photoId?: string; portraitOrder?: number }[];
 }
 
 const { lang, eyebrow, title, summary, heroMedia, home, members } = Astro.props;
@@ -63,6 +69,14 @@ const actions = contactActions(lang);
     </a>
   ))}
 </HeroBackdrop>
+
+{home.highlights && (
+  <Section labelledby="home-highlights" tone="alt">
+    <SectionHeader id="home-highlights" align="center" title={home.highlights.title} />
+    <FeatureGrid columns={4} items={home.highlights.items} />
+    {home.highlights.note && <p class="section-note">{home.highlights.note}</p>}
+  </Section>
+)}
 
 <Section labelledby="home-profile">
   <div class="home-profile">
