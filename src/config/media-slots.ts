@@ -364,14 +364,17 @@ export const MEDIA_SLOTS: readonly MediaSlot[] = [
     gate: "Dokumen disetujui untuk publik.",
   }),
   slot({
-    id: "documents/preview-iso",
+    id: "documents/preview-npwp",
     priority: "P2",
-    subject: "Sertifikat ISO 9001:2015 manufacturer",
+    subject: "Kartu NPWP PT Permata Bara Globalindo (terdaftar 10 September 2026)",
     aspect: "4/5",
-    minWidth: 1000,
-    usedOn: "Kartu dokumen",
-    alt: { en: "ISO 9001:2015 certificate of the manufacturer", id: "Sertifikat ISO 9001:2015 milik manufacturer" },
-    gate: "Cakupan dan masa berlaku diketahui; dokumen disetujui untuk publik.",
+    minWidth: 500,
+    usedOn: "Pratinjau dokumen, halaman Tentang Kami dan Kualitas & Dokumen",
+    alt: {
+      en: "NPWP tax card of PT Permata Bara Globalindo, registered 10 September 2026",
+      id: "Kartu NPWP PT Permata Bara Globalindo, terdaftar 10 September 2026",
+    },
+    gate: "Dokumen disetujui untuk publik.",
   }),
   slot({
     id: "shipping/container-loading",
