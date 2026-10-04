@@ -163,7 +163,6 @@ describe("pages once images exist", () => {
     expect(home).toContain('alt="Logo Carsurin"');
     expect(read("id/kualitas-dokumen/index.html")).toContain("partner-logos");
     expect(read("id/produk/index.html")).not.toContain("partner-logos");
-    expect(home).toContain('class="section-note"');
     expect(home.match(/<h1[ >]/gu)).toHaveLength(1);
     expect(home).toMatch(/<picture>[\s\S]*type="image\/avif"[\s\S]*type="image\/webp"[\s\S]*<img /u);
     // Link previews keep the real product photo, never the illustration.

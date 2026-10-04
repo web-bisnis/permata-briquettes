@@ -11,7 +11,7 @@ const FOLDER_PURPOSE = {
   products: "Foto produk: lini produk, bentuk, dan abu hasil pembakaran.",
   packaging: "Foto kemasan.",
   team: "Foto anggota tim Permata Briquettes (satu file per orang, nama file = nama-anggota).",
-  documents: "Pratinjau dokumen (ROA, SHT, MSDS, ISO, Factory Audit).",
+  documents: "Pratinjau dokumen (ROA, SHT, MSDS, ISO).",
   shipping: "Foto proses pengiriman.",
   partners: "Materi mitra produksi. Tidak dipublikasikan sebelum izin tertulis.",
   labs: "Logo laboratorium dan surveyor (Carsurin, Beckjorindo, SGS, Sucofindo): SVG atau PNG transparan, logo asli dari pemiliknya tanpa diubah warna.",

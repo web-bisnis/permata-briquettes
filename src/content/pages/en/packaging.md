@@ -30,17 +30,17 @@ internalNotes:
     required: The inquiry form still waits for a separate decision.
 ---
 
-## Formats in the source data
+## Formats
 
-Bulk and inner-box packing can be discussed. Listed master-carton weights are 10 and 20 kg. Packing quantities and loaded container weight depend on the final configuration.
+Bulk and inner-box packing can be discussed. Available master-carton weights are 5, 10 and 20 kg. Packing quantities and loaded container weight depend on the final configuration.
 
 ## Your brand on the box
 
-For private-label packing, buyer-supplied artwork can be used for the inner box and master carton after the layout, materials and print specifications are agreed. Listed finish options include full-colour printing, gloss or matte lamination, embossing, metallic finishes, spot UV and foil. Each option is subject to a confirmed quotation.
+For private-label packing, buyer-supplied artwork can be used for the inner box and master carton after the layout, materials and print specifications are agreed. Available finish options include full-colour printing, gloss or matte lamination, embossing, metallic finishes, spot UV and foil. Each option is subject to a confirmed quotation. Packaging design services are available free of charge.
 
 ## Shipping protection
 
-ISPM15 export pallets, plastic wrapping, paper edges, thermal blankets and moisture absorbers are listed packing and shipping options. The exact protection and pallet configuration should be specified in the offer for the destination and carrier.
+ISPM15 export pallets, plastic wrapping, paper edges, thermal blankets and moisture absorbers are available packing and shipping options. The exact protection and pallet configuration should be specified in the offer for the destination and carrier.
 
 ## What to include in a packaging inquiry
 

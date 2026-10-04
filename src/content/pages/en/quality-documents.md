@@ -3,7 +3,7 @@ locale: en
 route: /en/quality-documents/
 alternateRoute: /id/kualitas-dokumen/
 title: Charcoal Quality Documents | Permata Briquettes
-description: Review the quality parameters and available ROA, SHT, MSDS, ISO and Factory Audit documents for B2B coconut charcoal briquette orders.
+description: Review the quality parameters and available ROA, SHT, MSDS and ISO documents for B2B coconut charcoal briquette orders.
 eyebrow: Quality & Documents
 heroTitle: Review the specification and the document behind it.
 heroSummary: "Product figures need context: grade, test method, report date and the batch to which they apply. We make the available documents part of the order discussion."
@@ -31,7 +31,7 @@ internalNotes:
 
 ## Product parameters
 
-The reference grade data includes ash content, moisture, fixed carbon, volatile matter, ignition time, burn time and ash colour. Before an order is placed, the agreed specification should identify the applicable limits and how they are tested.
+The grade data includes ash content, moisture, fixed carbon, volatile matter, ignition time, burn time and ash colour. Before an order is placed, the agreed specification should identify the applicable limits and how they are tested.
 
 ## Available documents
 
@@ -40,11 +40,8 @@ The reference grade data includes ash content, moisture, fixed carbon, volatile 
 | ROA / Report of Analysis | Product or batch analysis. |
 | SHT / Self-Heating Test | Transport-related test document. |
 | MSDS | Product safety and handling document. |
-| ISO 9001:2015 | Manufacturer's certification, not PT Permata Bara Globalindo's certification. |
-| Factory Audit | Manufacturer-related audit document. |
+| ISO 9001:2015 | Manufacturer's certification. |
 | Company registration | PT Permata Bara Globalindo's legal documents. |
-
-These document types have been confirmed as available to display. The final website links and document captions must match the actual files and their owners. A lab or surveyor's name must not be presented as a certification held by Permata Briquettes.
 
 ## Documents for shipment
 

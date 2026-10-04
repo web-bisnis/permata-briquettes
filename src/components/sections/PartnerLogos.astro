@@ -19,15 +19,11 @@ const copy = lang === "id"
   ? {
       eyebrow: "Pihak ketiga",
       title: "Laboratorium dan surveyor",
-      intro: "Lembaga pengujian dan inspeksi yang namanya dapat muncul pada dokumen mutu dan pengiriman.",
-      note: "Logo adalah milik masing-masing lembaga dan ditampilkan sebagai penerbit dokumen, bukan sebagai sertifikasi atau dukungan terhadap Permata Briquettes. Penerbit, tanggal, dan cakupan tertera pada setiap dokumen.",
       list: "Logo laboratorium dan surveyor",
     }
   : {
       eyebrow: "Third parties",
       title: "Laboratories and surveyors",
-      intro: "Testing and inspection bodies whose names can appear on quality and shipping documents.",
-      note: "Each logo belongs to its organisation and is shown as a document issuer, not as certification or endorsement of Permata Briquettes. The issuer, date and scope are printed on each document.",
       list: "Laboratory and surveyor logos",
     };
 ---
@@ -35,7 +31,7 @@ const copy = lang === "id"
 {logos.length > 0 && (
   <Section labelledby={id}>
     <div class="partner-logos">
-      <SectionHeader id={id} align="center" eyebrow={copy.eyebrow} title={copy.title} intro={copy.intro} />
+      <SectionHeader id={id} align="center" eyebrow={copy.eyebrow} title={copy.title} />
       <ul class="logo-row" aria-label={copy.list}>
         {logos.map((logo) => (
           <li class="logo-tile">
@@ -43,7 +39,6 @@ const copy = lang === "id"
           </li>
         ))}
       </ul>
-      <p class="section-note">{copy.note}</p>
     </div>
   </Section>
 )}

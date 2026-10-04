@@ -17,6 +17,7 @@ compose:
   - kind: split
   - kind: steps
   - kind: band
+    attach: transit
   - kind: split
 internalNotes:
   - id: commercial-decisions
@@ -35,7 +36,7 @@ The minimum order is one 20 ft container. Its net product weight is not a fixed 
 
 ## Trade terms and loading ports
 
-Permata Briquettes can offer EXW, FOB, CNF and CIF. The quotation must state the named place or port, included charges, insurance where applicable and the responsibilities agreed by both parties. Semarang (Tanjung Emas, IDSRG) is the primary loading port in the source data. Surabaya (Tanjung Perak, IDSUB) and Jakarta (IDTPP) are alternatives subject to confirmation for the shipment.
+Permata Briquettes can offer EXW, FOB, CNF and CIF. The quotation must state the named place or port, included charges, insurance where applicable and the responsibilities agreed by both parties. Surabaya (Tanjung Perak, IDSUB) is the primary loading port. Semarang (Tanjung Emas, IDSRG) and Jakarta (IDTPP) are alternatives subject to confirmation for the shipment.
 
 ## How an order moves forward
 

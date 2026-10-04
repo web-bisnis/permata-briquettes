@@ -8,15 +8,21 @@ import PageBlock from "./PageBlock.astro";
 
 interface Props {
   lang: MediaLocale;
+  /** Show only this kind of document; all kinds when omitted. */
+  kind?: "quality" | "legal";
 }
 
-const { lang } = Astro.props;
+const { lang, kind } = Astro.props;
 const id = lang === "id";
 const copy = {
-  title: id ? "Pratinjau dokumen" : "Document previews",
-  note: id
-    ? "Dokumen di atas adalah contoh dengan tanggal masing-masing; sebagian data disamarkan. Mintalah dokumen yang berlaku dan laporan batch terkini untuk pesanan Anda."
-    : "The documents above are samples with their own dates; some details are redacted. Ask for the documents that apply and the current batch report for your order.",
+  title: kind === "legal"
+    ? (id ? "Dokumen legalitas perusahaan" : "Company legal documents")
+    : (id ? "Pratinjau dokumen" : "Document previews"),
+  note: kind === "legal"
+    ? undefined
+    : id
+    ? "Mintalah dokumen yang berlaku dan laporan batch terkini untuk pesanan Anda."
+    : "Ask for the documents that apply and the current batch report for your order.",
   issuer: id ? "Penerbit" : "Issuer",
   date: id ? "Tanggal" : "Date",
   validUntil: id ? "Berlaku sampai" : "Valid until",
@@ -27,7 +33,7 @@ const formatDate = new Intl.DateTimeFormat(id ? "id-ID" : "en-GB", { dateStyle: 
 const format = (iso: string | undefined) => (iso ? formatDate.format(new Date(`${iso}T00:00:00Z`)) : undefined);
 
 const items = await Promise.all(
-  DOCUMENTS.filter((document) => hasMedia(document.mediaId)).map(async (document) => {
+  DOCUMENTS.filter((document) => (!kind || document.kind === kind) && hasMedia(document.mediaId)).map(async (document) => {
     const source = getMedia(document.mediaId);
     const full = source ? await getImage({ src: source, width: 1600, format: "jpg" }) : undefined;
     return { document, href: full?.src };
@@ -41,11 +47,11 @@ const items = await Promise.all(
       {items.map(({ document, href }) => (
         <DocumentCard
           lang={lang}
-          title={document.title}
+          title={document.title[lang]}
           description={document.description[lang]}
           previewId={document.mediaId}
           previewHref={href}
-          previewLabel={`${copy.open}: ${document.title}, ${document.issuer}`}
+          previewLabel={`${copy.open}: ${document.title[lang]}, ${document.issuer}`}
           rows={[
             { label: copy.issuer, value: document.issuer },
             { label: copy.date, value: format(document.date) },

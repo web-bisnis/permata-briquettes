@@ -8,13 +8,14 @@ interface Member {
   name: string;
   role: string;
   photoId?: string;
+  portraitOrder?: number;
 }
 
 interface Props {
   id: string;
   eyebrow: string;
   title: string;
-  body: string;
+  body?: string;
   linkLabel: string;
   href: string;
   lang: MediaLocale;
@@ -22,14 +23,16 @@ interface Props {
 }
 
 const { id, eyebrow, title, body, linkLabel, href, lang, members } = Astro.props;
-const portraits = members.filter((member) => hasMedia(member.photoId));
+const portraits = members
+  .filter((member) => hasMedia(member.photoId))
+  .sort((left, right) => (left.portraitOrder ?? 0) - (right.portraitOrder ?? 0));
 ---
 
 <section class="team-band" aria-labelledby={id}>
   <div class="container team-band__inner">
     <div class="team-band__text">
       <SectionHeader id={id} eyebrow={eyebrow} title={title} />
-      <p>{body}</p>
+      {body && <p>{body}</p>}
       <ul class="team-band__names">
         {members.map((member) => (
           <li><strong>{member.name}</strong><span>{member.role}</span></li>

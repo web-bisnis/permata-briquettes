@@ -1,5 +1,5 @@
 ---
-type IconName = "specs" | "quality" | "shipping" | "check" | "whatsapp";
+export type IconName = "specs" | "quality" | "shipping" | "check" | "whatsapp" | "coconut" | "odor-free" | "ash" | "burn-time";
 
 interface Props {
   name: IconName;
@@ -32,6 +32,32 @@ const { name, class: className } = Astro.props;
     <>
       <path d="M12 3a9 9 0 0 0-7.7 13.6L3 21l4.5-1.2A9 9 0 1 0 12 3z" />
       <path d="M9.200 8.200c-.6.700-.6 1.800.3 3.200 1 1.500 2.300 2.400 3.600 2.800.9.200 1.600-.4 1.900-1l-1.600-1-.9.700c-.9-.4-1.800-1.300-2.200-2.200l.7-.9-1-1.600z" />
+    </>
+  )}
+  {name === "coconut" && (
+    <>
+      <circle cx="12" cy="13" r="8" />
+      <path d="M8 10.500h.01M12 9h.01M16 10.500h.01M12 3c0-1 1-2 2.500-2" />
+      <path d="M8.500 16c2 1.500 5 1.500 7 0" />
+    </>
+  )}
+  {name === "odor-free" && (
+    <>
+      <path d="M4 12c2-4 5-6 8-6s6 2 8 6c-2 4-5 6-8 6s-6-2-8-6z" />
+      <circle cx="12" cy="12" r="2.500" />
+      <path d="M4 4l16 16" />
+    </>
+  )}
+  {name === "ash" && (
+    <>
+      <path d="M12 3c3 4 6 6.500 6 10.500a6 6 0 0 1-12 0C6 9.500 9 7 12 3z" />
+      <path d="M9.500 14.500h5M10.500 17h3" />
+    </>
+  )}
+  {name === "burn-time" && (
+    <>
+      <circle cx="12" cy="13" r="8" />
+      <path d="M12 8.500V13l3 2M9.500 2.500h5" />
     </>
   )}
   {name === "check" && <path d="M5 12.500l4.500 4.500L19 7.500" />}

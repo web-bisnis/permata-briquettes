@@ -30,17 +30,17 @@ internalNotes:
     required: Formulir inquiry tetap menunggu keputusan terpisah.
 ---
 
-## Format dalam data sumber
+## Format
 
-Kemasan bulk dan inner box dapat dibahas sesuai kebutuhan. Berat master carton yang tercantum adalah 10 dan 20 kg. Jumlah kotak serta berat muatan kontainer bergantung pada konfigurasi akhir.
+Kemasan bulk dan inner box dapat dibahas sesuai kebutuhan. Berat master carton yang tersedia adalah 5, 10 dan 20 kg. Jumlah kotak serta berat muatan kontainer bergantung pada konfigurasi akhir.
 
 ## Merek Anda pada kemasan
 
-Untuk private label, desain dari buyer dapat digunakan pada inner box dan master carton setelah ukuran template, bahan, dan spesifikasi cetak disepakati. Pilihan finishing yang tercantum meliputi full colour, laminasi glossy atau doff, emboss, efek metalik, spot UV, dan foil. Setiap pilihan perlu dikonfirmasi dalam penawaran.
+Untuk private label, desain dari buyer dapat digunakan pada inner box dan master carton setelah ukuran template, bahan, dan spesifikasi cetak disepakati. Pilihan finishing yang tersedia meliputi full colour, laminasi glossy atau doff, emboss, efek metalik, spot UV, dan foil. Setiap pilihan perlu dikonfirmasi dalam penawaran. Layanan desain kemasan tersedia gratis.
 
 ## Perlindungan saat pengiriman
 
-Pallet ekspor ISPM15, plastic wrapping, pelindung sudut kertas, thermal blanket, dan penyerap kelembapan tercantum sebagai pilihan pengemasan dan pengiriman. Konfigurasi perlindungan dan pallet yang digunakan harus dicantumkan dalam penawaran sesuai tujuan dan carrier.
+Pallet ekspor ISPM15, plastic wrapping, pelindung sudut kertas, thermal blanket, dan penyerap kelembapan tersedia sebagai pilihan pengemasan dan pengiriman. Konfigurasi perlindungan dan pallet yang digunakan harus dicantumkan dalam penawaran sesuai tujuan dan carrier.
 
 ## Data untuk inquiry kemasan
 
