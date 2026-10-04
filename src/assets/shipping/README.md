@@ -14,3 +14,4 @@ Taruh file di folder ini dengan nama persis seperti di tabel. File ini dibuat ot
 | Nama file | Prioritas | Isi foto | Rasio | Lebar min. | Dipakai di | Catatan |
 | --- | --- | --- | --- | --- | --- | --- |
 | `container-loading` | P2 | Foto proses stuffing/loading briket ke kontainer 20 ft | 3:2 | 1100 px | Halaman Pemesanan & Pengiriman |  |
+| `world-map` | P2 | Peta dunia datar (SVG, tanpa teks tertanam) dengan Indonesia dan wilayah tujuan ditandai, lisensi yang jelas | 16:9 | 1600 px | Halaman Pemesanan & Pengiriman, perkiraan durasi pengiriman | Syarat: Sumber dan lisensi peta diketahui; wilayah yang ditandai sesuai tabel durasi. |

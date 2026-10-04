@@ -42,7 +42,7 @@ Setiap aset yang diterima dicatat satu baris.
 | R11 | `shipping/container-loading.jpeg` | Diserahkan pengguna | Render/ilustrasi bermerek PT Permata Bara Globalindo | Kontainer bertuliskan nama perusahaan di pelabuhan; bukan proses loading | Hero Pemesanan & Pengiriman | Tampil tanpa label (label "Ilustrasi" dihapus atas permintaan pengguna, 2026-10-02). Ganti dengan foto loading nyata bila ada. |
 | R12 | `products/hero-background.jpeg` | Diserahkan pengguna, 2 Okt 2026 | Asal belum tercatat | Bongkahan arang mentah di atas kayu, daun palem; tampak buatan AI, 1024×585 | Latar hero beranda | Tampil tanpa label. Bukan briket yang dijual; resolusi rendah. |
 | R13 | `documents/hero.jpg` | Diserahkan pengguna, 2 Okt 2026 | Asal belum tercatat | Tiga lembar dokumen pengiriman; teks tampak buatan AI dan memuat nama pihak ketiga | Latar hero Kualitas & Dokumen | Tampil tanpa label. Perlu keputusan pengguna (lihat catatan serah-terima). |
-| R14 | `documents/preview-*.jpg` (ROA PT Carsurin 2022, ROA PT Beckjorindo Paryaweksana 2023, SHT PT Carsurin 2022, MSDS SGS Korea 2013, ISO 9001:2015 PT SOA Sertifikasi Indonesia 2024, Factory Audit PT Carsurin 2023) | Diserahkan pengguna, 2 Okt 2026 | Dokumen manufacturer; nama produsen disensor, sebagian alamat pabrik masih terbaca di Factory Audit | Halaman dokumen asli | Pratinjau dokumen, halaman Kualitas & Dokumen | Tampil dengan penerbit dan tanggal sesuai dokumen. Factory Audit berlaku sampai 1 Mar 2025; ROA Beckjorindo mencantumkan masa berlaku 90 hari. |
+| R14 | `documents/preview-*.jpg` (ROA PT Carsurin 2022, ROA PT Beckjorindo Paryaweksana 2023, SHT PT Carsurin 2022, MSDS SGS Korea 2013, ISO 9001:2015 PT SOA Sertifikasi Indonesia 2024) | Diserahkan pengguna, 2 Okt 2026 | Dokumen manufacturer; nama produsen disensor | Halaman dokumen asli | Pratinjau dokumen, halaman Kualitas & Dokumen | Tampil dengan penerbit dan tanggal sesuai dokumen. ROA Beckjorindo mencantumkan masa berlaku 90 hari. |
 | R15 | `brand/office.jpg` | Diserahkan pengguna, 2 Okt 2026 | Foto gedung Spazio Tower | Gedung Spazio Tower, 513×289 | Latar hero Kontak | Tampil. Resolusi rendah untuk latar lebar. |
 
 Pengguna menyatakan seluruh aset yang diserahkan aman digunakan (2 Okt 2026). Foto produk akan diperbarui oleh Pak Wahyoe; aset saat ini dipakai sementara.
@@ -61,7 +61,7 @@ Nilai status review: Diterima → Ditinjau → Approved / Ditolak.
    - kemasan.
 3. Spesifikasi referensi BBQ. Situs Berkarindo menulis untuk "Mix": abu 3–4,5%, fixed carbon min. 65%, nilai kalor min. 6000 kcal, kadar air <12%. Apakah angka ini disetujui untuk website Permata?
 4. MOQ dan incoterm BBQ. Situs Berkarindo menulis 17 MT per kontainer 20 ft dan FOB. Bagaimana ketentuan versi Permata?
-5. Dokumen Berkarindo (ROA, SHT, MSDS, Factory Audit, legalitas) yang boleh ditampilkan, beserta tanggal dan cakupannya.
+5. Dokumen Berkarindo (ROA, SHT, MSDS, legalitas) yang boleh ditampilkan, beserta tanggal dan cakupannya.
 6. Izin tertulis untuk foto fasilitas Berkarindo, dan rumusan atribusinya.
 
 Yang **tidak** diambil dari situs Berkarindo:
