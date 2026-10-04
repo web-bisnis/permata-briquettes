@@ -18,14 +18,16 @@ interface Props {
   title: string;
   lang: MediaLocale;
   panels: readonly Panel[];
+  /** Keeps the panels inside the page margins instead of running edge to edge. */
+  contained?: boolean;
 }
 
-const { id, title, lang, panels } = Astro.props;
+const { id, title, lang, panels, contained = false } = Astro.props;
 ---
 
-<section class="product-panels" aria-labelledby={id}>
+<section class:list={["product-panels", contained && "product-panels--contained"]} aria-labelledby={id}>
   <h2 id={id} class="visually-hidden">{title}</h2>
-  <div class="product-panels__grid">
+  <div class:list={["product-panels__grid", contained && "container"]}>
     {panels.map((panel) => (
       <article class:list={["product-panel", `product-panel--${panel.tone}`]}>
         <Media

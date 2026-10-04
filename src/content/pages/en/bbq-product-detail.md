@@ -33,7 +33,7 @@ The briquettes are made from hardwood mixed with coconut charcoal granule. They 
 
 ## Packaging and order volume
 
-The average box weight is 10 kg. The minimum order, incoterm and other packing options for this line are confirmed in the quotation. Prices are provided by quotation, not published on the website.
+The average box weight is 10 kg. The minimum order is one 20 ft container. The incoterm and other packing options for this line are confirmed in the quotation. Prices are provided by quotation, not published on the website.
 
 [Review Packaging Options](/en/packaging/)
 
