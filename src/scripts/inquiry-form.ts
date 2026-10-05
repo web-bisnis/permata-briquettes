@@ -1,10 +1,15 @@
 const forms = document.querySelectorAll<HTMLFormElement>("[data-inquiry-form]");
 
-function normalizedValue(control: HTMLInputElement | HTMLTextAreaElement): string {
+type Control = HTMLInputElement | HTMLTextAreaElement;
+
+const REFERENCE_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/iu;
+const TEXT_CONTROLS = "input:not([type='hidden']):not([type='checkbox']), textarea";
+
+function normalizedValue(control: Control): string {
   return control.value.replace(/\r\n?/gu, "\n").normalize("NFC").trim();
 }
 
-function applyValidationMessage(control: HTMLInputElement | HTMLTextAreaElement): void {
+function applyValidationMessage(control: Control): void {
   control.setCustomValidity("");
   const value = normalizedValue(control);
   const length = Array.from(value).length;
@@ -28,45 +33,91 @@ function applyValidationMessage(control: HTMLInputElement | HTMLTextAreaElement)
   }
 }
 
+function renderFieldError(control: Control): void {
+  const error = control
+    .closest(".inquiry__field")
+    ?.querySelector<HTMLElement>("[data-field-error]");
+  if (!error) return;
+  const message = control.validationMessage;
+  error.textContent = message;
+  error.hidden = !message;
+  if (message) {
+    if (!error.id) error.id = `${control.name}-error`;
+    control.setAttribute("aria-invalid", "true");
+    control.setAttribute("aria-describedby", error.id);
+  } else {
+    control.removeAttribute("aria-invalid");
+    control.removeAttribute("aria-describedby");
+  }
+}
+
+function setStatus(status: HTMLElement, state: "error" | "", message: string): void {
+  status.textContent = message;
+  if (state) status.dataset.state = state;
+  else delete status.dataset.state;
+}
+
 for (const form of forms) {
   let idempotencyKey = crypto.randomUUID();
   const status = form.querySelector<HTMLElement>("[data-inquiry-status]");
   const submit = form.querySelector<HTMLButtonElement>("button[type='submit']");
 
-  for (const control of form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>(
-    "input, textarea",
-  )) {
-    control.addEventListener("input", () => applyValidationMessage(control));
-    control.addEventListener("invalid", () => applyValidationMessage(control));
+  for (const control of form.querySelectorAll<Control>(TEXT_CONTROLS)) {
+    control.addEventListener("input", () => {
+      applyValidationMessage(control);
+      renderFieldError(control);
+    });
+    // Tabbing past an untouched field is not an error; only a filled one is checked on blur.
+    control.addEventListener("blur", () => {
+      if (!control.value.trim()) return;
+      applyValidationMessage(control);
+      renderFieldError(control);
+    });
+    // The messages are shown inline, so the browser's own bubble is suppressed.
+    control.addEventListener("invalid", (event) => {
+      event.preventDefault();
+      applyValidationMessage(control);
+      renderFieldError(control);
+    });
   }
 
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
-    for (const control of form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>(
-      "input, textarea",
-    )) applyValidationMessage(control);
-    if (!form.reportValidity() || !submit || !status) return;
+    if (!submit || !status) return;
+
+    const controls = [...form.querySelectorAll<Control>(TEXT_CONTROLS)];
+    for (const control of controls) applyValidationMessage(control);
+    if (!form.checkValidity()) {
+      for (const control of controls) renderFieldError(control);
+      controls.find((control) => !control.validity.valid)?.focus();
+      setStatus(status, "", "");
+      return;
+    }
 
     const turnstileToken = form.querySelector<HTMLInputElement>(
       "input[name='cf-turnstile-response']",
     )?.value;
     if (!turnstileToken) {
-      status.textContent = form.querySelector<HTMLElement>(".cf-turnstile")?.dataset
-        .turnstileMessage ?? "";
+      setStatus(
+        status,
+        "error",
+        form.querySelector<HTMLElement>(".cf-turnstile")?.dataset.turnstileMessage ?? "",
+      );
       return;
     }
 
     if (form.dataset.localMock === "true") {
       const localHostname = window.location.hostname === "localhost" ||
         window.location.hostname === "127.0.0.1";
-      status.textContent = localHostname
-        ? form.dataset.successMessage ?? ""
-        : form.dataset.errorMessage ?? "";
-      if (localHostname) form.reset();
+      if (localHostname && form.dataset.successHref) {
+        window.location.assign(form.dataset.successHref);
+        return;
+      }
+      setStatus(status, "error", form.dataset.errorMessage ?? "");
       return;
     }
 
-    const field = <T extends HTMLInputElement | HTMLTextAreaElement>(name: string) =>
+    const field = <T extends Control>(name: string) =>
       form.elements.namedItem(name) as T;
     const payload = {
       name: field<HTMLInputElement>("name").value,
@@ -82,8 +133,10 @@ for (const form of forms) {
     };
 
     submit.disabled = true;
+    submit.setAttribute("aria-busy", "true");
     submit.textContent = form.dataset.submittingLabel ?? submit.textContent;
-    status.textContent = "";
+    setStatus(status, "", "");
+    let redirecting = false;
     try {
       const response = await fetch(form.action, {
         method: "POST",
@@ -95,16 +148,33 @@ for (const form of forms) {
         credentials: "same-origin",
       });
       if (!response.ok) throw new Error("Inquiry rejected");
-      status.textContent = form.dataset.successMessage ?? "";
+      const result = (await response.json().catch(() => null)) as
+        | { referenceId?: unknown }
+        | null;
+      const reference =
+        typeof result?.referenceId === "string" && REFERENCE_PATTERN.test(result.referenceId)
+          ? result.referenceId
+          : null;
+      const successHref = form.dataset.successHref;
+      if (successHref) {
+        redirecting = true;
+        window.location.assign(reference ? `${successHref}?ref=${reference}` : successHref);
+        return;
+      }
+      setStatus(status, "", form.dataset.successMessage ?? "");
       form.reset();
       idempotencyKey = crypto.randomUUID();
       window.turnstile?.reset();
     } catch {
-      status.textContent = form.dataset.errorMessage ?? "";
+      setStatus(status, "error", form.dataset.errorMessage ?? "");
       window.turnstile?.reset();
     } finally {
-      submit.disabled = false;
-      submit.textContent = submit.dataset.submitLabel ?? submit.textContent;
+      // The button stays locked while the browser navigates to the confirmation page.
+      if (!redirecting) {
+        submit.disabled = false;
+        submit.removeAttribute("aria-busy");
+        submit.textContent = submit.dataset.submitLabel ?? submit.textContent;
+      }
     }
   });
 }

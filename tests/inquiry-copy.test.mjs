@@ -1,3 +1,5 @@
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import {
   BUYER_CONFIRMATION,
@@ -76,5 +78,25 @@ describe("inquiry feature gate", () => {
       PUBLIC_INQUIRY_FORM_ENABLED: "true",
       PUBLIC_INQUIRY_FORM_MODE: "local-mock",
     })).toMatchObject({ enabled: true, mode: "local-mock", useLocalMock: true });
+  });
+});
+
+describe("Worker version configuration", () => {
+  // The page sends versions hashed from the built content; the Worker rejects any
+  // payload whose versions differ from its own variables (400 invalid_payload).
+  // A drifted value silently breaks every live submission, so pin it here.
+  const root = process.cwd();
+  const wrangler = JSON.parse(readFileSync(join(root, "wrangler.jsonc"), "utf8"));
+  const devVars = readFileSync(join(root, ".dev.vars.example"), "utf8");
+
+  it.each(["staging", "production"])("%s Worker versions match the built content", (target) => {
+    const vars = wrangler.env[target].vars;
+    expect(vars.PRIVACY_NOTICE_VERSION).toBe(PRIVACY_NOTICE_VERSION);
+    expect(vars.MARKETING_CONSENT_VERSION).toBe(MARKETING_CONSENT_VERSION);
+  });
+
+  it("keeps the example local variables in step", () => {
+    expect(devVars).toContain(`PRIVACY_NOTICE_VERSION="${PRIVACY_NOTICE_VERSION}"`);
+    expect(devVars).toContain(`MARKETING_CONSENT_VERSION="${MARKETING_CONSENT_VERSION}"`);
   });
 });

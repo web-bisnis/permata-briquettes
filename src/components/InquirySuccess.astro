@@ -1,0 +1,44 @@
+---
+import { INQUIRY_SUCCESS_COPY, PRIVACY_CONTACT_EMAIL } from "../config/inquiry-copy";
+import Icon from "./Icon.astro";
+
+interface Props {
+  locale: "en" | "id";
+}
+
+const { locale } = Astro.props;
+const copy = INQUIRY_SUCCESS_COPY[locale];
+---
+
+<div class="container inquiry-success">
+  <section class="inquiry-success__card" aria-labelledby="inquiry-success-heading">
+    <span class="inquiry-success__mark" aria-hidden="true"><Icon name="check" /></span>
+    <header class="inquiry-success__heading">
+      <p class="page-intro__eyebrow">{copy.eyebrow}</p>
+      <h1 id="inquiry-success-heading" tabindex="-1">{copy.heading}</h1>
+      <p class="inquiry-success__lead">{copy.lead}</p>
+    </header>
+
+    <dl class="inquiry-success__reference" data-inquiry-reference hidden>
+      <dt>{copy.referenceLabel}</dt>
+      <dd data-inquiry-reference-value></dd>
+    </dl>
+
+    <ul class="inquiry-success__details">
+      <li>{copy.responseTime}</li>
+      <li>{copy.emailNotice}</li>
+      <li>
+        {copy.privacyBefore}<a href={`mailto:${PRIVACY_CONTACT_EMAIL}`}>{PRIVACY_CONTACT_EMAIL}</a>.
+      </li>
+    </ul>
+
+    <div class="inquiry-success__actions">
+      <a class="button" href={copy.primaryHref}>{copy.primaryAction}</a>
+      <a class="button button--secondary" href={copy.secondaryHref}>{copy.secondaryAction}</a>
+    </div>
+  </section>
+</div>
+
+<script>
+  import "../scripts/inquiry-success";
+</script>

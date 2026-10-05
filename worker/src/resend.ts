@@ -3,7 +3,7 @@ import type { EmailMessage, EmailSender, EmailSendResult } from "./domain";
 export class ResendEmailSender implements EmailSender {
   constructor(
     private readonly apiKey: string,
-    private readonly fetcher: typeof fetch = fetch,
+    private readonly fetcher: typeof fetch = (input, init) => fetch(input, init),
   ) {}
 
   async send(message: EmailMessage, idempotencyKey: string): Promise<EmailSendResult> {

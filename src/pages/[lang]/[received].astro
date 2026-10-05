@@ -1,0 +1,40 @@
+---
+import InquirySuccess from "../../components/InquirySuccess.astro";
+import {
+  INQUIRY_SUCCESS_COPY,
+  INQUIRY_SUCCESS_PATH,
+  type InquiryLocale,
+} from "../../config/inquiry-copy";
+import { resolveInquiryFeature } from "../../config/inquiry-feature";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+// The confirmation page belongs to the inquiry form: it is built only when the form is,
+// so a production build, where the form stays off, never contains it.
+export function getStaticPaths() {
+  const feature = resolveInquiryFeature({
+    PUBLIC_INQUIRY_FORM_ENABLED: import.meta.env.PUBLIC_INQUIRY_FORM_ENABLED,
+    PUBLIC_INQUIRY_FORM_MODE: import.meta.env.PUBLIC_INQUIRY_FORM_MODE,
+    PUBLIC_TURNSTILE_SITE_KEY: import.meta.env.PUBLIC_TURNSTILE_SITE_KEY,
+  });
+  if (!feature.enabled) return [];
+  return [
+    { params: { lang: "en", received: "inquiry-received" } },
+    { params: { lang: "id", received: "inquiry-diterima" } },
+  ];
+}
+
+const lang = Astro.params.lang as InquiryLocale;
+const otherLocale: InquiryLocale = lang === "en" ? "id" : "en";
+const copy = INQUIRY_SUCCESS_COPY[lang];
+---
+
+<BaseLayout
+  title={copy.title}
+  description={copy.description}
+  lang={lang}
+  route={INQUIRY_SUCCESS_PATH[lang]}
+  alternateRoute={INQUIRY_SUCCESS_PATH[otherLocale]}
+  indexable={false}
+>
+  <InquirySuccess locale={lang} />
+</BaseLayout>
