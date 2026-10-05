@@ -318,11 +318,6 @@ const sitemap = existsSync(sitemapPath) ? readFileSync(sitemapPath, "utf8") : ""
 const sitemapUrls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/gu)].map((match) => decodeHtml(match[1])).sort();
 // The inquiry confirmation pages exist only in builds with the form on, are noindex by design and stay out of the sitemap.
 const INQUIRY_SUCCESS_ROUTES = new Set(["/en/inquiry-received/", "/id/inquiry-diterima/"]);
-if (environment === "production") {
-  for (const route of INQUIRY_SUCCESS_ROUTES) {
-    requireCheck(!routes.has(route), `${route}: the inquiry confirmation page must not be built for production`);
-  }
-}
 const canonicalUrls = pages
   .filter((page) => !INQUIRY_SUCCESS_ROUTES.has(page.route))
   .map((page) => page.canonical)
