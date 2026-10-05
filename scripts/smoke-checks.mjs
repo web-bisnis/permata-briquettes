@@ -91,15 +91,15 @@ export function inspectContactPage(path, html, { formExpected }) {
 
 /**
  * Evaluates the two read-only GET probes. A configured staging Worker answers
- * 405 to GET; 503 means the gate is closed, which is correct for production
- * and a failure for staging (a secret, binding or D1 is missing).
+ * 405 to GET; 503 means the gate is closed, which is a failure when the form is
+ * expected (a secret, binding or D1 is missing).
  */
 export function inspectInquiryProbes({ formExpected, inquiry, webhook }) {
   if (formExpected) {
     return [
-      check(inquiry.status === 405, `read-only inquiry probe returns 405 on a configured staging Worker (got ${inquiry.status})`),
+      check(inquiry.status === 405, `read-only inquiry probe returns 405 on a configured Worker (got ${inquiry.status})`),
       check(inquiry.body.includes("method_not_allowed"), "inquiry probe reports method_not_allowed"),
-      check(webhook.status === 405, `read-only webhook probe returns 405 on a configured staging Worker (got ${webhook.status})`),
+      check(webhook.status === 405, `read-only webhook probe returns 405 on a configured Worker (got ${webhook.status})`),
     ];
   }
   return [

@@ -30,6 +30,7 @@ function build(target, extra = {}) {
 const failures = (results) => results.filter((result) => !result.ok).map((result) => result.message);
 
 let staging;
+let productionLive;
 let production;
 
 beforeAll(() => {
@@ -38,6 +39,12 @@ beforeAll(() => {
     PUBLIC_INQUIRY_FORM_MODE: "live",
     PUBLIC_TURNSTILE_SITE_KEY: DUMMY_SITE_KEY,
   });
+  productionLive = build("production", {
+    PUBLIC_INQUIRY_FORM_ENABLED: "true",
+    PUBLIC_INQUIRY_FORM_MODE: "live",
+    PUBLIC_TURNSTILE_SITE_KEY: DUMMY_SITE_KEY,
+  });
+  // A production build without form variables: the form stays off.
   production = build("production");
 }, 120_000);
 
@@ -87,12 +94,18 @@ describe("smoke contact-page checks on staging HTML", () => {
   });
 });
 
-describe("smoke contact-page checks on production HTML", () => {
-  it.each(PAGES)("pass against the local production build: %s", (page) => {
+describe("smoke contact-page checks on production HTML with the form enabled", () => {
+  it.each(PAGES)("pass against the local production build with the live form: %s", (page) => {
+    expect(failures(inspectContactPage(`/${page}`, productionLive(page), { formExpected: true }))).toEqual([]);
+  });
+});
+
+describe("smoke contact-page checks on a build without the form", () => {
+  it.each(PAGES)("pass against a local production build without form variables: %s", (page) => {
     expect(failures(inspectContactPage(`/${page}`, production(page), { formExpected: false }))).toEqual([]);
   });
 
-  it("the production build really contains no form markup at all", () => {
+  it("a production build without form variables really contains no form markup at all", () => {
     for (const page of PAGES) {
       const html = production(page);
       expect(html).not.toMatch(/<form(?=[\s>/])/iu);
@@ -101,7 +114,7 @@ describe("smoke contact-page checks on production HTML", () => {
     }
   });
 
-  it("fail when the staging form appears on a production page", () => {
+  it("fail when a form appears where none is expected", () => {
     for (const page of PAGES) {
       const messages = failures(inspectContactPage(`/${page}`, staging(page), { formExpected: false }));
       expect(messages.join("\n")).toMatch(/no <form> element/u);
@@ -129,7 +142,7 @@ describe("smoke probe checks", () => {
     expect(failures(inspectInquiryProbes(closed))).toHaveLength(3);
   });
 
-  it("require production to stay fail closed", () => {
+  it("require the closed gate when no form is expected", () => {
     const closed = { formExpected: false, inquiry: response(503, "inquiry_unavailable"), webhook: response(503, "webhook_unavailable") };
     expect(failures(inspectInquiryProbes(closed))).toEqual([]);
     const open = { formExpected: false, inquiry: response(405, "method_not_allowed"), webhook: response(405, "method_not_allowed") };
