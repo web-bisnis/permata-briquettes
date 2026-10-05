@@ -20,6 +20,9 @@ Browser ──> Cloudflare Worker (worker/src)
 - Environment: `staging` (`staging.permatabriquettes.com`) dan `production`
   (`www.permatabriquettes.com`), dideklarasikan di `wrangler.jsonc`.
 
+- Deploy: hanya lewat workflow manual `Cloudflare manual deployment`; staging dan production dirilis dengan
+  form inquiry aktif sejak rilis awal. Rinciannya di operations.md.
+
 ## Struktur folder
 
 | Path | Isi |

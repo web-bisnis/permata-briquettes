@@ -57,11 +57,24 @@ ada, cek production Environment punya minimal satu protection rule, `npm ci`, `n
 `npm run build:<target>`, `npm run audit:<target>`, `npm test`, `npm run prepare:deploy-config`,
 dry-run Wrangler, `wrangler deploy --strict`, lalu `npm run smoke:deployment` (GET saja, tanpa payload).
 
+Job memakai `environment: <target>`, jadi GitHub menahan job pada titik persetujuan (required reviewers
+`production`) sebelum langkah pertama berjalan. Bila reviewer menolak, job berhenti tanpa menyentuh Cloudflare.
+Langkah "cek protection rule" hanya memastikan `production` punya minimal satu aturan perlindungan; hitungannya
+mencakup semua jenis aturan (termasuk pembatasan branch), bukan khusus required reviewers.
+Dry-run Wrangler memakai `wrangler.deploy.jsonc` hasil generate dan tidak mengunggah apa pun; langkah
+Cloudflare yang mengubah keadaan hanya `wrangler deploy --strict`.
+
 Urutan rilis: staging dulu, verifikasi, baru production. Migration D1 tidak pernah dijalankan oleh workflow
 (lihat bagian Inquiry). **Untuk production, selesaikan seluruh prasyarat Inquiry (migration, delapan secret
 Worker, Turnstile, webhook Resend) sebelum menjalankan workflow.** Deploy mengganti situs langsung dengan form
-aktif; bila konfigurasi belum lengkap, Worker menjawab 503 dan smoke test gagal setelah deploy, padahal
-pengunjung sudah melihat form. Bila itu terjadi, lengkapi konfigurasi atau lakukan rollback.
+aktif sejak deploy pertama; bila konfigurasi belum lengkap, Worker menjawab 503 dan smoke test gagal setelah
+deploy, padahal pengunjung sudah melihat form. Bila itu terjadi, lengkapi konfigurasi atau lakukan rollback.
+
+Yang dibuat atau diubah deploy di Cloudflare (dari `wrangler.jsonc` env `production`): Worker
+`permata-briquettes-production`, Static Assets dari `dist/` (binding `ASSETS`, hanya `/api/*` yang dijalankan
+Worker lebih dulu), binding `DB` ke D1 `permata-briquettes-inquiry-production`, dan custom domain
+`www.permatabriquettes.com` (`custom_domain: true`, dipasang oleh deploy). Karena itu tidak boleh ada record DNS
+`www` manual. `workers.dev` dan preview URL mati. Staging serupa dengan `staging.permatabriquettes.com`.
 
 Verifikasi lokal sebelum rilis:
 
@@ -89,7 +102,8 @@ Rollback kode tidak me-rollback schema atau data D1. Utamakan perbaikan maju yan
 - Secret: `CLOUDFLARE_API_TOKEN` (scope minimum untuk Workers dan D1), `CLOUDFLARE_ACCOUNT_ID`,
   `CLOUDFLARE_D1_DATABASE_ID` (berbeda per environment).
 - Variable: `PUBLIC_TURNSTILE_SITE_KEY` (site key publik Turnstile environment itu; wajib di kedua environment karena build gagal bila kosong).
-- `production`: required reviewers.
+- `production`: required reviewers dan pembatasan deployment ke branch `main` (pengaturan GitHub, dikonfigurasi
+  pemilik; tidak dapat diverifikasi dari repo).
 
 **Cloudflare Worker (per environment)**
 
@@ -112,18 +126,25 @@ lengkap kedua endpoint menjawab `503`. Form di situs hanya dirender bila build m
 
 ### Prasyarat production dengan inquiry aktif
 
-Production dirilis dengan inquiry aktif sejak awal. Pipeline (build, config deploy, workflow, smoke, audit)
-sudah mendukungnya; yang harus disiapkan di luar repo, sebelum workflow production dijalankan:
+Production dirilis dengan inquiry aktif sejak awal (berubah dari rencana lama "rilis awal disabled", yang
+tidak berlaku lagi). Pipeline (build, config deploy, workflow, smoke, audit) mendukungnya. Prasyarat berikut
+dikonfigurasi di luar repo lewat dashboard; sumbernya pemilik dan tidak dapat diverifikasi dari repo:
 
-1. GitHub Environment `production` dengan required reviewers; tiga secret Cloudflare dan variable
-   `PUBLIC_TURNSTILE_SITE_KEY` production.
-2. D1 production (nama `permata-briquettes-inquiry-production`) dibuat; bookmark/backup dicatat; migration
-   `worker/migrations` diterapkan secara terpisah (bagian di bawah).
-3. Turnstile: widget untuk `www.permatabriquettes.com`; secret dan site key.
-4. Resend: domain/sender terverifikasi, webhook ke `https://www.permatabriquettes.com/api/webhooks/resend`,
-   delapan secret Worker (daftar di atas).
-5. Domain `www.permatabriquettes.com` dan DNS.
-6. Persetujuan legal/privacy dan pemilik retensi data.
+1. Zona Cloudflare `permatabriquettes.com` aktif. Hostname `www` dipasang oleh deploy sebagai custom domain,
+   jadi jangan membuat record `www` manual. Apex dialihkan ke `www` lewat record proxied dan Redirect Rule;
+   Always Use HTTPS aktif.
+2. GitHub Environment `production`: required reviewers, pembatasan ke branch `main`, tiga secret Cloudflare,
+   dan variable `PUBLIC_TURNSTILE_SITE_KEY`.
+3. D1 production (`permata-briquettes-inquiry-production`) dibuat; bookmark time-travel dicatat; migration
+   `worker/migrations` diterapkan manual dan terpisah (bagian di bawah).
+4. Turnstile: widget production hanya untuk hostname `www.permatabriquettes.com`, terpisah dari widget staging.
+5. Resend: domain terverifikasi; webhook per environment dengan signing secret masing-masing (event
+   `email.bounced` dan `email.complained`) ke `https://www.permatabriquettes.com/api/webhooks/resend`
+   (production) dan `https://staging.permatabriquettes.com/api/webhooks/resend` (staging). Akun Resend dipakai
+   bersama; endpoint tiap environment menerima event dari kedua environment, dan event untuk email yang tidak
+   dikenal D1-nya dijawab 204 tanpa efek.
+6. Delapan secret Worker production (daftar di atas).
+7. Persetujuan legal/privacy dan pemilik retensi data.
 
 Cara kerja aktivasi: `wrangler.jsonc` selalu menyimpan `INQUIRY_ENABLED="false"` dan cron kosong.
 `npm run prepare:deploy-config -- <target>` menghasilkan `wrangler.deploy.jsonc` (diabaikan git) dengan
@@ -132,7 +153,9 @@ mengubahnya.
 
 ### Migration D1
 
-Tidak otomatis. Hanya setelah review, backup/bookmark, dan persetujuan:
+Tidak otomatis dan terpisah dari deploy. Hanya setelah review dan persetujuan; catat bookmark time-travel
+(perintah `time-travel info`) lebih dulu, baru terapkan. Perintah `--remote` di bawah mengikuti pola Wrangler
+dan belum diuji di repo ini:
 
 ```powershell
 npx wrangler d1 migrations list DB --remote --config wrangler.deploy.jsonc --env <target>
@@ -146,23 +169,33 @@ perubahan terlindungi, bukan di repo.
 ### Perawatan rutin
 
 - **Retensi bulanan**: `worker/maintenance/monthly-maintenance.sql` (template; placeholder `__RUN_ID__` dan
-  `__EXECUTOR__` sengaja belum terisi). Salin ke luar repo, isi dengan ID acak dan identitas operator tanpa
-  PII, tinjau transaksinya, jalankan setelah backup terverifikasi dan dengan persetujuan tertulis. Ia menghapus
-  idempotency key, consent, rate-limit, event webhook, dan inquiry yang kedaluwarsa; data suppression tidak
-  pernah dihapus otomatis (hanya dihitung bila jatuh tempo tinjauan tahunan). Catatan operasional ada di tabel
+  `__EXECUTOR__` sengaja belum terisi). Angka retensi dari kode (`worker/src/domain.ts`, `service.ts`) dan
+  privacy notice: inquiry 12 bulan sejak aktivitas terakhir, bukti consent pemasaran 24 bulan, data keamanan,
+  rate-limit, dan event webhook 30 hari, idempotency key 24 jam. Suppression tidak dihapus otomatis (tinjauan
+  12 bulan). Salin template ke luar repo, isi dengan ID acak dan identitas operator tanpa PII, tinjau
+  transaksinya, jalankan setelah backup terverifikasi dan dengan persetujuan tertulis. Hasil dicatat di tabel
   `maintenance_runs`. Validasi lokal: `npx wrangler d1 execute DB --local --file <salinan>.sql`.
+  **Prosedur remote belum teruji:** tidak ada perintah remote yang terverifikasi, tidak ada dry-run (hitungan
+  "sebelum" berada di transaksi yang sama dengan DELETE), dan dukungan `BEGIN/COMMIT` lewat
+  `wrangler d1 execute --remote --file` belum terbukti, termasuk di staging. Uji di D1 staging dulu sebelum
+  data production mendekati batas retensi.
 - **Cron retry**: Worker punya handler `scheduled` yang mengirim ulang pengiriman email yang jatuh tempo, tetapi
   `triggers.crons` di `wrangler.jsonc` sengaja kosong dan `buildDeployConfig` menolak cron berisi. Aktifkan
   sebagai perubahan terpisah setelah alur inquiry dan delivery terverifikasi di staging.
 - **Turnstile dan Resend**: rotasi secret dengan `wrangler secret put`; jangan menaruh nilainya di command
   line, commit, log, atau screenshot. `wrangler secret list` hanya untuk memastikan nama.
-- **Webhook**: event hard bounce dan complaint membuat entri suppression; tinjau tahunan.
+- **Webhook** (`POST /api/webhooks/resend`, tanda tangan Svix, toleransi waktu 5 menit): tanda tangan salah
+  atau header hilang `400`; JSON rusak `400`; GET `405`; konfigurasi belum lengkap `503`; event selain
+  `email.bounced`/`email.complained`, bounce lunak, email tak dikenal, dan event yang sudah diproses `204`.
+  Hard bounce dan complaint pada email buyer membuat entri suppression (tinjau tahunan). Event dicatat setelah
+  efeknya berhasil, sehingga kegagalan sesaat (503) diproses ulang saat retry.
 - **Analytics**: Cloudflare Web Analytics mati di semua environment; mengaktifkannya adalah perubahan
   terpisah (production saja, tanpa event kustom atau PII).
 
 ## Smoke test dan pemeriksaan pascarilis
 
 `npm run smoke:deployment -- --environment <staging|production> --base-url <url>` hanya melakukan `GET`:
+meta robots beranda (staging `noindex, nofollow`; production `index, follow`), `robots.txt`, `sitemap.xml`,
 halaman kontak EN/ID (form dan Turnstile harus ada di kedua environment), `GET /api/inquiries` dan
 `GET /api/webhooks/resend` (harus `405`; `503` berarti secret atau binding belum lengkap). Cek manual
 tambahan: `robots.txt` dan `sitemap.xml` (staging: `Disallow: /`, tanpa sitemap; production: sitemap
