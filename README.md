@@ -1,40 +1,57 @@
 # Permata Briquettes
 
-Fondasi website statis menggunakan Astro dan TypeScript.
+Website bilingual (EN/ID) PT Permata Briquettes. Situs statis Astro + TypeScript, disajikan oleh
+Cloudflare Worker lewat Static Assets. Worker yang sama menangani form inquiry (`/api/*`) dengan
+D1, Turnstile, dan Resend.
 
-## Perintah
+Operasi (deploy, rollback, konfigurasi, perawatan inquiry): [docs/operations.md](docs/operations.md).
+Rekaman izin dan asal aset: [docs/asset-register.md](docs/asset-register.md).
 
-- `npm run dev` — menjalankan server pengembangan.
-- `npm run check` — memeriksa Astro dan TypeScript.
-- `npm run build` — menghasilkan website statis di `dist/`.
-- `npm run preview` — meninjau hasil build secara lokal.
-- `npm test` — menjalankan pengujian Worker, copy, dan build gated dengan mock lokal.
-- `npm run worker:check` — membundel Worker sebagai dry-run tanpa deployment.
-- `npm run build:staging` / `npm run build:production` — build reproducible
-  dengan Cloudflare Web Analytics dipaksa nonaktif. Inquiry nonaktif kecuali
-  staging diberi `PUBLIC_INQUIRY_FORM_ENABLED=true`, mode `live`, dan
-  `PUBLIC_TURNSTILE_SITE_KEY`; production menolak (build gagal) bila salah satunya
-  diisi.
-- `npm run worker:check:staging` / `npm run worker:check:production` — dry-run
-  konfigurasi Wrangler bernama tanpa upload.
-- `npm run db:migrate:local` — menerapkan migration hanya ke simulator D1 lokal.
+## Arsitektur
 
-Blog: artikel Markdown di `src/content/blog/{en,id}/` dan gambar di
-`src/assets/blog/<nama-artikel>/`. Hanya `draft: false` yang dirender; untuk
-meninjau draft secara lokal jalankan `npm run dev` dengan
-`PUBLIC_BLOG_PREVIEW_DRAFTS=true`. Cara menerbitkan ada di
-`src/content/blog/README.md`.
+```
+Browser ──> Cloudflare Worker (worker/src)
+              ├─ /api/inquiries, /api/webhooks/resend  -> logika inquiry + D1 + Turnstile + Resend
+              └─ semua path lain                        -> Static Assets (dist/, hasil build Astro)
+```
 
-Inquiry Worker dan form nonaktif secara default. Build hanya merender form bila
-`PUBLIC_INQUIRY_FORM_ENABLED=true` dan `PUBLIC_INQUIRY_FORM_MODE` bernilai
-`local-mock`, atau bernilai `live` dengan `PUBLIC_TURNSTILE_SITE_KEY` tersedia.
-Mode `local-mock` tidak melakukan request jaringan dan menolak simulasi submit
-di hostname selain loopback. Lihat `reports/05-inquiry-copy-revision-01.md` untuk
-bukti copy, feature gate, versi deterministik, dan hasil pengujian.
+- Situs: Astro statis, i18n EN/ID, konten dari content collections.
+- Worker: `worker/src`, migration D1 di `worker/migrations`.
+- Environment: `staging` (`staging.permatabriquettes.com`) dan `production`
+  (`www.permatabriquettes.com`), dideklarasikan di `wrangler.jsonc`.
 
-Runbook provisioning, deployment, migration, rollback, dan aktivasi terpisah
-tersedia di `docs/cloudflare-deployment.md`. Workflow GitHub hanya dapat dipicu
-manual. Target staging membangun form live dan mengaktifkan Worker inquiry
-(`INQUIRY_ENABLED="true"` hanya pada config deploy yang dihasilkan); target
-production selalu membangun inquiry, cron retry, dan analytics nonaktif. Cron
-retry tidak diaktifkan oleh workflow.
+## Struktur folder
+
+| Path | Isi |
+| --- | --- |
+| `src/pages`, `src/layouts`, `src/components`, `src/styles` | Route, layout, komponen, CSS. |
+| `src/content/{pages,products,team,blog}` | Konten per bahasa (Markdown/YAML), divalidasi `src/content.config.ts`. |
+| `src/config` | Navigasi, SEO, kontak, slot media (`media-slots.ts`), dokumen, copy inquiry. |
+| `src/assets/<folder>` | Foto, logo, dokumen. Tiap folder punya `README.md` hasil generate. |
+| `worker/` | Worker inquiry, migration, template maintenance, test Worker. |
+| `scripts/` | Build per environment, audit build, smoke test, sinkronisasi aset. |
+| `tests/` | Test build dan konfigurasi (Vitest). |
+| `.github/workflows/cloudflare-deploy.yml` | Deploy manual staging/production. |
+
+## Perintah harian
+
+| Perintah | Fungsi |
+| --- | --- |
+| `npm run dev` | Server pengembangan. |
+| `npm run check` | `astro check` + type-check Worker. |
+| `npm test` | Test Worker, copy, dan build. |
+| `npm run build` | Build lokal ke `dist/`. |
+| `npm run build:staging` / `build:production` | Build per environment (lihat operations.md). |
+| `npm run audit:staging` / `audit:production` | Audit hasil build di `dist/`; hasil ditulis ke `reports/` (diabaikan git). |
+| `npm run worker:check[:staging\|:production]` | Dry-run bundle Worker, tanpa upload. |
+| `npm run db:migrate:local` | Terapkan migration ke D1 lokal. |
+| `npm run assets:check` / `assets:sync` | Validasi / regenerasi README folder aset dari `media-slots.ts`. |
+| `npm run assets:report` | Laporan aset: slot kosong, resolusi, rasio. |
+| `npm run gallery` | Dev server dengan galeri komponen (`/en/component-gallery/`). |
+
+Sebelum PR: `npm run check`, `npm test`, `npm run assets:check`, dan
+`npm run build:staging && npm run audit:staging`.
+
+## Mengubah konten dan aset
+
+Lihat bagian "Konten dan aset" di [docs/operations.md](docs/operations.md).
