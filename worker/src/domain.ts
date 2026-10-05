@@ -103,6 +103,7 @@ export interface InquiryRepository {
     errorCode: string;
     now: number;
   }): Promise<void>;
+  isWebhookProcessed(eventId: string): Promise<boolean>;
   recordWebhookOnce(input: {
     eventId: string;
     eventType: string;

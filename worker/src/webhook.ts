@@ -66,17 +66,11 @@ export async function handleResendWebhook(
     return new Response(null, { status: 204 });
   }
 
-  const firstProcessing = await repository.recordWebhookOnce({
-    eventId,
-    eventType: event.type,
-    providerEmailId,
-    processedAt: now,
-    expiresAt: now + SECURITY_RETENTION_SECONDS,
-  });
-  if (!firstProcessing) return new Response(null, { status: 204 });
-
+  // Unknown email ids (e.g. staging events on a shared Resend account) are
+  // ignored without leaving any record.
   const delivery = await repository.findDeliveryByProviderId(providerEmailId);
   if (!delivery) return new Response(null, { status: 204 });
+  if (await repository.isWebhookProcessed(eventId)) return new Response(null, { status: 204 });
 
   const feedbackStatus = event.type === "email.complained" ? "complained" : "bounced";
   await repository.markDeliveryFeedback({
@@ -98,6 +92,16 @@ export async function handleResendWebhook(
       });
     }
   }
+
+  // Record the event only after its effects succeeded, so a failed attempt
+  // (503) is reprocessed on the next retry. Both effects are idempotent.
+  await repository.recordWebhookOnce({
+    eventId,
+    eventType: event.type,
+    providerEmailId,
+    processedAt: now,
+    expiresAt: now + SECURITY_RETENTION_SECONDS,
+  });
 
   return new Response(null, { status: 204 });
 }
