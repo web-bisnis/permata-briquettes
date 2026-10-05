@@ -77,5 +77,49 @@ export const INQUIRY_COPY = {
   },
 } as const;
 
+/** Where a successful submission lands; the page exists only in builds with the form enabled. */
+export const INQUIRY_SUCCESS_PATH = {
+  en: "/en/inquiry-received/",
+  id: "/id/inquiry-diterima/",
+} as const;
+
+/**
+ * Copy of the inquiry confirmation page. The thank-you, response-time and
+ * personal-data sentences reuse the approved confirmation text; the remaining
+ * labels are new and wait for approval.
+ */
+export const INQUIRY_SUCCESS_COPY = {
+  id: {
+    title: "Inquiry diterima | Permata Briquettes",
+    description: "Konfirmasi bahwa inquiry Anda telah diterima oleh Permata Briquettes.",
+    eyebrow: "Inquiry",
+    heading: "Inquiry diterima",
+    lead: "Terima kasih. Inquiry Anda telah kami terima.",
+    responseTime: "Tim kami akan meninjaunya dan berupaya merespons dalam satu hari kerja.",
+    emailNotice: "Email konfirmasi dikirim ke alamat yang Anda berikan.",
+    referenceLabel: "Referensi",
+    privacyBefore: "Untuk pertanyaan terkait data pribadi, hubungi ",
+    primaryAction: "Lihat produk",
+    primaryHref: "/id/produk/",
+    secondaryAction: "Kembali ke beranda",
+    secondaryHref: "/id/",
+  },
+  en: {
+    title: "Inquiry received | Permata Briquettes",
+    description: "Confirmation that Permata Briquettes has received your inquiry.",
+    eyebrow: "Inquiry",
+    heading: "Inquiry received",
+    lead: "Thank you. We have received your inquiry.",
+    responseTime: "Our team will review it and aims to respond within one business day.",
+    emailNotice: "A confirmation email is sent to the address you provided.",
+    referenceLabel: "Reference",
+    privacyBefore: "For questions about personal data, please contact ",
+    primaryAction: "Explore products",
+    primaryHref: "/en/products/",
+    secondaryAction: "Back to home",
+    secondaryHref: "/en/",
+  },
+} as const;
+
 export type InquiryLocale = keyof typeof INQUIRY_COPY;
 export type InquiryFormCopy = (typeof INQUIRY_COPY)[InquiryLocale];
