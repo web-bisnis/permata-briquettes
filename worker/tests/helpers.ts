@@ -112,6 +112,10 @@ export class MemoryRepository implements InquiryRepository {
     delivery.nextAttemptAt = input.nextAttemptAt;
   }
 
+  async isWebhookProcessed(eventId: string) {
+    return this.webhooks.has(eventId);
+  }
+
   async recordWebhookOnce(input: {
     eventId: string;
     eventType: string;
@@ -145,6 +149,8 @@ export class MemoryRepository implements InquiryRepository {
     now: number;
     annualReviewDueAt: number;
   }) {
+    // Mirrors the D1 upsert on email_hash.
+    this.suppressions = this.suppressions.filter((entry) => entry.emailHash !== input.emailHash);
     this.suppressions.push({
       emailHash: input.emailHash,
       reason: input.reason,

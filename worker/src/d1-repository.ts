@@ -237,6 +237,14 @@ export class D1InquiryRepository implements InquiryRepository {
     ]);
   }
 
+  async isWebhookProcessed(eventId: string): Promise<boolean> {
+    const row = await this.db
+      .prepare("SELECT 1 AS found FROM webhook_events WHERE event_id = ?")
+      .bind(eventId)
+      .first<{ found: number }>();
+    return row !== null && row !== undefined;
+  }
+
   async recordWebhookOnce(input: {
     eventId: string;
     eventType: string;
