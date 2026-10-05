@@ -68,8 +68,8 @@ requireCheck(sitemap.response.ok && sitemap.body.includes("<urlset"), "sitemap.x
 requireCheck(sitemap.body.includes("https://www.permatabriquettes.com/"), "sitemap uses the production origin");
 requireCheck(!/staging|localhost|127\.0\.0\.1|\/api\//iu.test(sitemap.body), "sitemap excludes non-production origins and API routes");
 
-// Staging serves the live inquiry form; production must keep it off.
-const formExpected = environment === "staging";
+// Both staging and production serve the live inquiry form.
+const formExpected = true;
 
 async function probe(path) {
   const response = await fetch(new URL(path, baseUrl), {
@@ -89,7 +89,7 @@ for (const path of ["/en/contact/", "/id/kontak/"]) {
 }
 
 // GET is never a valid inquiry call. A configured Worker answers 405; 503 means
-// the gate is closed (production by design, staging if a secret or binding is missing).
+// the gate is closed (a secret, binding, or D1 is missing), which fails the smoke test.
 const inquiry = await probe("/api/inquiries");
 const webhook = await probe("/api/webhooks/resend");
 for (const result of inspectInquiryProbes({ formExpected, inquiry, webhook })) {

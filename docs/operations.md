@@ -1,8 +1,8 @@
 # Operasi
 
 Satu-satunya dokumen operasi. Tanpa nilai secret atau ID akun; semuanya disimpan di GitHub
-Environment atau Cloudflare. Bagian bertanda **[BERUBAH]** mengikuti rencana baru: production
-dirilis dengan form inquiry aktif sejak rilis awal.
+Environment atau Cloudflare. Staging dan production dirilis dengan form inquiry aktif sejak rilis awal;
+tidak ada lagi mode "disabled" untuk rilis.
 
 ## Konten dan aset
 
@@ -34,14 +34,16 @@ dirilis dengan form inquiry aktif sejak rilis awal.
 
 | Perintah | Hasil |
 | --- | --- |
-| `npm run build:staging` | `noindex`; form inquiry hanya bila tiga variable di bawah semuanya diisi. |
-| `npm run build:production` | Dapat diindeks; Web Analytics selalu mati. |
+| `npm run build:staging` | `noindex`; form inquiry aktif bila tiga variable di bawah semuanya diisi. |
+| `npm run build:production` | Dapat diindeks; form inquiry aktif bila tiga variable di bawah semuanya diisi; Web Analytics selalu mati. |
 
 Keduanya memaksa `PUBLIC_CLOUDFLARE_WEB_ANALYTICS_ENABLED=false`, menghapus token analytics dan
 `PUBLIC_BLOG_PREVIEW_DRAFTS`, lalu menjalankan `astro build`. Jangan memakai artifact staging untuk
 production (direktif indexing berbeda). Variable build form: `PUBLIC_INQUIRY_FORM_ENABLED=true`,
-`PUBLIC_INQUIRY_FORM_MODE=live`, `PUBLIC_TURNSTILE_SITE_KEY` (nilai publik). Ketiganya diatur di
-`scripts/inquiry-activation.mjs`.
+`PUBLIC_INQUIRY_FORM_MODE=live`, `PUBLIC_TURNSTILE_SITE_KEY` (nilai publik). Aturannya di
+`scripts/inquiry-activation.mjs`: ketiganya diisi bersama atau tidak sama sekali; setengah terisi, mode selain
+`live`, atau site key tidak valid membuat build gagal. Tanpa variable, build tetap menghasilkan situs tanpa
+form (dipakai untuk pemeriksaan lokal). Workflow selalu mengirim ketiganya untuk kedua target.
 
 ## Deploy
 
@@ -49,13 +51,17 @@ Hanya lewat workflow manual `.github/workflows/cloudflare-deploy.yml` (Actions >
 deployment > Run workflow). Tidak ada deploy otomatis dari push.
 
 Input: `target` (`staging` atau `production`), `release_confirmation` (frasa persis sesuai target, ditolak bila
-berbeda), `staging_verified` (wajib `true` untuk production). Langkah workflow: validasi konfirmasi, cek secret
+berbeda: `DEPLOY_STAGING_INQUIRY_ACTIVE_WITH_CUSTOM_DOMAIN` atau
+`DEPLOY_PRODUCTION_INQUIRY_ACTIVE_WITH_CUSTOM_DOMAIN`), `staging_verified` (wajib `true` untuk production). Langkah workflow: validasi konfirmasi, cek secret
 ada, cek production Environment punya minimal satu protection rule, `npm ci`, `npm run check`,
 `npm run build:<target>`, `npm run audit:<target>`, `npm test`, `npm run prepare:deploy-config`,
 dry-run Wrangler, `wrangler deploy --strict`, lalu `npm run smoke:deployment` (GET saja, tanpa payload).
 
 Urutan rilis: staging dulu, verifikasi, baru production. Migration D1 tidak pernah dijalankan oleh workflow
-(lihat bagian Inquiry).
+(lihat bagian Inquiry). **Untuk production, selesaikan seluruh prasyarat Inquiry (migration, delapan secret
+Worker, Turnstile, webhook Resend) sebelum menjalankan workflow.** Deploy mengganti situs langsung dengan form
+aktif; bila konfigurasi belum lengkap, Worker menjawab 503 dan smoke test gagal setelah deploy, padahal
+pengunjung sudah melihat form. Bila itu terjadi, lengkapi konfigurasi atau lakukan rollback.
 
 Verifikasi lokal sebelum rilis:
 
@@ -82,7 +88,7 @@ Rollback kode tidak me-rollback schema atau data D1. Utamakan perbaikan maju yan
 
 - Secret: `CLOUDFLARE_API_TOKEN` (scope minimum untuk Workers dan D1), `CLOUDFLARE_ACCOUNT_ID`,
   `CLOUDFLARE_D1_DATABASE_ID` (berbeda per environment).
-- Variable: `PUBLIC_TURNSTILE_SITE_KEY` (site key publik Turnstile environment itu).
+- Variable: `PUBLIC_TURNSTILE_SITE_KEY` (site key publik Turnstile environment itu; wajib di kedua environment karena build gagal bila kosong).
 - `production`: required reviewers.
 
 **Cloudflare Worker (per environment)**
@@ -104,32 +110,25 @@ Perilaku: `POST /api/inquiries` (same-origin; origin publik hanya dua host resmi
 dan `POST /api/webhooks/resend` (bounce/complaint, tanda tangan Svix). Selama gate aktivasi belum
 lengkap kedua endpoint menjawab `503`. Form di situs hanya dirender bila build mendapat tiga variable form.
 
-### **[BERUBAH]** Prasyarat production dengan inquiry aktif
+### Prasyarat production dengan inquiry aktif
 
-Dokumen lama menyebut rilis awal "disabled". Rencana sekarang: production aktif sejak awal. Prasyarat
-konfigurasi (belum dikerjakan, bukan bagian pembersihan repo):
+Production dirilis dengan inquiry aktif sejak awal. Pipeline (build, config deploy, workflow, smoke, audit)
+sudah mendukungnya; yang harus disiapkan di luar repo, sebelum workflow production dijalankan:
 
 1. GitHub Environment `production` dengan required reviewers; tiga secret Cloudflare dan variable
    `PUBLIC_TURNSTILE_SITE_KEY` production.
 2. D1 production (nama `permata-briquettes-inquiry-production`) dibuat; bookmark/backup dicatat; migration
-   `worker/migrations` diterapkan secara terpisah.
+   `worker/migrations` diterapkan secara terpisah (bagian di bawah).
 3. Turnstile: widget untuk `www.permatabriquettes.com`; secret dan site key.
 4. Resend: domain/sender terverifikasi, webhook ke `https://www.permatabriquettes.com/api/webhooks/resend`,
-   delapan secret Worker.
+   delapan secret Worker (daftar di atas).
 5. Domain `www.permatabriquettes.com` dan DNS.
 6. Persetujuan legal/privacy dan pemilik retensi data.
 
-**Perubahan kode/workflow yang masih diperlukan.** Pipeline saat ini sengaja menahan production tetap
-nonaktif, sehingga rilis aktif belum bisa dijalankan sebelum item berikut diubah lewat PR terpisah:
-
-- `scripts/inquiry-activation.mjs`: `ACTIVATABLE_ENVIRONMENTS` hanya `staging`; build production gagal bila variable
-  form diisi, dan `buildDeployConfig` menolak `INQUIRY_ENABLED=true` untuk production.
-- `.github/workflows/cloudflare-deploy.yml`: frasa konfirmasi production masih
-  `DEPLOY_PRODUCTION_DISABLED_WITH_CUSTOM_DOMAIN`, dan variable form hanya diteruskan untuk `staging`.
-- `scripts/smoke-deployment.mjs` / `smoke-checks.mjs`: production masih mengharapkan form absen dan
-  `503 inquiry_unavailable`.
-- Tes yang mengunci perilaku itu (`tests/inquiry-activation.test.mjs`, `tests/smoke-checks.test.mjs`,
-  `tests/inquiry-build.test.mjs`).
+Cara kerja aktivasi: `wrangler.jsonc` selalu menyimpan `INQUIRY_ENABLED="false"` dan cron kosong.
+`npm run prepare:deploy-config -- <target>` menghasilkan `wrangler.deploy.jsonc` (diabaikan git) dengan
+`INQUIRY_ENABLED="true"` untuk staging dan production; cron tetap kosong dan skrip menolak sumber yang
+mengubahnya.
 
 ### Migration D1
 
@@ -164,7 +163,7 @@ perubahan terlindungi, bukan di repo.
 ## Smoke test dan pemeriksaan pascarilis
 
 `npm run smoke:deployment -- --environment <staging|production> --base-url <url>` hanya melakukan `GET`:
-halaman kontak EN/ID, form dan Turnstile (bila diharapkan ada), `GET /api/inquiries` dan
+halaman kontak EN/ID (form dan Turnstile harus ada di kedua environment), `GET /api/inquiries` dan
 `GET /api/webhooks/resend` (harus `405`; `503` berarti secret atau binding belum lengkap). Cek manual
 tambahan: `robots.txt` dan `sitemap.xml` (staging: `Disallow: /`, tanpa sitemap; production: sitemap
 dengan host `www.permatabriquettes.com`), canonical/hreflang, dan CTA email/WhatsApp.

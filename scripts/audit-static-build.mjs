@@ -31,6 +31,9 @@ if (!["absent", "present"].includes(analyticsExpectation)) {
   throw new Error(`Unsupported analytics expectation: ${analyticsExpectation}`);
 }
 
+// The inquiry confirmation pages exist only in builds with the form on, are noindex by design and stay out of the sitemap.
+const INQUIRY_SUCCESS_ROUTES = new Set(["/en/inquiry-received/", "/id/inquiry-diterima/"]);
+
 function walk(directory) {
   return readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
     const path = join(directory, entry.name);
@@ -138,7 +141,7 @@ const pages = htmlFiles
     requireCheck(canonicals[0] === `${SITE_ORIGIN}${route}`, `${route}: canonical does not match its route`);
     requireCheck(htmlTag.lang === (route === "/" ? "mul" : route.split("/")[1]), `${route}: incorrect html lang`);
     requireCheck(
-      robots === (environment === "production" ? "index, follow" : "noindex, nofollow"),
+      robots === (environment === "production" && !INQUIRY_SUCCESS_ROUTES.has(route) ? "index, follow" : "noindex, nofollow"),
       `${route}: incorrect robots directive for ${environment}`,
     );
     requireCheck(Object.keys(alternates).length === 3, `${route}: requires exactly three language alternates`);
@@ -316,13 +319,6 @@ const sitemapPath = join(buildDirectory, "sitemap.xml");
 requireCheck(existsSync(sitemapPath), "sitemap.xml is missing");
 const sitemap = existsSync(sitemapPath) ? readFileSync(sitemapPath, "utf8") : "";
 const sitemapUrls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/gu)].map((match) => decodeHtml(match[1])).sort();
-// The inquiry confirmation pages exist only in builds with the form on, are noindex by design and stay out of the sitemap.
-const INQUIRY_SUCCESS_ROUTES = new Set(["/en/inquiry-received/", "/id/inquiry-diterima/"]);
-if (environment === "production") {
-  for (const route of INQUIRY_SUCCESS_ROUTES) {
-    requireCheck(!routes.has(route), `${route}: the inquiry confirmation page must not be built for production`);
-  }
-}
 const canonicalUrls = pages
   .filter((page) => !INQUIRY_SUCCESS_ROUTES.has(page.route))
   .map((page) => page.canonical)

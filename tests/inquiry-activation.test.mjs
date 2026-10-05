@@ -53,19 +53,27 @@ describe("build-time inquiry guard", () => {
       .toThrow(/Set all three or none/u);
   });
 
-  it("keeps production disabled by default and accepts explicit off values", () => {
+  it("lets production enable the form with a complete live configuration", () => {
+    expect(resolveBuildInquiryVariables("production", live)).toEqual(live);
+  });
+
+  it("keeps production disabled when no form variable is set and accepts explicit off values", () => {
     expect(resolveBuildInquiryVariables("production", {})).toEqual(off);
     expect(resolveBuildInquiryVariables("production", off)).toEqual(off);
   });
 
   it.each([
-    ["the enable flag", { PUBLIC_INQUIRY_FORM_ENABLED: "true" }, /PUBLIC_INQUIRY_FORM_ENABLED/u],
-    ["live mode", { PUBLIC_INQUIRY_FORM_MODE: "live" }, /PUBLIC_INQUIRY_FORM_MODE/u],
-    ["local-mock mode", { PUBLIC_INQUIRY_FORM_MODE: "local-mock" }, /PUBLIC_INQUIRY_FORM_MODE/u],
-    ["a site key", { PUBLIC_TURNSTILE_SITE_KEY: DUMMY_SITE_KEY }, /PUBLIC_TURNSTILE_SITE_KEY/u],
-    ["the full live set", live, /PUBLIC_INQUIRY_FORM_ENABLED/u],
-  ])("refuses a production build that tries to set %s", (_name, variables, message) => {
+    ["without a site key", { ...live, PUBLIC_TURNSTILE_SITE_KEY: "" }, /PUBLIC_TURNSTILE_SITE_KEY is empty/u],
+    ["outside live mode", { ...live, PUBLIC_INQUIRY_FORM_MODE: "local-mock" }, /MODE must be "live"/u],
+    ["with a malformed site key", { ...live, PUBLIC_TURNSTILE_SITE_KEY: "not a key" }, /does not look like/u],
+    ["half configured (key only)", { PUBLIC_TURNSTILE_SITE_KEY: DUMMY_SITE_KEY }, /Set all three or none/u],
+    ["half configured (live mode only)", { PUBLIC_INQUIRY_FORM_MODE: "live" }, /Set all three or none/u],
+  ])("rejects a production build with the form enabled %s", (_name, variables, message) => {
     expect(() => resolveBuildInquiryVariables("production", variables)).toThrow(message);
+  });
+
+  it("refuses to enable the form for an unknown target", () => {
+    expect(() => resolveBuildInquiryVariables("preview", live)).toThrow(/Refusing to build preview/u);
   });
 });
 
@@ -81,30 +89,23 @@ describe("deploy configuration guard", () => {
     }
   });
 
-  it("enables the inquiry Worker only in the generated staging config, with no cron", () => {
-    const config = buildDeployConfig(source, "staging", DATABASE_ID);
-    expect(Object.keys(config.env)).toEqual(["staging"]);
-    expect(config.env.staging.vars.INQUIRY_ENABLED).toBe("true");
-    expect(config.env.staging.vars.RUNTIME_MODE).toBe("staging");
-    expect(config.env.staging.vars.USE_LOCAL_MOCKS).toBe("false");
-    expect(config.env.staging.triggers.crons).toEqual([]);
-    expect(config.env.staging.d1_databases[0].database_id).toBe(DATABASE_ID);
-    expect(source.env.staging.vars.INQUIRY_ENABLED).toBe("false");
+  it.each(["staging", "production"])("enables the inquiry Worker only in the generated %s config, with no cron", (target) => {
+    const config = buildDeployConfig(source, target, DATABASE_ID);
+    expect(Object.keys(config.env)).toEqual([target]);
+    expect(config.env[target].vars.INQUIRY_ENABLED).toBe("true");
+    expect(config.env[target].vars.RUNTIME_MODE).toBe(target);
+    expect(config.env[target].vars.USE_LOCAL_MOCKS).toBe("false");
+    expect(config.env[target].triggers.crons).toEqual([]);
+    expect(config.env[target].d1_databases[0].database_id).toBe(DATABASE_ID);
+    expect(source.env[target].vars.INQUIRY_ENABLED).toBe("false");
   });
 
-  it("generates a disabled production config", () => {
-    const config = buildDeployConfig(source, "production", DATABASE_ID);
-    expect(Object.keys(config.env)).toEqual(["production"]);
-    expect(config.env.production.vars.INQUIRY_ENABLED).toBe("false");
-    expect(config.env.production.triggers.crons).toEqual([]);
-  });
-
-  it("refuses production when INQUIRY_ENABLED is true in the environment or the source", () => {
-    expect(() => buildDeployConfig(source, "production", DATABASE_ID, { INQUIRY_ENABLED: "true" }))
-      .toThrow(/not allowed there/u);
-    const tampered = structuredClone(source);
-    tampered.env.production.vars.INQUIRY_ENABLED = "true";
-    expect(() => buildDeployConfig(tampered, "production", DATABASE_ID)).toThrow(/INQUIRY_ENABLED="false"/u);
+  it("refuses a source whose committed INQUIRY_ENABLED is not false", () => {
+    for (const target of ["staging", "production"]) {
+      const tampered = structuredClone(source);
+      tampered.env[target].vars.INQUIRY_ENABLED = "true";
+      expect(() => buildDeployConfig(tampered, target, DATABASE_ID)).toThrow(/INQUIRY_ENABLED="false"/u);
+    }
   });
 
   it("refuses any target that declares cron triggers", () => {
@@ -174,17 +175,35 @@ describe("safe environment builds", () => {
     expect(result.stderr).toMatch(/PUBLIC_TURNSTILE_SITE_KEY is empty/u);
   }, 30_000);
 
+  it("renders the live form on both contact pages for a complete production build, and the audit passes", () => {
+    const { output, result, read } = build("production", live);
+    expect(result.status, result.stderr).toBe(0);
+    for (const path of ["en/contact/index.html", "id/kontak/index.html"]) {
+      const html = read(path);
+      expect(html).toContain("data-inquiry-form");
+      expect(html).toContain(`data-sitekey="${DUMMY_SITE_KEY}"`);
+      expect(html).toContain("challenges.cloudflare.com");
+      expect(html).not.toContain("local-turnstile-pass");
+      expect(html).toContain("mailto:marketing@permatabriquettes.com");
+    }
+    expect(read("en/index.html")).toContain('content="index, follow"');
+    execFileSync(
+      process.execPath,
+      ["scripts/audit-static-build.mjs", "--dir", output, "--environment", "production", "--analytics", "absent", "--quiet"],
+      { cwd: projectRoot, stdio: "pipe" },
+    );
+  }, 120_000);
+
   it.each([
-    ["the enable flag", { PUBLIC_INQUIRY_FORM_ENABLED: "true" }],
-    ["live mode", { PUBLIC_INQUIRY_FORM_MODE: "live" }],
-    ["a site key", { PUBLIC_TURNSTILE_SITE_KEY: DUMMY_SITE_KEY }],
-  ])("fails a production build that sets %s", (_name, extra) => {
+    ["without a site key", { ...live, PUBLIC_TURNSTILE_SITE_KEY: "" }, /PUBLIC_TURNSTILE_SITE_KEY is empty/u],
+    ["half configured", { PUBLIC_TURNSTILE_SITE_KEY: DUMMY_SITE_KEY }, /Set all three or none/u],
+  ])("fails a production build that enables the form %s", (_name, extra, message) => {
     const { result } = build("production", extra);
     expect(result.status).not.toBe(0);
-    expect(result.stderr).toMatch(/Refusing to build production/u);
+    expect(result.stderr).toMatch(message);
   }, 30_000);
 
-  it("keeps a normal production build free of the form and of Turnstile", () => {
+  it("keeps a production build without form variables free of the form and of Turnstile", () => {
     const { result, read } = build("production");
     expect(result.status, result.stderr).toBe(0);
     for (const path of ["en/contact/index.html", "id/kontak/index.html"]) {
