@@ -16,10 +16,9 @@ Aset baru dipublikasikan setelah barisnya berstatus **Approved**.
 
 ## Daftar aset dan lokasi file
 
-Daftar lengkap aset yang dibutuhkan (nama file, isi foto, rasio, ukuran minimum, tempat pemakaian,
-dan syarat publikasi) ada di [asset-checklist.md](asset-checklist.md). Taruh setiap file di
-`src/assets/<folder>/` dengan nama persis seperti di daftar itu; tiap folder memiliki `README.md`
-berisi tabel slot-nya. Daftar dibuat dari `src/config/media-slots.ts` (`npm run assets:sync`).
+Nama file, isi foto, rasio, ukuran minimum, tempat pemakaian, dan syarat publikasi tiap aset ada di
+`README.md` setiap folder `src/assets/<folder>/` (dibuat dari `src/config/media-slots.ts` dengan
+`npm run assets:sync`). Taruh file dengan nama persis seperti di tabel itu.
 
 Slot yang filenya belum ada tidak menampilkan apa pun, jadi aset boleh masuk bertahap.
 
