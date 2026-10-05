@@ -9,7 +9,7 @@ interface SiteverifyResponse {
 export class CloudflareTurnstileVerifier implements TurnstileVerifier {
   constructor(
     private readonly secret: string,
-    private readonly fetcher: typeof fetch = fetch,
+    private readonly fetcher: typeof fetch = (input, init) => fetch(input, init),
   ) {}
 
   async verify(input: {
