@@ -1,6 +1,7 @@
 // Single source of truth for which environments may switch the inquiry form on.
-// Staging may be activated; production must stay disabled and fails loudly if
-// anything tries to enable it. Shared by the build and deploy-config scripts.
+// Staging and production are both activatable; any other target must stay
+// disabled and fails loudly if anything tries to enable it. Shared by the build
+// and deploy-config scripts.
 
 const FORM_VARIABLES = [
   "PUBLIC_INQUIRY_FORM_ENABLED",
@@ -8,7 +9,7 @@ const FORM_VARIABLES = [
   "PUBLIC_TURNSTILE_SITE_KEY",
 ];
 
-const ACTIVATABLE_ENVIRONMENTS = new Set(["staging"]);
+const ACTIVATABLE_ENVIRONMENTS = new Set(["staging", "production"]);
 
 // Public Turnstile site keys are 20+ URL-safe characters; real keys start 0x4,
 // test keys 1x/2x/3x. Reject empty, spaced, or implausibly short values.
@@ -20,8 +21,8 @@ function value(environment, name) {
 
 /**
  * Returns the public form variables a build for `target` must use.
- * Throws when production is asked to enable anything, or when staging is asked
- * to enable the form without a usable live configuration.
+ * Throws when an activatable environment is asked to enable the form without a
+ * usable live configuration (all three variables, or none).
  */
 export function resolveBuildInquiryVariables(target, environment) {
   const requested = value(environment, "PUBLIC_INQUIRY_FORM_ENABLED");
@@ -80,7 +81,7 @@ export function resolveBuildInquiryVariables(target, environment) {
 /**
  * Builds the ignored deploy config for one target from the committed
  * wrangler.jsonc. The committed file stays fail-closed ("false") everywhere;
- * only the generated staging config turns the Worker on. Cron stays empty.
+ * only the generated config turns the Worker on. Cron stays empty.
  */
 export function buildDeployConfig(source, target, databaseId, environment = {}) {
   const selected = source.env?.[target];
