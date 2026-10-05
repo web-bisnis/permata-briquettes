@@ -76,32 +76,6 @@ for (const folder of MEDIA_FOLDERS) {
   outputs.set(join(root, "src", "assets", folder, "README.md"), lines.join("\n"));
 }
 
-const checklist = [
-  "# Daftar aset yang dibutuhkan",
-  "",
-  "Dibuat otomatis dari `src/config/media-slots.ts` (`npm run assets:sync`).",
-  "Taruh setiap file di folder `src/assets/<folder>/` dengan nama persis seperti di tabel.",
-  "",
-  ...FORMAT_RULES.map((rule) => `- ${rule}`),
-  "- Setiap foto yang diserahkan dicatat di `docs/asset-register.md` (sumber, izin, caption, alt text).",
-  "",
-];
-for (const priority of ["P1", "P2", "P3"]) {
-  const slots = MEDIA_SLOTS.filter((entry) => entry.priority === priority);
-  checklist.push(
-    `## ${priority}${priority === "P3" ? " (menunggu izin)" : ""}`,
-    "",
-    "| Folder | Nama file | Isi foto | Rasio | Lebar min. | Dipakai di | Catatan |",
-    "| --- | --- | --- | --- | --- | --- | --- |",
-    ...slots.map((entry) => {
-      const [folder, file] = entry.id.split("/");
-      return `| \`${folder}/\` | \`${file}\` | ${entry.subject} | ${aspectLabel(entry.aspect)} | ${entry.minWidth} px | ${entry.usedOn} | ${notesFor(entry)} |`;
-    }),
-    "",
-  );
-}
-outputs.set(join(root, "docs", "asset-checklist.md"), checklist.join("\n"));
-
 let stale = 0;
 for (const [path, content] of outputs) {
   const current = existsSync(path) ? readFileSync(path, "utf8") : undefined;
