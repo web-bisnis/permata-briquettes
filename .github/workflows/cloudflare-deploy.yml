@@ -11,7 +11,7 @@ on:
           - staging
           - production
       release_confirmation:
-        description: Type DEPLOY_STAGING_INQUIRY_ACTIVE_WITH_CUSTOM_DOMAIN (staging) or DEPLOY_PRODUCTION_DISABLED_WITH_CUSTOM_DOMAIN (production)
+        description: Type DEPLOY_STAGING_INQUIRY_ACTIVE_WITH_CUSTOM_DOMAIN (staging) or DEPLOY_PRODUCTION_INQUIRY_ACTIVE_WITH_CUSTOM_DOMAIN (production)
         required: true
         type: string
       staging_verified:
@@ -45,7 +45,7 @@ jobs:
           if [[ "$TARGET" == "staging" ]]; then
             expected="DEPLOY_STAGING_INQUIRY_ACTIVE_WITH_CUSTOM_DOMAIN"
           else
-            expected="DEPLOY_PRODUCTION_DISABLED_WITH_CUSTOM_DOMAIN"
+            expected="DEPLOY_PRODUCTION_INQUIRY_ACTIVE_WITH_CUSTOM_DOMAIN"
           fi
           if [[ "$CONFIRMATION" != "$expected" ]]; then
             echo "Release confirmation did not match $expected."
@@ -86,15 +86,14 @@ jobs:
       - name: Check source
         run: npm run check
       - name: Build release
-        # Only staging enables the inquiry form; the site key is a public value
-        # kept in the staging GitHub Environment variable PUBLIC_TURNSTILE_SITE_KEY.
-        # Production receives empty values, and the build script refuses
-        # production if any form variable is set.
+        # Both targets ship the live inquiry form; the Turnstile site key is a
+        # public value kept in each GitHub Environment's variable
+        # PUBLIC_TURNSTILE_SITE_KEY. The build script fails if it is missing.
         run: npm run build:${{ inputs.target }}
         env:
-          PUBLIC_INQUIRY_FORM_ENABLED: ${{ inputs.target == 'staging' && 'true' || '' }}
-          PUBLIC_INQUIRY_FORM_MODE: ${{ inputs.target == 'staging' && 'live' || '' }}
-          PUBLIC_TURNSTILE_SITE_KEY: ${{ inputs.target == 'staging' && vars.PUBLIC_TURNSTILE_SITE_KEY || '' }}
+          PUBLIC_INQUIRY_FORM_ENABLED: 'true'
+          PUBLIC_INQUIRY_FORM_MODE: live
+          PUBLIC_TURNSTILE_SITE_KEY: ${{ vars.PUBLIC_TURNSTILE_SITE_KEY }}
       - name: Audit static output
         run: npm run audit:${{ inputs.target }}
       - name: Run tests
