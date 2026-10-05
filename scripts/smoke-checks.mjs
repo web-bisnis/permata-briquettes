@@ -108,3 +108,34 @@ export function inspectInquiryProbes({ formExpected, inquiry, webhook }) {
     check(webhook.status === 503, "read-only webhook probe returns 503 fail closed"),
   ];
 }
+
+// Network-level codes that a freshly attached custom domain can produce while DNS propagates.
+const TRANSIENT_NETWORK_CODES = new Set([
+  "ENOTFOUND",
+  "EAI_AGAIN",
+  "ECONNREFUSED",
+  "ECONNRESET",
+  "ETIMEDOUT",
+  "UND_ERR_CONNECT_TIMEOUT",
+]);
+
+// fetch() rejects with TypeError("fetch failed") and puts the system error in `cause`.
+// Assertion failures and HTTP status problems are never transient.
+export function isTransientNetworkError(error) {
+  return error instanceof TypeError && TRANSIENT_NETWORK_CODES.has(error.cause?.code);
+}
+
+export async function withNetworkRetry(
+  operation,
+  { attempts = 5, delayMs = 30_000, sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms)), onRetry = () => {} } = {},
+) {
+  for (let attempt = 1; ; attempt += 1) {
+    try {
+      return await operation();
+    } catch (error) {
+      if (attempt >= attempts || !isTransientNetworkError(error)) throw error;
+      onRetry(error, attempt);
+      await sleep(delayMs);
+    }
+  }
+}

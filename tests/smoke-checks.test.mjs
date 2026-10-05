@@ -3,7 +3,7 @@ import { mkdtempSync, readFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
-import { inspectContactPage, inspectInquiryProbes, parseAttributes } from "../scripts/smoke-checks.mjs";
+import { inspectContactPage, inspectInquiryProbes, isTransientNetworkError, parseAttributes, withNetworkRetry } from "../scripts/smoke-checks.mjs";
 
 const projectRoot = process.cwd();
 // A syntactically valid, non-sensitive dummy key for local builds only.
@@ -147,6 +147,42 @@ describe("smoke probe checks", () => {
     expect(failures(inspectInquiryProbes(closed))).toEqual([]);
     const open = { formExpected: false, inquiry: response(405, "method_not_allowed"), webhook: response(405, "method_not_allowed") };
     expect(failures(inspectInquiryProbes(open))).toHaveLength(3);
+  });
+});
+
+describe("smoke network retry", () => {
+  const dnsError = () => Object.assign(new TypeError("fetch failed"), { cause: Object.assign(new Error("getaddrinfo ENOTFOUND"), { code: "ENOTFOUND" }) });
+  const options = (extra = {}) => ({ attempts: 5, delayMs: 1, sleep: async () => {}, ...extra });
+
+  it("classifies only network-level fetch failures as transient", () => {
+    expect(isTransientNetworkError(dnsError())).toBe(true);
+    expect(isTransientNetworkError(new Error("/ has index, follow"))).toBe(false);
+    expect(isTransientNetworkError(new TypeError("fetch failed"))).toBe(false);
+  });
+
+  it("retries a DNS failure and returns the later success", async () => {
+    let calls = 0;
+    const result = await withNetworkRetry(async () => {
+      calls += 1;
+      if (calls < 3) throw dnsError();
+      return "ok";
+    }, options());
+    expect(result).toBe("ok");
+    expect(calls).toBe(3);
+  });
+
+  it("gives up after the attempt limit and rethrows the network error", async () => {
+    let calls = 0;
+    await expect(withNetworkRetry(async () => { calls += 1; throw dnsError(); }, options({ attempts: 3 })))
+      .rejects.toThrow("fetch failed");
+    expect(calls).toBe(3);
+  });
+
+  it("never retries a real assertion failure", async () => {
+    let calls = 0;
+    await expect(withNetworkRetry(async () => { calls += 1; throw new Error("robots.txt is served"); }, options()))
+      .rejects.toThrow("robots.txt is served");
+    expect(calls).toBe(1);
   });
 });
 

@@ -1,4 +1,4 @@
-import { inspectContactPage, inspectInquiryProbes } from "./smoke-checks.mjs";
+import { inspectContactPage, inspectInquiryProbes, withNetworkRetry } from "./smoke-checks.mjs";
 
 const args = process.argv.slice(2);
 
@@ -21,6 +21,17 @@ if (baseUrl.hostname !== expectedHost) {
   throw new Error(`Expected ${expectedHost}, received ${baseUrl.hostname}`);
 }
 
+// Only network/DNS failures are retried (a new custom domain may not have propagated yet);
+// failed assertions and HTTP responses are never retried.
+const retryOptions = {
+  attempts: Number(process.env.SMOKE_RETRY_ATTEMPTS ?? 5),
+  delayMs: Number(process.env.SMOKE_RETRY_DELAY_MS ?? 30_000),
+  onRetry: (error, attempt) => process.stderr.write(
+    `Network error (${error.cause?.code}), retry ${attempt} in ${retryOptions.delayMs / 1000}s
+`,
+  ),
+};
+
 const checks = [];
 function requireCheck(condition, message) {
   if (!condition) throw new Error(message);
@@ -28,14 +39,17 @@ function requireCheck(condition, message) {
 }
 
 async function get(path) {
-  const response = await fetch(new URL(path, baseUrl), {
-    method: "GET",
-    redirect: "follow",
-    headers: { "User-Agent": "permata-briquettes-read-only-smoke/1.0" },
-  });
+  const { response, body } = await withNetworkRetry(async () => {
+    const response = await fetch(new URL(path, baseUrl), {
+      method: "GET",
+      redirect: "follow",
+      headers: { "User-Agent": "permata-briquettes-read-only-smoke/1.0" },
+    });
+    return { response, body: await response.text() };
+  }, retryOptions);
   requireCheck(response.url.startsWith("https://"), `${path} remains on HTTPS`);
   requireCheck(new URL(response.url).hostname === expectedHost, `${path} remains on the target host`);
-  return { response, body: await response.text() };
+  return { response, body };
 }
 
 const root = await get("/");
@@ -72,12 +86,14 @@ requireCheck(!/staging|localhost|127\.0\.0\.1|\/api\//iu.test(sitemap.body), "si
 const formExpected = true;
 
 async function probe(path) {
-  const response = await fetch(new URL(path, baseUrl), {
-    method: "GET",
-    redirect: "manual",
-    headers: { "User-Agent": "permata-briquettes-read-only-smoke/1.0" },
-  });
-  return { status: response.status, body: await response.text() };
+  return withNetworkRetry(async () => {
+    const response = await fetch(new URL(path, baseUrl), {
+      method: "GET",
+      redirect: "manual",
+      headers: { "User-Agent": "permata-briquettes-read-only-smoke/1.0" },
+    });
+    return { status: response.status, body: await response.text() };
+  }, retryOptions);
 }
 
 for (const path of ["/en/contact/", "/id/kontak/"]) {
