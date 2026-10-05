@@ -91,6 +91,11 @@ npm run build:production; npm run audit:production; npm run worker:check:product
 2. `npx wrangler rollback <VERSION_ID> --config wrangler.deploy.jsonc --env <target> --message "<alasan>"`.
 3. Jalankan ulang `npm run smoke:deployment -- --environment <target> --base-url <url>`.
 
+Belum terverifikasi: tidak ada prosedur di repo untuk melepas custom domain `www` yang sudah terpasang (dampak ke
+DNS dan pengalihan apex), dan production belum punya versi sebelum deploy pertama, jadi rollback ke "sebelum
+deploy pertama" tidak bisa dijalankan; untuk kasus itu hentikan inquiry (`INQUIRY_ENABLED=false` pada config
+generate, deploy ulang) dan perbaiki maju.
+
 Rollback kode tidak me-rollback schema atau data D1. Utamakan perbaikan maju yang aditif. Restore D1
 (`wrangler d1 time-travel restore` ke bookmark pra-migrasi) bersifat destruktif: hentikan inquiry dulu
 (`INQUIRY_ENABLED=false`), dan lakukan hanya dengan persetujuan pemilik data.
@@ -200,3 +205,18 @@ halaman kontak EN/ID (form dan Turnstile harus ada di kedua environment), `GET /
 `GET /api/webhooks/resend` (harus `405`; `503` berarti secret atau binding belum lengkap). Cek manual
 tambahan: `robots.txt` dan `sitemap.xml` (staging: `Disallow: /`, tanpa sitemap; production: sitemap
 dengan host `www.permatabriquettes.com`), canonical/hreflang, dan CTA email/WhatsApp.
+
+### Uji manual pascarilis production
+
+Setelah smoke otomatis lulus:
+
+1. `https://www.permatabriquettes.com` terbuka; `http://www…` dialihkan ke https; apex `permatabriquettes.com`
+   dialihkan ke `www`.
+2. Form tampil di `/en/contact/` dan `/id/kontak/` dan widget Turnstile termuat.
+3. Kirim satu inquiry uji: tersimpan, notifikasi sampai ke kotak penerima, dan email tidak ditolak DMARC (cek
+   header autentikasi).
+4. Webhook Resend production (`POST /api/webhooks/resend`): dari dashboard Resend kirim event uji. Event
+   bertanda tangan valid untuk email tak dikenal dibalas `204`; tanda tangan salah atau header hilang `400`
+   `invalid_webhook_signature`; `GET` `405`; konfigurasi tidak lengkap `503`. Webhook production memakai signing
+   secret sendiri, terpisah dari staging (event `email.bounced` dan `email.complained`).
+5. Privacy notice final tampil di `/en/privacy/` dan `/id/privasi/`.
