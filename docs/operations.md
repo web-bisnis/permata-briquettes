@@ -206,6 +206,11 @@ halaman kontak EN/ID (form dan Turnstile harus ada di kedua environment), `GET /
 tambahan: `robots.txt` dan `sitemap.xml` (staging: `Disallow: /`, tanpa sitemap; production: sitemap
 dengan host `www.permatabriquettes.com`), canonical/hreflang, dan CTA email/WhatsApp.
 
+Kegagalan jaringan/DNS (`ENOTFOUND`, `EAI_AGAIN`, `ECONNREFUSED`, `ECONNRESET`, `ETIMEDOUT`) pada tiap request
+dicoba ulang sampai 5 kali dengan jeda 30 detik, karena custom domain yang baru dipasang deploy pertama bisa belum
+menyebar saat smoke berjalan. Kegagalan assertion dan respons HTTP tidak pernah dicoba ulang. Batas dapat diubah
+lewat env `SMOKE_RETRY_ATTEMPTS` dan `SMOKE_RETRY_DELAY_MS`.
+
 ### Uji manual pascarilis production
 
 Setelah smoke otomatis lulus:
